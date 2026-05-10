@@ -53,7 +53,9 @@ function CategoryPage() {
       </nav>
 
       <article className="space-y-3">
-        <h1 className="text-3xl font-bold tracking-tight">{category.name}</h1>
+        <h1 className="display-title text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1]">
+          <span className="brand-gradient-text">{category.name}</span>
+        </h1>
         <p className="text-lg text-muted-foreground">{category.description}</p>
         {category.intro && (
           <p className="text-base text-muted-foreground">{category.intro}</p>

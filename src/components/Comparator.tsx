@@ -1,6 +1,6 @@
 import { Check, Eraser, Plus, RotateCcw, Share2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "#/components/ui/button.tsx";
+import { Button } from "#/components/app/button.tsx";
 import BulkPaste from "./BulkPaste.tsx";
 import EntryForm from "./EntryForm.tsx";
 import PurchasePlanner from "./PurchasePlanner.tsx";
@@ -144,7 +144,7 @@ export default function Comparator({ category }: Props) {
             esempi.
           </p>
           <div className="flex flex-wrap justify-center gap-2">
-            <Button type="button" onClick={addEntry}>
+            <Button type="button" variant="gradient" onClick={addEntry}>
               <Plus className="h-4 w-4" />
               Aggiungi prodotto
             </Button>

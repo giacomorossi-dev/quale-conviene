@@ -1,7 +1,7 @@
 import { Search, X } from "lucide-react";
 import type { ChangeEvent } from "react";
-import { Input } from "#/components/ui/input.tsx";
-import { Button } from "#/components/ui/button.tsx";
+import { Input } from "#/components/app/input.tsx";
+import { Button } from "#/components/app/button.tsx";
 import type { CategoryDefinition } from "#/lib/pricing.ts";
 
 interface Props {

@@ -1,15 +1,15 @@
 import { ChevronDown, Trash2 } from "lucide-react";
 import { useState } from "react";
-import { Button } from "#/components/ui/button.tsx";
-import { Input } from "#/components/ui/input.tsx";
-import { Label } from "#/components/ui/label.tsx";
+import { Button } from "#/components/app/button.tsx";
+import { Input } from "#/components/app/input.tsx";
+import { Label } from "#/components/app/label.tsx";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "#/components/ui/select.tsx";
+} from "#/components/app/select.tsx";
 import { cn } from "#/lib/utils.ts";
 import {
   getCategoryBaseLabelPlural,

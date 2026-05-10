@@ -6,7 +6,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "#/components/ui/table.tsx";
+} from "#/components/app/table.tsx";
 import { cn } from "#/lib/utils.ts";
 import {
   getCategoryBaseLabel,

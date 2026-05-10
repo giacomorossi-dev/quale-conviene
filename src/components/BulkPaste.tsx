@@ -1,6 +1,7 @@
 import { ClipboardPaste, X } from "lucide-react";
 import { useId, useState } from "react";
-import { Button } from "#/components/ui/button.tsx";
+import { Button } from "#/components/app/button.tsx";
+import { Textarea } from "#/components/app/textarea.tsx";
 import { parseBulkPaste } from "#/lib/bulk-paste.ts";
 import {
   type CategoryDefinition,
@@ -98,14 +99,14 @@ export default function BulkPaste({ category, onImport }: Props) {
         <br />
         Esempio: <code className="text-xs">{exampleFor(category)}</code>
       </p>
-      <textarea
+      <Textarea
         value={text}
         onChange={(e) => {
           setText(e.currentTarget.value);
           setError(null);
         }}
         rows={6}
-        className="w-full rounded-md border bg-background p-2 font-mono text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+        className="font-mono"
         aria-describedby={helpId}
         placeholder={exampleFor(category)}
       />

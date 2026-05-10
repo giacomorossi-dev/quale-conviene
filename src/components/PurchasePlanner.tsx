@@ -1,7 +1,7 @@
 import { Calculator } from "lucide-react";
 import { useState } from "react";
-import { Input } from "#/components/ui/input.tsx";
-import { Label } from "#/components/ui/label.tsx";
+import { Input } from "#/components/app/input.tsx";
+import { Label } from "#/components/app/label.tsx";
 import {
   getCategoryBaseLabel,
   getCategoryBaseLabelPlural,

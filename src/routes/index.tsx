@@ -24,9 +24,15 @@ function Home() {
   );
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-10 space-y-10">
-      <section className="space-y-4">
-        <h1 className="text-4xl font-bold tracking-tight">{SITE_NAME}</h1>
+    <div className="container mx-auto max-w-5xl px-4 py-12 space-y-12">
+      <section className="space-y-5">
+        <p className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/50 px-3 py-1 text-xs font-medium text-muted-foreground backdrop-blur-sm">
+          <span className="brand-gradient-bg h-1.5 w-1.5 rounded-full" />
+          Confronta. Calcola. Risparmia.
+        </p>
+        <h1 className="display-title text-5xl sm:text-6xl font-bold tracking-tight leading-[1.05]">
+          <span className="brand-gradient-text">{SITE_NAME}</span>
+        </h1>
         <p className="max-w-2xl text-lg text-muted-foreground">
           Confronta prodotti della stessa categoria normalizzando il prezzo
           all'unità — scoprirai a colpo d'occhio quale conviene davvero, anche
