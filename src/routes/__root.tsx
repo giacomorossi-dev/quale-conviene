@@ -10,7 +10,12 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
 import BuyMeCoffee from "#/components/BuyMeCoffee.tsx";
+import ThemeToggle from "#/components/ThemeToggle.tsx";
 import { CLOUDFLARE_ANALYTICS_TOKEN, SITE_NAME } from "#/lib/seo.ts";
+
+// Runs synchronously before hydration so the .dark class is applied before
+// first paint — no white-flash for users with the dark theme saved.
+const THEME_BOOTSTRAP = `(function(){try{var t=localStorage.getItem('qc:theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();`;
 
 export const Route = createRootRoute({
   head: () => ({
@@ -37,6 +42,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <html lang="it">
       <head>
         <HeadContent />
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: theme bootstrap must run before hydration */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
       </head>
       <body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
         <header className="border-b">
@@ -44,6 +51,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             <Link to="/" className="text-lg font-bold tracking-tight">
               {SITE_NAME}
             </Link>
+            <ThemeToggle />
           </div>
         </header>
 

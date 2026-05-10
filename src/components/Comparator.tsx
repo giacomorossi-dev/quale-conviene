@@ -1,5 +1,5 @@
-import { Eraser, Plus, RotateCcw } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { Check, Eraser, Plus, RotateCcw, Share2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "#/components/ui/button.tsx";
 import EntryForm from "./EntryForm.tsx";
 import ResultsTable from "./ResultsTable.tsx";
@@ -9,6 +9,7 @@ import {
   type CategoryDefinition,
   type ProductEntry,
 } from "#/lib/pricing.ts";
+import { buildShareUrl, decodeEntries } from "#/lib/share.ts";
 
 interface Props {
   category: CategoryDefinition;
@@ -30,12 +31,30 @@ export default function Comparator({ category }: Props) {
   // Marks the moment we've finished reading localStorage so we don't persist
   // the SSR-initialized sample values on top of the user's saved data.
   const [hydrated, setHydrated] = useState(false);
+  const [shareState, setShareState] = useState<"idle" | "copied">("idle");
+  const shareTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // U1 — restore from localStorage after mount (client-only).
+  // U2 — `?d=…` URL takes precedence over localStorage and replaces history
+  // so the user can keep editing without the share token cluttering future URLs.
   useEffect(() => {
     if (typeof window === "undefined") {
       setHydrated(true);
       return;
+    }
+    const params = new URLSearchParams(window.location.search);
+    const shared = params.get("d");
+    if (shared) {
+      const decoded = decodeEntries(shared);
+      if (decoded && decoded.length > 0) {
+        setEntries(decoded);
+        params.delete("d");
+        const query = params.toString();
+        const url =
+          window.location.pathname + (query ? `?${query}` : "") + window.location.hash;
+        window.history.replaceState(window.history.state, "", url);
+        setHydrated(true);
+        return;
+      }
     }
     try {
       const stored = window.localStorage.getItem(
@@ -82,6 +101,34 @@ export default function Comparator({ category }: Props) {
   const reset = () => setEntries(initialEntries(category));
   const clear = () => setEntries([]);
 
+  const share = async () => {
+    if (typeof window === "undefined") return;
+    const url = buildShareUrl(category.slug, entries);
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: category.name, url });
+        return;
+      }
+    } catch {
+      /* user dismissed share sheet — fall through to clipboard */
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareState("copied");
+      if (shareTimer.current) clearTimeout(shareTimer.current);
+      shareTimer.current = setTimeout(() => setShareState("idle"), 2000);
+    } catch {
+      window.prompt("Copia il link e condividilo:", url);
+    }
+  };
+
+  useEffect(
+    () => () => {
+      if (shareTimer.current) clearTimeout(shareTimer.current);
+    },
+    [],
+  );
+
   return (
     <div className="space-y-6">
       {entries.length === 0 ? (
@@ -103,7 +150,10 @@ export default function Comparator({ category }: Props) {
         </div>
       ) : (
         <>
-          <div className="space-y-3">
+          <section
+            aria-label="Prodotti da confrontare"
+            className="space-y-3"
+          >
             {entries.map((entry, i) => (
               <EntryForm
                 key={i}
@@ -114,7 +164,7 @@ export default function Comparator({ category }: Props) {
                 onRemove={() => removeAt(i)}
               />
             ))}
-          </div>
+          </section>
 
           <div className="flex flex-wrap items-center gap-2">
             <Button type="button" variant="outline" onClick={addEntry}>
@@ -129,12 +179,33 @@ export default function Comparator({ category }: Props) {
               <Eraser className="h-4 w-4" />
               Svuota tutto
             </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={share}
+              className="ml-auto"
+              aria-live="polite"
+            >
+              {shareState === "copied" ? (
+                <>
+                  <Check className="h-4 w-4" />
+                  Link copiato
+                </>
+              ) : (
+                <>
+                  <Share2 className="h-4 w-4" />
+                  Condividi
+                </>
+              )}
+            </Button>
           </div>
 
-          <div>
-            <h2 className="mb-3 text-xl font-semibold">Risultati</h2>
+          <section aria-labelledby="results-heading">
+            <h2 id="results-heading" className="mb-3 text-xl font-semibold">
+              Risultati
+            </h2>
             <ResultsTable category={category} results={results} />
-          </div>
+          </section>
         </>
       )}
     </div>

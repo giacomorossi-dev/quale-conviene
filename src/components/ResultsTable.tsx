@@ -84,7 +84,12 @@ export default function ResultsTable({ category, results }: Props) {
     .reduce((m, r) => Math.max(m, r.diffPctFromBest), 0);
 
   return (
-    <div className="overflow-x-auto rounded-lg border">
+    <div
+      className="overflow-x-auto rounded-lg border"
+      role="region"
+      aria-label="Risultati del confronto"
+      aria-live="polite"
+    >
       <Table>
         <TableHeader>
           <TableRow>

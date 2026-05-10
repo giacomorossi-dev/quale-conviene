@@ -1,4 +1,5 @@
-import { Trash2 } from "lucide-react";
+import { ChevronDown, Trash2 } from "lucide-react";
+import { useState } from "react";
 import { Button } from "#/components/ui/button.tsx";
 import { Input } from "#/components/ui/input.tsx";
 import { Label } from "#/components/ui/label.tsx";
@@ -9,12 +10,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "#/components/ui/select.tsx";
+import { cn } from "#/lib/utils.ts";
 import {
   getCategoryBaseLabelPlural,
   getCategoryUnits,
   type CategoryDefinition,
   type ProductEntry,
 } from "#/lib/pricing.ts";
+
+const eur = new Intl.NumberFormat("it-IT", {
+  style: "currency",
+  currency: "EUR",
+});
+
+function summarise(entry: ProductEntry, fallback: string): string {
+  const parts: string[] = [];
+  if (Number.isFinite(entry.price) && entry.price > 0) {
+    parts.push(eur.format(entry.price));
+  }
+  if (Number.isFinite(entry.measureValue) && entry.measureValue > 0) {
+    parts.push(`${entry.measureValue}${entry.measureUnitId !== "count" ? entry.measureUnitId : ""}`);
+  }
+  if (parts.length === 0) return fallback;
+  return parts.join(" · ");
+}
 
 interface Props {
   index: number;
@@ -54,15 +73,42 @@ export default function EntryForm({
     onChange({ ...entry, counts: { ...entry.counts, [levelId]: value } });
   };
 
+  // Default to expanded for empty rows, collapsed on mobile for rows that already
+  // have a price (so the user sees the comparison list, not 20cm of forms).
+  const hasData = Number.isFinite(entry.price) && entry.price > 0;
+  const [collapsed, setCollapsed] = useState(hasData);
+  const bodyId = `entry-${index}-body`;
+  const displayName = entry.name?.trim() || `Prodotto ${index + 1}`;
+
   return (
     <div className="space-y-3 rounded-lg border bg-card p-4">
       <div className="flex items-center justify-between gap-2">
+        <button
+          type="button"
+          onClick={() => setCollapsed((c) => !c)}
+          className="flex items-center gap-2 text-left sm:hidden flex-1 min-w-0 rounded outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          aria-expanded={!collapsed}
+          aria-controls={bodyId}
+        >
+          <ChevronDown
+            className={cn(
+              "h-4 w-4 shrink-0 transition-transform",
+              collapsed && "-rotate-90",
+            )}
+          />
+          <span className="flex flex-col min-w-0">
+            <span className="font-medium truncate">{displayName}</span>
+            <span className="text-xs text-muted-foreground truncate">
+              {summarise(entry, "Da compilare")}
+            </span>
+          </span>
+        </button>
         <Input
           aria-label="Nome prodotto"
           placeholder={`Prodotto ${index + 1}`}
           value={entry.name ?? ""}
           onChange={(e) => onChange({ ...entry, name: e.currentTarget.value })}
-          className="max-w-xs"
+          className="max-w-xs hidden sm:flex"
         />
         {onRemove && (
           <Button
@@ -77,7 +123,21 @@ export default function EntryForm({
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div
+        id={bodyId}
+        className={cn(
+          "space-y-3 sm:block",
+          collapsed ? "hidden" : "block",
+        )}
+      >
+        <Input
+          aria-label="Nome prodotto"
+          placeholder={`Prodotto ${index + 1}`}
+          value={entry.name ?? ""}
+          onChange={(e) => onChange({ ...entry, name: e.currentTarget.value })}
+          className="sm:hidden"
+        />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {category.levels.map((level) => (
           <div key={level.id} className="space-y-1">
             <Label htmlFor={`entry-${index}-${level.id}`}>
@@ -170,6 +230,7 @@ export default function EntryForm({
               onChange({ ...entry, price: numericValue(e.currentTarget.value) })
             }
           />
+        </div>
         </div>
       </div>
     </div>
