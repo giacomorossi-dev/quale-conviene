@@ -15,7 +15,11 @@ export const Route = createFileRoute("/")({
 function Home() {
   const [query, setQuery] = useState("");
   const filtered = useMemo(
-    () => CATEGORIES.filter((c) => matchesCategory(c, query)),
+    () =>
+      CATEGORIES.map((category) => ({
+        category,
+        match: matchesCategory(category, query),
+      })).filter((r) => r.match.matched),
     [query],
   );
 
@@ -49,8 +53,12 @@ function Home() {
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
-            {filtered.map((c) => (
-              <CategoryCard key={c.slug} category={c} />
+            {filtered.map(({ category, match }) => (
+              <CategoryCard
+                key={category.slug}
+                category={category}
+                matchedKeyword={match.viaKeyword}
+              />
             ))}
           </div>
         )}

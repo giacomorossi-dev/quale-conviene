@@ -43,20 +43,35 @@ export default function CategorySearch({ query, onQueryChange }: Props) {
 const normalize = (s: string): string =>
   s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
 
+export interface CategoryMatch {
+  matched: boolean;
+  /** Set when the match wouldn't have been found via name/description alone. */
+  viaKeyword?: string;
+}
+
 /**
- * Returns true when every space-separated token in `query` appears somewhere
- * in the category's name, description or keywords. Empty query → matches.
+ * Returns whether the query matches the category, plus a hint when the match
+ * came only through a keyword (so the UI can explain "why this card appeared").
+ * Empty query → matches everything with no hint.
  */
 export function matchesCategory(
   category: CategoryDefinition,
   query: string,
-): boolean {
+): CategoryMatch {
   const normalized = normalize(query.trim());
-  if (!normalized) return true;
+  if (!normalized) return { matched: true };
   const tokens = normalized.split(/\s+/).filter(Boolean);
-  if (tokens.length === 0) return true;
-  const haystack = normalize(
-    [category.name, category.description, ...(category.keywords ?? [])].join(" "),
-  );
-  return tokens.every((t) => haystack.includes(t));
+  if (tokens.length === 0) return { matched: true };
+  const primary = normalize([category.name, category.description].join(" "));
+  const matchesPrimary = tokens.every((t) => primary.includes(t));
+  if (matchesPrimary) return { matched: true };
+  const keywords = category.keywords ?? [];
+  const haystack = normalize([primary, ...keywords].join(" "));
+  const matchesWithKeywords = tokens.every((t) => haystack.includes(t));
+  if (!matchesWithKeywords) return { matched: false };
+  const hint = keywords.find((kw) => {
+    const normKw = normalize(kw);
+    return tokens.some((t) => normKw.includes(t));
+  });
+  return { matched: true, viaKeyword: hint };
 }

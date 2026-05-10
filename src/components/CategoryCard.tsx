@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import {
   Card,
@@ -10,9 +10,11 @@ import type { CategoryDefinition } from "#/lib/pricing.ts";
 
 interface Props {
   category: CategoryDefinition;
+  /** Surfaced when a search query matched via this keyword (synonym hint). */
+  matchedKeyword?: string;
 }
 
-export default function CategoryCard({ category }: Props) {
+export default function CategoryCard({ category, matchedKeyword }: Props) {
   return (
     <Link
       to="/$category"
@@ -28,6 +30,12 @@ export default function CategoryCard({ category }: Props) {
           <CardDescription className="line-clamp-3">
             {category.description}
           </CardDescription>
+          {matchedKeyword && (
+            <p className="mt-2 inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 w-fit">
+              <Sparkles className="h-3 w-3" />
+              include <strong className="font-semibold">«{matchedKeyword}»</strong>
+            </p>
+          )}
         </CardHeader>
       </Card>
     </Link>

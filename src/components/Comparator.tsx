@@ -1,7 +1,9 @@
 import { Check, Eraser, Plus, RotateCcw, Share2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "#/components/ui/button.tsx";
+import BulkPaste from "./BulkPaste.tsx";
 import EntryForm from "./EntryForm.tsx";
+import PurchasePlanner from "./PurchasePlanner.tsx";
 import ResultsTable from "./ResultsTable.tsx";
 import {
   buildEmptyEntry,
@@ -98,6 +100,10 @@ export default function Comparator({ category }: Props) {
     setEntries((prev) => [...prev, buildEmptyEntry(category)]);
   };
 
+  const appendEntries = (extra: ProductEntry[]) => {
+    setEntries((prev) => [...prev, ...extra]);
+  };
+
   const reset = () => setEntries(initialEntries(category));
   const clear = () => setEntries([]);
 
@@ -166,6 +172,8 @@ export default function Comparator({ category }: Props) {
             ))}
           </section>
 
+          <BulkPaste category={category} onImport={appendEntries} />
+
           <div className="flex flex-wrap items-center gap-2">
             <Button type="button" variant="outline" onClick={addEntry}>
               <Plus className="h-4 w-4" />
@@ -206,6 +214,8 @@ export default function Comparator({ category }: Props) {
             </h2>
             <ResultsTable category={category} results={results} />
           </section>
+
+          <PurchasePlanner category={category} results={results} />
         </>
       )}
     </div>
