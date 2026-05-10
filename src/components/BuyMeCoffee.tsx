@@ -4,11 +4,10 @@ interface Props {
   username?: string;
 }
 
-/**
- * Lightweight Buy Me a Coffee button (no third-party JS until needed).
- * Replace `username` with your real BMC handle when ready.
- */
-export default function BuyMeCoffee({ username = "your-handle" }: Props) {
+const ENV_HANDLE = import.meta.env.VITE_BMC_HANDLE as string | undefined;
+
+export default function BuyMeCoffee({ username = ENV_HANDLE }: Props) {
+  if (!username) return null;
   return (
     <a
       href={`https://www.buymeacoffee.com/${username}`}

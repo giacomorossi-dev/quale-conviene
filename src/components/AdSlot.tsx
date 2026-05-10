@@ -5,21 +5,23 @@ interface Props {
   label?: string;
 }
 
+const ADS_ENABLED = import.meta.env.VITE_ADS_ENABLED === "true";
+
 /**
- * Visual placeholder for ad units. Real AdSense integration is intentionally
- * deferred until traffic justifies the approval flow.
+ * Renders nothing unless VITE_ADS_ENABLED=true. Keeps a slot reservation in
+ * the layout so the page doesn't reflow once a real ad provider is wired in.
  */
 export default function AdSlot({ className, label = "Spazio pubblicitario" }: Props) {
+  if (!ADS_ENABLED) return null;
   return (
-    <div
-      role="complementary"
+    <aside
       aria-label={label}
       className={cn(
-        "flex min-h-24 items-center justify-center rounded-lg border border-dashed bg-muted/40 text-xs text-muted-foreground",
+        "flex min-h-[90px] items-center justify-center rounded-lg border bg-muted/30 text-xs text-muted-foreground",
         className,
       )}
     >
       {label}
-    </div>
+    </aside>
   );
 }
