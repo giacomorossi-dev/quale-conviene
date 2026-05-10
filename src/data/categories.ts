@@ -4,6 +4,10 @@ import type { CategoryDefinition } from "#/lib/pricing.ts";
  * All categories sorted alphabetically by slug. Each entry follows the
  * pattern in `pricing.ts`: declare a `context` (math) and inject category-
  * specific labels via `levels`, `baseLabel`, etc.
+ *
+ * `keywords` powers the home-page search: include synonyms, related
+ * products and common brand names so users searching for "panna" or
+ * "powerade" land on the right utility.
  */
 export const CATEGORIES: CategoryDefinition[] = [
   {
@@ -14,6 +18,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "I supermercati alternano formati e promozioni continuamente. Inserisci la confezione (anche più bottiglie/lattine in un fardello), la quantità di ciascuna e il prezzo: il sistema normalizza tutto al prezzo per litro.",
     context: "liquid",
+    keywords: ["acqua", "acqua minerale", "acqua naturale", "acqua frizzante", "acqua effervescente", "minerale"],
     levels: [
       { id: "box", label: "fardello", pluralLabel: "fardelli", optional: true, default: 0 },
       { id: "bottle", label: "bottiglia/lattina", pluralLabel: "bottiglie/lattine", default: 6 },
@@ -33,6 +38,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Le bevande sportive arrivano in formati molto diversi (singoli 500 ml, fardelli da 6, formato gym 1 L). Riduci tutto a €/L per scegliere il formato che paga meno per la stessa idratazione.",
     context: "liquid",
+    keywords: ["bevanda sportiva", "isotonica", "powerade", "gatorade", "energade", "sport drink", "elettroliti"],
     levels: [
       { id: "box", label: "fardello", pluralLabel: "fardelli", optional: true, default: 0 },
       { id: "bottle", label: "bottiglia", pluralLabel: "bottiglie", default: 1 },
@@ -52,6 +58,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Bottiglie da 1,5 L, fardelli di lattine da 33 cl, mini-bottiglie da 45 cl: il prezzo in scaffale non si confronta a colpo d'occhio. Inserisci formato e prezzo, il sistema normalizza al litro.",
     context: "liquid",
+    keywords: ["coca cola", "coca-cola", "pepsi", "aranciata", "fanta", "sprite", "chinotto", "ginger", "tè freddo", "the freddo", "tea", "energy drink", "redbull", "red bull", "monster", "estathè", "lipton"],
     levels: [
       { id: "box", label: "fardello", pluralLabel: "fardelli", optional: true, default: 0 },
       { id: "bottle", label: "bottiglia/lattina", pluralLabel: "bottiglie/lattine", default: 1 },
@@ -73,6 +80,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     context: "unit",
     baseLabel: "capsula",
     baseLabelPlural: "capsule",
+    keywords: ["caffè", "caffe", "capsule", "capsule caffè", "cialde", "nespresso", "dolce gusto", "lavazza", "a modo mio", "lavazza espresso point"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "pack", label: "astuccio", pluralLabel: "astucci", default: 1 },
@@ -95,6 +103,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     context: "unit",
     baseLabel: "strappo",
     baseLabelPlural: "strappi",
+    keywords: ["carta igienica", "carta wc", "carta igienic", "rotolone", "rotoli wc", "veline wc", "papercart"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "roll", label: "rotolo", pluralLabel: "rotoli", default: 4 },
@@ -114,6 +123,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Il numero che conta è il prezzo per lavaggio, non al litro: un concentrato da 750 ml che fa 44 lavaggi quasi sempre vince contro uno standard da 1,5 L che ne fa solo 24. Inserisci numero lavaggi dichiarati in confezione e prezzo: il sistema fa i conti.",
     context: "dosage",
+    keywords: ["detersivo", "detersivo lavatrice", "detersivo bucato", "bucato", "lavaggio", "ammorbidente", "dash", "dixan", "perlana", "vernel", "scala", "ace lavatrice", "capsule lavatrice"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "bottle", label: "flacone", pluralLabel: "flaconi", default: 1 },
@@ -134,6 +144,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Concentrati ed extra-concentrati cambiano i conti: un flacone 750 ml a €3,99 può costare meno per lavata di uno standard da 1 L a €3,49. Inserisci volume e prezzo, il sistema riduce tutto a €/L.",
     context: "liquid",
+    keywords: ["detersivo piatti", "lava piatti", "lavapiatti", "fairy", "winni's", "nelsen", "svelto", "ava"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "bottle", label: "flacone", pluralLabel: "flaconi", default: 1 },
@@ -153,6 +164,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Le confezioni di formaggio grattugiato vanno dai 60 g del pacchetto monoporzione ai 500 g della busta risparmio, con grossi sconti sui formati grandi. Inserisci grammatura e prezzo, il sistema normalizza al kg.",
     context: "weight",
+    keywords: ["formaggio", "formaggio grattugiato", "parmigiano", "parmigiano reggiano", "grana", "grana padano", "pecorino", "padano", "reggiano", "grattugiato"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "pack", label: "vaschetta", pluralLabel: "vaschette", default: 1 },
@@ -166,12 +178,13 @@ export const CATEGORIES: CategoryDefinition[] = [
 
   {
     slug: "latte-uht",
-    name: "Latte UHT",
+    name: "Latte UHT e panna",
     description:
-      "Confronta brick, bottiglie e fardelli di latte al prezzo al litro.",
+      "Confronta brick, bottiglie e fardelli di latte (e panna da cucina) al prezzo al litro.",
     intro:
-      "Brick da 500 ml, da 1 L, bottiglie PET da 1,5 L, fardelli 6 × 1 L: il prezzo per brick varia ma €/L è l'unico numero che conta. Inserisci volume e prezzo, il sistema normalizza.",
+      "Brick da 500 ml, da 1 L, bottiglie PET da 1,5 L, fardelli 6 × 1 L: il prezzo per brick varia ma €/L è l'unico numero che conta. Lo stesso strumento serve anche per la panna fresca, da montare o da cucina: stesso volume, formato uguale.",
     context: "liquid",
+    keywords: ["latte", "latte uht", "latte fresco", "latte parzialmente scremato", "latte intero", "latte scremato", "panna", "panna fresca", "panna da cucina", "panna da montare", "panna vegetale", "yogurt liquido", "yogurt da bere", "kefir", "latte di mandorla", "latte di soia", "bevanda vegetale"],
     levels: [
       { id: "box", label: "fardello", pluralLabel: "fardelli", optional: true, default: 0 },
       { id: "bottle", label: "brick/bottiglia", pluralLabel: "brick/bottiglie", default: 1 },
@@ -192,6 +205,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Panetti freschi da 25 g, bustine di lievito secco da 7 g, multipack: il €/kg è l'unico modo per confrontare formati diversi sulla stessa scala. Tieni a mente che 7 g di secco ≈ 25 g di fresco in potere lievitante.",
     context: "weight",
+    keywords: ["lievito", "lievito di birra", "lievito secco", "lievito istantaneo", "lievito pizza", "bertolini", "mastrofornaio", "paneangeli"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "pack", label: "panetto/bustina", pluralLabel: "panetti/bustine", default: 1 },
@@ -214,6 +228,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     context: "unit",
     baseLabel: "merendina",
     baseLabelPlural: "merendine",
+    keywords: ["merendine", "merendina", "biscotti", "biscotti per la colazione", "snack dolci", "kinder", "kinder brioss", "kinder delice", "crostatine", "girelle", "tegolino", "saccottino", "fiesta", "buondì", "mulino bianco", "ferrero", "barrette", "wafer"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "pack", label: "multipack", pluralLabel: "multipack", default: 1 },
@@ -233,6 +248,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Bottiglie da 750 ml, da 1 L, lattine da 3 e 5 L, bag-in-box: i formati grandi spesso scendono sotto i 6 €/L mentre la bottiglia da 750 ml in promozione del supermercato resta sui 7-8 €/L. Inserisci volume e prezzo, il sistema dice quale conviene.",
     context: "liquid",
+    keywords: ["olio", "olio extravergine", "olio evo", "olio oliva", "olio extra vergine", "olio di oliva", "olio di semi", "olio di girasole", "olio di mais", "olio di arachide", "olio di vinaccioli"],
     levels: [
       { id: "box", label: "cartone", pluralLabel: "cartoni", optional: true, default: 0 },
       { id: "bottle", label: "bottiglia/lattina", pluralLabel: "bottiglie/lattine", default: 1 },
@@ -253,6 +269,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Una confezione da 500 g a 1,29 € costa meno di una da 1 kg a 2,49 € o di un cartone da 6 × 500 g a 6,99 €? Il prezzo al chilo lo dice in un attimo. Inserisci confezione, peso e prezzo, il sistema normalizza tutto al kg.",
     context: "weight",
+    keywords: ["pasta", "spaghetti", "penne", "fusilli", "rigatoni", "farfalle", "linguine", "tagliatelle", "lasagne", "riso", "riso basmati", "riso arborio", "riso carnaroli", "farro", "orzo", "farina", "farina 00", "farina integrale", "legumi", "ceci", "fagioli", "lenticchie", "barilla", "de cecco", "garofalo", "voiello"],
     levels: [
       { id: "box", label: "cartone", pluralLabel: "cartoni", optional: true, default: 0 },
       { id: "pack", label: "confezione", pluralLabel: "confezioni", default: 1 },
@@ -274,6 +291,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     context: "unit",
     baseLabel: "sacco",
     baseLabelPlural: "sacchi",
+    keywords: ["sacchi", "sacchi spazzatura", "sacchetti", "sacchetti spazzatura", "rifiuti", "umido", "indifferenziato", "differenziata", "pattumiera", "spazzatura", "biodegradabili", "compostabili"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "roll", label: "rotolo", pluralLabel: "rotoli", default: 1 },
@@ -293,6 +311,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Flacone travel da 250 ml, taglio standard 400 ml, family-size 750 ml, ricariche eco: i prezzi al pezzo sembrano simili ma €/L svela differenze del 30-40%. Inserisci volume e prezzo, il sistema confronta.",
     context: "liquid",
+    keywords: ["shampoo", "balsamo", "conditioner", "bagnoschiuma", "doccia gel", "gel doccia", "doccia schiuma", "schiuma da bagno", "sapone liquido", "sapone mani", "head and shoulders", "pantene", "garnier", "schwarzkopf"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "bottle", label: "flacone", pluralLabel: "flaconi", default: 1 },
@@ -312,6 +331,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Sacchetto monoporzione 30 g a 0,99 €, formato famiglia 150 g a 1,89 €, multipack 6 × 25 g a 1,99 €: solo il €/kg dice quale conviene. Inserisci grammatura e prezzo, il sistema normalizza.",
     context: "weight",
+    keywords: ["snack", "snack salati", "patatine", "patatine fritte", "crackers", "popcorn", "taralli", "grissini", "lays", "pringles", "san carlo", "amica chips", "pai"],
     levels: [
       { id: "box", label: "multipack", pluralLabel: "multipack", optional: true, default: 0 },
       { id: "pack", label: "sacchetto", pluralLabel: "sacchetti", default: 1 },
@@ -331,6 +351,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     intro:
       "Brick monodose da 200 ml, bottiglie PET da 1 L, fardelli da 3, brik famiglia 1,5 L: cambia tutto sul €/L. Inserisci volume e prezzo, il sistema confronta.",
     context: "liquid",
+    keywords: ["succhi", "succo", "succo di frutta", "nettare", "nettari", "centrifuga", "ace", "smoothie", "estathè", "santal", "yoga", "skipper", "zuegg"],
     levels: [
       { id: "box", label: "fardello", pluralLabel: "fardelli", optional: true, default: 0 },
       { id: "bottle", label: "brick/bottiglia", pluralLabel: "brick/bottiglie", default: 1 },
@@ -353,6 +374,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     context: "unit",
     baseLabel: "tab",
     baseLabelPlural: "tab",
+    keywords: ["tabs", "tabs lavastoviglie", "tab", "lavastoviglie", "pastiglie", "cialde lavastoviglie", "finish", "fairy lavastoviglie", "all in one", "all-in-one", "calgonit"],
     levels: [
       { id: "box", label: "confezione", pluralLabel: "confezioni", optional: true, default: 0 },
       { id: "pack", label: "scatola", pluralLabel: "scatole", default: 1 },
@@ -374,6 +396,7 @@ export const CATEGORIES: CategoryDefinition[] = [
     context: "unit",
     baseLabel: "vasetto",
     baseLabelPlural: "vasetti",
+    keywords: ["yogurt", "yogurt greco", "yogurt magro", "yogurt bianco", "yogurt alla frutta", "vasetto yogurt", "danone", "muller", "müller", "activia", "kyr", "fage"],
     levels: [
       { id: "box", label: "confezione esterna", pluralLabel: "confezioni esterne", optional: true, default: 0 },
       { id: "pack", label: "confezione", pluralLabel: "confezioni", default: 1 },

@@ -106,6 +106,12 @@ export interface CategoryDefinition {
   baseLabelPlural?: string;
   /** Hierarchy of wrapper levels; the last one wraps the base unit. */
   levels: UnitLevel[];
+  /**
+   * Synonyms and related products for the search box on the home.
+   * Include brand names, alternative formats, related items the user might
+   * search for (e.g. "panna" should surface `latte-uht`).
+   */
+  keywords?: string[];
   /** Sample entries pre-loaded in the comparator on first render. */
   sampleEntries?: ProductEntry[];
 }
