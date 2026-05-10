@@ -1,11 +1,17 @@
 import {
   createFileRoute,
   getRouteApi,
+  Link,
   notFound,
 } from "@tanstack/react-router";
+import { ChevronRight } from "lucide-react";
 import Comparator from "#/components/Comparator.tsx";
 import AdSlot from "#/components/AdSlot.tsx";
-import { getCategoryBySlug } from "#/data/categories.ts";
+import CategoryCard from "#/components/CategoryCard.tsx";
+import {
+  getCategoryBySlug,
+  getRelatedCategories,
+} from "#/data/categories.ts";
 import { buildCategoryJsonLd, buildCategoryMeta } from "#/lib/seo.ts";
 
 export const Route = createFileRoute("/$category")({
@@ -31,9 +37,21 @@ const route = getRouteApi("/$category");
 
 function CategoryPage() {
   const category = route.useLoaderData();
+  const related = getRelatedCategories(category);
 
   return (
-    <div className="container mx-auto max-w-5xl px-4 py-10 space-y-8">
+    <div className="container mx-auto max-w-5xl px-4 py-10 space-y-10">
+      <nav
+        aria-label="breadcrumb"
+        className="flex items-center gap-1 text-sm text-muted-foreground"
+      >
+        <Link to="/" className="hover:underline hover:text-foreground">
+          Home
+        </Link>
+        <ChevronRight className="h-3 w-3" />
+        <span className="text-foreground">{category.name}</span>
+      </nav>
+
       <article className="space-y-3">
         <h1 className="text-3xl font-bold tracking-tight">{category.name}</h1>
         <p className="text-lg text-muted-foreground">{category.description}</p>
@@ -43,6 +61,31 @@ function CategoryPage() {
       </article>
 
       <Comparator category={category} />
+
+      {category.faq && category.faq.length > 0 && (
+        <section className="space-y-4">
+          <h2 className="text-2xl font-semibold">Domande frequenti</h2>
+          <dl className="space-y-4">
+            {category.faq.map((qa, i) => (
+              <div key={i} className="rounded-lg border bg-card p-4">
+                <dt className="font-semibold mb-2">{qa.q}</dt>
+                <dd className="text-muted-foreground leading-relaxed">{qa.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
+
+      {related.length > 0 && (
+        <section className="space-y-4">
+          <h2 className="text-2xl font-semibold">Categorie correlate</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {related.map((c) => (
+              <CategoryCard key={c.slug} category={c} />
+            ))}
+          </div>
+        </section>
+      )}
 
       <AdSlot className="mt-12" />
     </div>

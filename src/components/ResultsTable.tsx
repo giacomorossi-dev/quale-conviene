@@ -10,6 +10,7 @@ import {
 import { cn } from "#/lib/utils.ts";
 import {
   getCategoryBaseLabel,
+  getCategoryBaseLabelPlural,
   type CategoryDefinition,
   type ComputedEntry,
 } from "#/lib/pricing.ts";
@@ -36,6 +37,29 @@ const pct = new Intl.NumberFormat("it-IT", {
   signDisplay: "exceptZero",
 });
 
+const pctMagnitude = new Intl.NumberFormat("it-IT", {
+  maximumFractionDigits: 1,
+});
+
+/**
+ * For very small €/base values (< 0.01 €), switch to a "€/100 X" display so
+ * the number is comfortably readable (e.g. 0,366 € / 100 fogli rather than
+ * 0,00366 € / foglio).
+ */
+function chooseBaseDisplay(
+  category: CategoryDefinition,
+  results: ComputedEntry[],
+): { label: string; multiplier: number } {
+  const validBest = results.find((r) => !r.invalid)?.pricePerBase;
+  if (validBest && validBest > 0 && validBest < 0.01) {
+    return {
+      label: `100 ${getCategoryBaseLabelPlural(category)}`,
+      multiplier: 100,
+    };
+  }
+  return { label: getCategoryBaseLabel(category), multiplier: 1 };
+}
+
 export default function ResultsTable({ category, results }: Props) {
   if (results.length === 0) {
     return (
@@ -52,6 +76,13 @@ export default function ResultsTable({ category, results }: Props) {
     results.some((r) => r.pricePerLevel[level.id] !== undefined),
   );
 
+  const baseDisplay = chooseBaseDisplay(category, results);
+
+  // Largest gap → "Risparmi fino al X%" badge on the winner.
+  const maxDiff = results
+    .filter((r) => !r.invalid && Number.isFinite(r.diffPctFromBest))
+    .reduce((m, r) => Math.max(m, r.diffPctFromBest), 0);
+
   return (
     <div className="overflow-x-auto rounded-lg border">
       <Table>
@@ -66,7 +97,7 @@ export default function ResultsTable({ category, results }: Props) {
               </TableHead>
             ))}
             <TableHead className="text-right font-semibold">
-              €/{getCategoryBaseLabel(category)}
+              €/{baseDisplay.label}
             </TableHead>
             <TableHead className="text-right">vs migliore</TableHead>
           </TableRow>
@@ -91,7 +122,14 @@ export default function ResultsTable({ category, results }: Props) {
                 )}
               </TableCell>
               <TableCell className="font-medium">
-                {r.entry.name?.trim() || `Prodotto ${i + 1}`}
+                <div className="flex flex-col gap-0.5">
+                  <span>{r.entry.name?.trim() || `Prodotto ${i + 1}`}</span>
+                  {!r.invalid && r.rank === 1 && maxDiff > 0 && (
+                    <span className="text-xs font-normal text-emerald-700 dark:text-emerald-400">
+                      Risparmi fino al {pctMagnitude.format(maxDiff)}%
+                    </span>
+                  )}
+                </div>
               </TableCell>
               <TableCell className="text-right">
                 {r.invalid ? "—" : eur.format(r.entry.price)}
@@ -104,7 +142,9 @@ export default function ResultsTable({ category, results }: Props) {
                 </TableCell>
               ))}
               <TableCell className="text-right font-semibold tabular-nums">
-                {r.invalid ? "—" : eurPrecise.format(r.pricePerBase)}
+                {r.invalid
+                  ? "—"
+                  : eurPrecise.format(r.pricePerBase * baseDisplay.multiplier)}
               </TableCell>
               <TableCell className="text-right tabular-nums text-sm text-muted-foreground">
                 {r.invalid
