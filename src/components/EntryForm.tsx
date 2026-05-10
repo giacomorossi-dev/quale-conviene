@@ -42,7 +42,13 @@ export default function EntryForm({
   const measureFieldLabel =
     category.context === "unit"
       ? `${getCategoryBaseLabelPlural(category)} per ${lastLevel.label}`
-      : `Quantità per ${lastLevel.label}`;
+      : category.context === "dosage"
+        ? `Volume per ${lastLevel.label}`
+        : `Quantità per ${lastLevel.label}`;
+  const doseFieldLabel =
+    category.context === "dosage"
+      ? `${getCategoryBaseLabelPlural(category)} per ${lastLevel.label}`
+      : null;
 
   const updateCount = (levelId: string, value: number) => {
     onChange({ ...entry, counts: { ...entry.counts, [levelId]: value } });
@@ -130,6 +136,26 @@ export default function EntryForm({
             ) : null}
           </div>
         </div>
+
+        {doseFieldLabel && (
+          <div className="space-y-1">
+            <Label htmlFor={`entry-${index}-doses`}>{doseFieldLabel}</Label>
+            <Input
+              id={`entry-${index}-doses`}
+              type="number"
+              inputMode="numeric"
+              min={0}
+              step={1}
+              value={Number.isFinite(entry.doseCount) ? entry.doseCount : ""}
+              onChange={(e) =>
+                onChange({
+                  ...entry,
+                  doseCount: numericValue(e.currentTarget.value),
+                })
+              }
+            />
+          </div>
+        )}
 
         <div className="space-y-1">
           <Label htmlFor={`entry-${index}-price`}>Prezzo (€)</Label>

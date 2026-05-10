@@ -11,7 +11,7 @@
 // Comparison contexts (math): liquid / weight / unit
 // =====================================================================
 
-export type ContextId = "liquid" | "weight" | "unit";
+export type ContextId = "liquid" | "weight" | "unit" | "dosage";
 
 export interface MeasureUnit {
   id: string;
@@ -56,6 +56,19 @@ export const CONTEXTS: Record<ContextId, ComparisonContext> = {
     defaultBaseLabel: "pezzo",
     defaultBaseLabelPlural: "pezzi",
     inputUnits: [{ id: "count", label: "", toBase: 1 }],
+  },
+  // Dosage = liquid product whose actionable metric is per-dose, not per-litre
+  // (e.g. "44 washes per bottle"). The user types both the bottle volume (info
+  // only) and the dose count; the math ranks on €/dose.
+  dosage: {
+    id: "dosage",
+    defaultBaseLabel: "lavaggio",
+    defaultBaseLabelPlural: "lavaggi",
+    inputUnits: [
+      { id: "L", label: "L", toBase: 1 },
+      { id: "cl", label: "cl", toBase: 0.01 },
+      { id: "ml", label: "ml", toBase: 0.001 },
+    ],
   },
 };
 
@@ -120,6 +133,8 @@ export interface ProductEntry {
   /** Quantity expressed in the chosen `MeasureUnit`. */
   measureValue: number;
   measureUnitId: string;
+  /** Dose count per innermost level (e.g. washes per bottle). `dosage` only. */
+  doseCount?: number;
 }
 
 export interface ComputedEntry {
@@ -161,16 +176,29 @@ export function computeEntry(
   category: CategoryDefinition,
   entry: ProductEntry,
 ): Omit<ComputedEntry, "rank" | "diffPctFromBest"> {
-  const measureUnit = resolveMeasureUnit(category, entry.measureUnitId);
   const counts = category.levels.map((l) => resolveCount(l, entry.counts));
   const totalItems = counts.reduce((acc, c) => acc * c, 1);
-  const totalBase = totalItems * entry.measureValue * measureUnit.toBase;
 
-  const invalid =
-    entry.price <= 0 ||
-    entry.measureValue <= 0 ||
-    totalBase <= 0 ||
-    counts.some((c) => c <= 0);
+  let totalBase: number;
+  let invalid: boolean;
+
+  if (category.context === "dosage") {
+    const doseCount = entry.doseCount ?? 0;
+    totalBase = totalItems * doseCount;
+    invalid =
+      entry.price <= 0 ||
+      doseCount <= 0 ||
+      totalBase <= 0 ||
+      counts.some((c) => c <= 0);
+  } else {
+    const measureUnit = resolveMeasureUnit(category, entry.measureUnitId);
+    totalBase = totalItems * entry.measureValue * measureUnit.toBase;
+    invalid =
+      entry.price <= 0 ||
+      entry.measureValue <= 0 ||
+      totalBase <= 0 ||
+      counts.some((c) => c <= 0);
+  }
 
   const pricePerLevel: Record<string, number> = {};
   if (!invalid) {
@@ -228,10 +256,12 @@ export function buildEmptyEntry(category: CategoryDefinition): ProductEntry {
   for (const level of category.levels) {
     counts[level.id] = level.default ?? 1;
   }
-  return {
+  const entry: ProductEntry = {
     price: 0,
     counts,
     measureValue: 0,
     measureUnitId: getCategoryUnits(category)[0].id,
   };
+  if (category.context === "dosage") entry.doseCount = 0;
+  return entry;
 }
