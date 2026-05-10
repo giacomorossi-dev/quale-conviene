@@ -1,10 +1,27 @@
 import type { CategoryDefinition } from "./pricing";
 
 const SITE_NAME = "Quale Conviene";
-const SITE_URL = "https://quale-conviene.example"; // TODO: replace at deploy time
+
+/**
+ * Public canonical URL of the deployment. Set `VITE_SITE_URL` at build time
+ * (e.g. in Cloudflare Pages env vars). Falls back to a placeholder for
+ * local dev so meta tags are still well-formed.
+ */
+const SITE_URL =
+  (import.meta.env.VITE_SITE_URL as string | undefined) ??
+  "https://quale-conviene.example";
+
+/**
+ * Cloudflare Web Analytics token (privacy-first, no cookie banner).
+ * Set `VITE_CLOUDFLARE_ANALYTICS_TOKEN` to enable. Falls back to undefined
+ * which makes the analytics tag a no-op.
+ */
+const CLOUDFLARE_ANALYTICS_TOKEN = import.meta.env
+  .VITE_CLOUDFLARE_ANALYTICS_TOKEN as string | undefined;
 
 export function buildCategoryMeta(category: CategoryDefinition) {
-  const title = `${category.name} — quale conviene? · ${SITE_NAME}`;
+  // SEO-tuned title: long-tail + question framing performs better in SERP.
+  const title = `${category.name} al miglior prezzo · €/${category.baseLabel ?? "unità"} · ${SITE_NAME}`;
   const description = category.description;
   const url = `${SITE_URL}/${category.slug}`;
   return [
@@ -23,22 +40,55 @@ export function buildCategoryMeta(category: CategoryDefinition) {
   ];
 }
 
+/**
+ * Article schema for the category page (richer than plain WebApplication for
+ * SERP) plus a BreadcrumbList for the site hierarchy. Returns an array so the
+ * route can serialize each as a separate `<script type="application/ld+json">`.
+ */
 export function buildCategoryJsonLd(category: CategoryDefinition) {
-  return {
+  const url = `${SITE_URL}/${category.slug}`;
+  const article = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
-    name: `${category.name} — Comparatore prezzi`,
+    "@type": "Article",
+    headline: `${category.name} — quale conviene? Calcolatore €/unità`,
     description: category.description,
-    url: `${SITE_URL}/${category.slug}`,
-    applicationCategory: "ShoppingApplication",
-    operatingSystem: "Any",
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "EUR",
-    },
+    url,
     inLanguage: "it",
+    author: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+    mainEntityOfPage: url,
   };
+  const breadcrumb = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: category.name,
+        item: url,
+      },
+    ],
+  };
+  const items: object[] = [article, breadcrumb];
+  if (category.faq && category.faq.length > 0) {
+    items.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: category.faq.map((qa) => ({
+        "@type": "Question",
+        name: qa.q,
+        acceptedAnswer: { "@type": "Answer", text: qa.a },
+      })),
+    });
+  }
+  return items;
 }
 
 export function buildHomeMeta() {
@@ -54,7 +104,8 @@ export function buildHomeMeta() {
     { property: "og:url", content: SITE_URL },
     { property: "og:site_name", content: SITE_NAME },
     { property: "og:locale", content: "it_IT" },
+    { rel: "canonical", href: SITE_URL },
   ];
 }
 
-export { SITE_NAME, SITE_URL };
+export { SITE_NAME, SITE_URL, CLOUDFLARE_ANALYTICS_TOKEN };

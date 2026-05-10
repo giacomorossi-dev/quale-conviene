@@ -10,7 +10,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
 import BuyMeCoffee from "#/components/BuyMeCoffee.tsx";
-import { SITE_NAME } from "#/lib/seo.ts";
+import { CLOUDFLARE_ANALYTICS_TOKEN, SITE_NAME } from "#/lib/seo.ts";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -27,6 +27,8 @@ export const Route = createRootRoute({
     ],
     links: [{ rel: "stylesheet", href: appCss }],
   }),
+  notFoundComponent: NotFound,
+  errorComponent: ErrorBoundary,
   shellComponent: RootDocument,
 });
 
@@ -62,6 +64,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           </div>
         </footer>
 
+        {/* Cloudflare Web Analytics: privacy-first, no cookie banner. */}
+        {CLOUDFLARE_ANALYTICS_TOKEN && (
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: official CF beacon snippet
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: CLOUDFLARE_ANALYTICS_TOKEN })}
+          />
+        )}
+
         {import.meta.env.DEV && (
           <TanStackDevtools
             config={{ position: "bottom-right" }}
@@ -79,6 +91,45 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Outlet is rendered inside `children` from shellComponent. Re-export not needed
-// since `RootDocument` already gets `children` (the Outlet) from TanStack Router.
+function NotFound() {
+  return (
+    <div className="container mx-auto max-w-3xl px-4 py-20 text-center space-y-4">
+      <h1 className="text-4xl font-bold tracking-tight">Pagina non trovata</h1>
+      <p className="text-muted-foreground">
+        La categoria che stai cercando non esiste o è stata spostata.
+      </p>
+      <Link
+        to="/"
+        className="inline-block rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background hover:opacity-90"
+      >
+        Torna alla home
+      </Link>
+    </div>
+  );
+}
+
+function ErrorBoundary({ error }: { error: Error }) {
+  return (
+    <div className="container mx-auto max-w-3xl px-4 py-20 text-center space-y-4">
+      <h1 className="text-4xl font-bold tracking-tight">Qualcosa è andato storto</h1>
+      <p className="text-muted-foreground">
+        Si è verificato un errore caricando questa pagina. Prova a ricaricare,
+        oppure torna alla home.
+      </p>
+      {import.meta.env.DEV && (
+        <pre className="text-left text-xs bg-muted p-4 rounded-md overflow-auto">
+          {error.message}
+          {error.stack && `\n\n${error.stack}`}
+        </pre>
+      )}
+      <Link
+        to="/"
+        className="inline-block rounded-md bg-foreground px-4 py-2 text-sm font-medium text-background hover:opacity-90"
+      >
+        Torna alla home
+      </Link>
+    </div>
+  );
+}
+
 void Outlet;

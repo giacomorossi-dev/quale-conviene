@@ -18,12 +18,10 @@ export const Route = createFileRoute("/$category")({
     if (!loaderData) return {};
     return {
       meta: buildCategoryMeta(loaderData),
-      scripts: [
-        {
-          type: "application/ld+json",
-          children: JSON.stringify(buildCategoryJsonLd(loaderData)),
-        },
-      ],
+      scripts: buildCategoryJsonLd(loaderData).map((item) => ({
+        type: "application/ld+json",
+        children: JSON.stringify(item),
+      })),
     };
   },
   component: CategoryPage,

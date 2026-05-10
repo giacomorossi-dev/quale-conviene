@@ -112,6 +112,10 @@ export interface CategoryDefinition {
    * search for (e.g. "panna" should surface `latte-uht`).
    */
   keywords?: string[];
+  /** 3-5 Q&A surfaced as FAQPage schema and rendered at the bottom of the page. */
+  faq?: Array<{ q: string; a: string }>;
+  /** Slugs of related categories used for internal linking + SEO. */
+  related?: string[];
   /** Sample entries pre-loaded in the comparator on first render. */
   sampleEntries?: ProductEntry[];
 }
