@@ -7,6 +7,8 @@ import {
 	Scripts,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import { MessageSquare } from "lucide-react";
+import { Button } from "#/components/app/button.tsx";
 import BuyMeCoffee from "#/components/BuyMeCoffee.tsx";
 import Logo from "#/components/Logo.tsx";
 import ServiceWorkerRegister from "#/components/ServiceWorkerRegister.tsx";
@@ -61,7 +63,15 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<header className="topbar-surface fixed inset-x-0 top-0 z-50">
 					<div className="container mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
 						<Logo />
-						<ThemeToggle />
+						<div className="flex items-center gap-2">
+							<Button asChild variant="gradient" size="sm">
+								<Link to="/contatti">
+									<MessageSquare className="h-4 w-4" />
+									<span className="hidden sm:inline">Feedback</span>
+								</Link>
+							</Button>
+							<ThemeToggle />
+						</div>
 					</div>
 				</header>
 

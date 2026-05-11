@@ -4,7 +4,7 @@ import {
   Link,
   notFound,
 } from "@tanstack/react-router";
-import { ChevronRight, HelpCircle, Sparkles } from "lucide-react";
+import { BookOpen, ChevronRight, HelpCircle, Sparkles } from "lucide-react";
 import AdSlot from "#/components/AdSlot.tsx";
 import CategoryCard from "#/components/CategoryCard.tsx";
 import CategoryPager from "#/components/CategoryPager.tsx";
@@ -72,6 +72,43 @@ function CategoryPage() {
       </article>
 
       <Comparator category={category} />
+
+      {(category.longDescription ||
+        (category.sections && category.sections.length > 0)) && (
+        <section>
+          <h2 className="flex items-center gap-3 text-xl font-semibold">
+            <SectionIcon>
+              <BookOpen />
+            </SectionIcon>
+            {category.guideTitle ?? "Guida ai prezzi"}
+          </h2>
+          <div
+            aria-hidden="true"
+            className="brand-gradient-bg mt-2 mb-4 h-[2px] w-full"
+          />
+          {category.longDescription && (
+            <div className="space-y-4 text-muted-foreground leading-relaxed">
+              {category.longDescription
+                .split(/\n\s*\n/)
+                .map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+            </div>
+          )}
+          {category.sections?.map((s, i) => (
+            <div key={i} className="mt-6 space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                {s.heading}
+              </h3>
+              <div className="space-y-3 text-muted-foreground leading-relaxed">
+                {s.body.split(/\n\s*\n/).map((p, j) => (
+                  <p key={j}>{p}</p>
+                ))}
+              </div>
+            </div>
+          ))}
+        </section>
+      )}
 
       {category.faq && category.faq.length > 0 && (
         <section>

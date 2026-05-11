@@ -98,6 +98,14 @@ export interface CategoryDefinition {
   description: string;
   /** Optional longer copy rendered above the comparator. */
   intro?: string;
+  /** SEO long-tail copy rendered below the comparator. Plain text;
+   *  empty lines split paragraphs. */
+  longDescription?: string;
+  /** Section title shown above `sections`. Defaults to "Guida ai prezzi". */
+  guideTitle?: string;
+  /** H3 subsections under the long-form guide. Each `body` supports
+   *  paragraph splits via empty lines. */
+  sections?: Array<{ heading: string; body: string }>;
   /** Comparison context (math axis). */
   context: ContextId;
   /** Override the context default (always meaningful for `unit`). */
