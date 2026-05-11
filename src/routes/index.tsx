@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { LayoutGrid } from "lucide-react";
 import { useMemo, useState } from "react";
 import CategoryCard from "#/components/CategoryCard.tsx";
 import CategorySearch, {
@@ -6,6 +7,7 @@ import CategorySearch, {
 } from "#/components/CategorySearch.tsx";
 import HeroBanner from "#/components/HeroBanner.tsx";
 import RecentComparisons from "#/components/RecentComparisons.tsx";
+import SectionIcon from "#/components/SectionIcon.tsx";
 import { CATEGORIES } from "#/data/categories.ts";
 import { buildCanonicalLinks, buildHomeMeta } from "#/lib/seo.ts";
 
@@ -35,8 +37,13 @@ function Home() {
       <RecentComparisons />
 
       <section className="space-y-4">
-        <div className="flex flex-wrap items-baseline gap-3">
-          <h2 className="text-2xl font-semibold">Categorie disponibili</h2>
+        <div className="flex flex-wrap items-center gap-3">
+          <h2 className="flex items-center gap-3 text-xl font-semibold">
+            <SectionIcon>
+              <LayoutGrid />
+            </SectionIcon>
+            Categorie disponibili
+          </h2>
           <span className="text-sm text-muted-foreground ml-auto">
             {filtered.length === CATEGORIES.length
               ? `${CATEGORIES.length} totali`

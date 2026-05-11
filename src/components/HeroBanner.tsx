@@ -1,11 +1,67 @@
+import { useEffect, useState } from "react";
 import { CATEGORIES } from "#/data/categories.ts";
 import { SITE_NAME } from "#/lib/seo.ts";
 
-const STATS = [
-	{ value: String(CATEGORIES.length), label: "categorie" },
-	{ value: "4", label: "contesti di calcolo" },
-	{ value: "100%", label: "gratis · senza login" },
+const STATS: { to: number; suffix?: string; label: string }[] = [
+	{ to: CATEGORIES.length, label: "categorie" },
+	{ to: 4, label: "contesti di calcolo" },
+	{ to: 100, suffix: "%", label: "gratis · senza login" },
 ];
+
+const COUNT_UP_DURATION = 1400;
+
+// Ease-out cubic — fast start, gentle finish, looks more "natural" than linear.
+const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
+
+function useCountUp(target: number, duration: number) {
+	// SSR / first render: emit the final value so the SEO/no-JS snapshot is correct.
+	// Right after hydration the effect resets to 0 and animates up.
+	const [value, setValue] = useState(target);
+
+	useEffect(() => {
+		if (
+			typeof window !== "undefined" &&
+			window.matchMedia("(prefers-reduced-motion: reduce)").matches
+		) {
+			setValue(target);
+			return;
+		}
+
+		setValue(0);
+		let raf = 0;
+		const start = performance.now();
+		const tick = (now: number) => {
+			const t = Math.min(1, (now - start) / duration);
+			setValue(Math.round(target * easeOutCubic(t)));
+			if (t < 1) raf = requestAnimationFrame(tick);
+		};
+		raf = requestAnimationFrame(tick);
+		return () => cancelAnimationFrame(raf);
+	}, [target, duration]);
+
+	return value;
+}
+
+function Stat({
+	to,
+	suffix,
+	label,
+}: {
+	to: number;
+	suffix?: string;
+	label: string;
+}) {
+	const n = useCountUp(to, COUNT_UP_DURATION);
+	return (
+		<li className="flex items-baseline gap-1.5">
+			<span className="text-lg font-bold tabular-nums">
+				{n}
+				{suffix}
+			</span>
+			<span className="text-white/85">{label}</span>
+		</li>
+	);
+}
 
 export default function HeroBanner() {
 	return (
@@ -62,10 +118,12 @@ export default function HeroBanner() {
 
 				<ul className="mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-2 pt-2 text-sm">
 					{STATS.map((s) => (
-						<li key={s.label} className="flex items-baseline gap-1.5">
-							<span className="text-lg font-bold tabular-nums">{s.value}</span>
-							<span className="text-white/85">{s.label}</span>
-						</li>
+						<Stat
+							key={s.label}
+							to={s.to}
+							suffix={s.suffix}
+							label={s.label}
+						/>
 					))}
 				</ul>
 			</div>

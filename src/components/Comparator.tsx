@@ -1,6 +1,15 @@
-import { Check, Eraser, Plus, Printer, RotateCcw, Share2 } from "lucide-react";
+import {
+  Check,
+  Eraser,
+  Plus,
+  Printer,
+  RotateCcw,
+  Share2,
+  Trophy,
+} from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "#/components/app/button.tsx";
+import SectionIcon from "#/components/SectionIcon.tsx";
 import BulkPaste from "./BulkPaste.tsx";
 import EntryForm from "./EntryForm.tsx";
 import PurchasePlanner from "./PurchasePlanner.tsx";
@@ -256,7 +265,13 @@ export default function Comparator({ category }: Props) {
           </div>
 
           <section aria-labelledby="results-heading">
-            <h2 id="results-heading" className="text-xl font-semibold">
+            <h2
+              id="results-heading"
+              className="flex items-center gap-3 text-xl font-semibold"
+            >
+              <SectionIcon>
+                <Trophy />
+              </SectionIcon>
               Risultati
             </h2>
             <div

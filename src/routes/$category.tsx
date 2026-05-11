@@ -4,11 +4,12 @@ import {
   Link,
   notFound,
 } from "@tanstack/react-router";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, HelpCircle, Sparkles } from "lucide-react";
 import AdSlot from "#/components/AdSlot.tsx";
 import CategoryCard from "#/components/CategoryCard.tsx";
 import CategoryPager from "#/components/CategoryPager.tsx";
 import Comparator from "#/components/Comparator.tsx";
+import SectionIcon from "#/components/SectionIcon.tsx";
 import {
   getAdjacentCategories,
   getCategoryBySlug,
@@ -74,7 +75,12 @@ function CategoryPage() {
 
       {category.faq && category.faq.length > 0 && (
         <section>
-          <h2 className="text-2xl font-semibold">Domande frequenti</h2>
+          <h2 className="flex items-center gap-3 text-xl font-semibold">
+            <SectionIcon>
+              <HelpCircle />
+            </SectionIcon>
+            Domande frequenti
+          </h2>
           <div
             aria-hidden="true"
             className="brand-gradient-bg mt-2 mb-4 h-[2px] w-full"
@@ -92,7 +98,12 @@ function CategoryPage() {
 
       {related.length > 0 && (
         <section>
-          <h2 className="text-2xl font-semibold">Categorie correlate</h2>
+          <h2 className="flex items-center gap-3 text-xl font-semibold">
+            <SectionIcon>
+              <Sparkles />
+            </SectionIcon>
+            Categorie correlate
+          </h2>
           <div
             aria-hidden="true"
             className="brand-gradient-bg mt-2 mb-4 h-[2px] w-full"

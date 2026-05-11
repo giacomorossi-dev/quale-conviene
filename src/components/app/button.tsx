@@ -10,7 +10,7 @@ const appButtonVariants = cva(
 		variants: {
 			variant: {
 				gradient:
-					"brand-gradient-bg text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.45)] hover:shadow-[0_12px_32px_-10px_rgba(168,85,247,0.55)] hover:-translate-y-px active:translate-y-0",
+					"brand-gradient-bg text-white shadow-[0_8px_24px_-8px_rgba(99,102,241,0.45)] transition-[box-shadow,filter] hover:shadow-[0_12px_32px_-10px_rgba(168,85,247,0.55)] hover:brightness-110 active:brightness-95",
 				default:
 					"bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm",
 				outline:

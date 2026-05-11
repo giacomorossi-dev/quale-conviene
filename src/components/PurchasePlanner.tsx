@@ -1,4 +1,5 @@
 import { Calculator, RotateCcw } from "lucide-react";
+import SectionIcon from "#/components/SectionIcon.tsx";
 import { useState } from "react";
 import { Button } from "#/components/app/button.tsx";
 import { Input } from "#/components/app/input.tsx";
@@ -44,24 +45,21 @@ function PlannerCard({
 
   return (
     <section className="space-y-3 rounded-lg border bg-card p-4">
-      <div className="flex items-start gap-2">
-        <Calculator className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
-        <h3 className="flex flex-wrap items-center gap-2 font-semibold">
-          <span>{titlePrefix}</span>
-          <Input
-            type="number"
-            inputMode="decimal"
-            min={0}
-            step="any"
-            placeholder="0"
-            value={value}
-            onChange={(e) => setValue(e.currentTarget.value)}
-            aria-label={inputAriaLabel}
-            className="h-8 w-24 px-2 text-sm font-normal"
-          />
-          <span>{titleSuffix}</span>
-        </h3>
-      </div>
+      <h3 className="flex flex-wrap items-center gap-2 font-semibold">
+        <span>{titlePrefix}</span>
+        <Input
+          type="number"
+          inputMode="decimal"
+          min={0}
+          step="any"
+          placeholder="0"
+          value={value}
+          onChange={(e) => setValue(e.currentTarget.value)}
+          aria-label={inputAriaLabel}
+          className="h-8 w-24 px-2 text-sm font-normal"
+        />
+        <span>{titleSuffix}</span>
+      </h3>
 
       {hasInput && (
         <>
@@ -106,7 +104,13 @@ export default function PurchasePlanner({ category, results }: Props) {
 
   return (
     <section aria-labelledby="planner-heading">
-      <h2 id="planner-heading" className="text-xl font-semibold">
+      <h2
+        id="planner-heading"
+        className="flex items-center gap-3 text-xl font-semibold"
+      >
+        <SectionIcon>
+          <Calculator />
+        </SectionIcon>
         Pianifica
       </h2>
       <div
