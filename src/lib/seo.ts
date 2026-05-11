@@ -46,8 +46,17 @@ export function buildCategoryMeta(category: CategoryDefinition) {
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
     ...OG_IMAGE_META,
-    { rel: "canonical", href: url },
   ];
+}
+
+/**
+ * Canonical link tag(s) for a route. Use `path` starting with "/" (e.g. "/terms")
+ * or "/" for the home page. TanStack Router renders these as `<link>` elements
+ * — `rel="canonical"` belongs on a `<link>`, not a `<meta>`.
+ */
+export function buildCanonicalLinks(path: string) {
+  const href = path === "/" ? SITE_URL : `${SITE_URL}${path}`;
+  return [{ rel: "canonical", href }];
 }
 
 /**
@@ -118,7 +127,6 @@ export function buildHomeMeta() {
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
     ...OG_IMAGE_META,
-    { rel: "canonical", href: SITE_URL },
   ];
 }
 

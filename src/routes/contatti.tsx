@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail } from "lucide-react";
-import { SITE_NAME } from "#/lib/seo.ts";
+import { buildCanonicalLinks, SITE_NAME } from "#/lib/seo.ts";
 
 const CONTACT_EMAIL = "giacomorossi.dev@gmail.com";
 
@@ -14,6 +14,7 @@ export const Route = createFileRoute("/contatti")({
 			},
 			{ name: "robots", content: "index, follow" },
 		],
+		links: buildCanonicalLinks("/contatti"),
 	}),
 	component: ContactPage,
 });

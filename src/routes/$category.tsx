@@ -14,7 +14,11 @@ import {
   getCategoryBySlug,
   getRelatedCategories,
 } from "#/data/categories.ts";
-import { buildCategoryJsonLd, buildCategoryMeta } from "#/lib/seo.ts";
+import {
+  buildCanonicalLinks,
+  buildCategoryJsonLd,
+  buildCategoryMeta,
+} from "#/lib/seo.ts";
 
 export const Route = createFileRoute("/$category")({
   loader: ({ params }) => {
@@ -26,6 +30,7 @@ export const Route = createFileRoute("/$category")({
     if (!loaderData) return {};
     return {
       meta: buildCategoryMeta(loaderData),
+      links: buildCanonicalLinks(`/${loaderData.slug}`),
       scripts: buildCategoryJsonLd(loaderData).map((item) => ({
         type: "application/ld+json",
         children: JSON.stringify(item),

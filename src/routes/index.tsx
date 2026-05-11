@@ -7,10 +7,13 @@ import CategorySearch, {
 import HeroBanner from "#/components/HeroBanner.tsx";
 import RecentComparisons from "#/components/RecentComparisons.tsx";
 import { CATEGORIES } from "#/data/categories.ts";
-import { buildHomeMeta } from "#/lib/seo.ts";
+import { buildCanonicalLinks, buildHomeMeta } from "#/lib/seo.ts";
 
 export const Route = createFileRoute("/")({
-  head: () => ({ meta: buildHomeMeta() }),
+  head: () => ({
+    meta: buildHomeMeta(),
+    links: buildCanonicalLinks("/"),
+  }),
   component: Home,
 });
 

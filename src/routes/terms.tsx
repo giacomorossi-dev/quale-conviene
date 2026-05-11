@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SITE_NAME } from "#/lib/seo.ts";
+import { buildCanonicalLinks, SITE_NAME } from "#/lib/seo.ts";
 
 export const Route = createFileRoute("/terms")({
 	head: () => ({
@@ -11,6 +11,7 @@ export const Route = createFileRoute("/terms")({
 			},
 			{ name: "robots", content: "index, follow" },
 		],
+		links: buildCanonicalLinks("/terms"),
 	}),
 	component: TermsPage,
 });
