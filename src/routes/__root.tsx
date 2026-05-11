@@ -88,16 +88,19 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 function SiteFooter() {
 	const year = new Date().getFullYear();
 	return (
-		<footer className="relative mt-20 w-full overflow-hidden border-t border-border/60 bg-background/40 backdrop-blur-sm">
+		<footer className="relative mt-20 w-full overflow-hidden bg-background/40 backdrop-blur-sm">
+			{/* Top gradient separator — bumped from 1px to 3px for a stronger split. */}
 			<div
 				aria-hidden="true"
-				className="pointer-events-none absolute inset-x-0 top-0 h-px brand-gradient-bg opacity-80"
+				className="pointer-events-none absolute inset-x-0 top-0 h-[3px] brand-gradient-bg"
 			/>
+			{/* Bottom glow — pushed well below the footer + dimmed so it never bleeds
+			    into the copyright/text area. */}
 			<div
 				aria-hidden="true"
-				className="pointer-events-none absolute -bottom-32 left-1/2 h-72 w-[min(1100px,90%)] -translate-x-1/2 rounded-full opacity-40 blur-3xl brand-gradient-bg"
+				className="pointer-events-none absolute -bottom-72 left-1/2 h-72 w-[min(1100px,90%)] -translate-x-1/2 rounded-full opacity-30 blur-3xl brand-gradient-bg"
 			/>
-			<div className="container mx-auto max-w-6xl px-4 py-20 sm:py-24">
+			<div className="relative container mx-auto max-w-6xl px-4 py-20 sm:py-24">
 				<div className="grid gap-12 md:grid-cols-3">
 					<div className="space-y-4 md:col-span-2 max-w-xl">
 						<Logo />
@@ -156,7 +159,7 @@ function SiteFooter() {
 					</nav>
 				</div>
 
-				<div className="mt-16 flex flex-col gap-4 border-t border-border/60 pt-8 sm:flex-row sm:items-center sm:justify-between">
+				<div className="mt-16 flex flex-col gap-4 border-t-2 border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
 					<p className="text-xs text-muted-foreground">
 						© {year} {SITE_NAME}. Tutti i marchi citati appartengono ai
 						rispettivi proprietari.
