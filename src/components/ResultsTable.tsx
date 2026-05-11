@@ -85,7 +85,7 @@ export default function ResultsTable({ category, results }: Props) {
 
   return (
     <div
-      className="overflow-x-auto rounded-lg border bg-card shadow-sm"
+      className="overflow-x-auto rounded-lg border bg-card shadow-sm [&_tbody_td]:py-3.5 [&_thead_th]:h-12"
       role="region"
       aria-label="Risultati del confronto"
       aria-live="polite"
@@ -123,9 +123,9 @@ export default function ResultsTable({ category, results }: Props) {
             >
               <TableCell className="hidden font-medium sm:table-cell">
                 {!r.invalid && r.rank === 1 ? (
-                  <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400">
-                    <Crown className="h-4 w-4" />
+                  <span className="inline-flex items-center gap-1.5">
                     {r.rank}
+                    <Crown className="h-5 w-5 fill-yellow-400 text-yellow-500" />
                   </span>
                 ) : (
                   r.rank
@@ -137,7 +137,7 @@ export default function ResultsTable({ category, results }: Props) {
                     {/* On mobile we drop the rank column, so show the crown here instead. */}
                     {!r.invalid && r.rank === 1 && (
                       <Crown
-                        className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400 sm:hidden"
+                        className="h-5 w-5 shrink-0 fill-yellow-400 text-yellow-500 sm:hidden"
                         aria-label="Vincitore"
                       />
                     )}
@@ -152,7 +152,7 @@ export default function ResultsTable({ category, results }: Props) {
                   )}
                   {/* Compact mobile delta replacing the hidden "vs migliore" column. */}
                   {!r.invalid && r.rank !== 1 && Number.isFinite(r.diffPctFromBest) && (
-                    <span className="text-xs font-normal text-muted-foreground sm:hidden">
+                    <span className="text-xs font-normal text-destructive sm:hidden">
                       {pct.format(r.diffPctFromBest)} % vs migliore
                     </span>
                   )}
@@ -176,7 +176,14 @@ export default function ResultsTable({ category, results }: Props) {
                   ? "—"
                   : eurPrecise.format(r.pricePerBase * baseDisplay.multiplier)}
               </TableCell>
-              <TableCell className="hidden text-right tabular-nums text-sm text-muted-foreground sm:table-cell">
+              <TableCell
+                className={cn(
+                  "hidden text-right tabular-nums text-sm sm:table-cell",
+                  !r.invalid && r.rank !== 1
+                    ? "text-destructive"
+                    : "text-muted-foreground",
+                )}
+              >
                 {r.invalid
                   ? "—"
                   : r.rank === 1

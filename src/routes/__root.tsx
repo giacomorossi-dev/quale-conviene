@@ -114,7 +114,7 @@ function SiteFooter() {
 				className="pointer-events-none absolute -bottom-72 left-1/2 h-72 w-[min(1100px,90%)] -translate-x-1/2 rounded-full opacity-30 blur-3xl brand-gradient-bg"
 			/>
 			<div className="relative container mx-auto max-w-6xl px-4 py-20 sm:py-24">
-				<div className="grid gap-12 md:grid-cols-3">
+				<div className="grid gap-12 md:grid-cols-4">
 					<div className="space-y-4 md:col-span-2 max-w-xl">
 						<Logo />
 						<p className="text-sm leading-relaxed text-muted-foreground">
@@ -170,6 +170,46 @@ function SiteFooter() {
 							</li>
 						</ul>
 					</nav>
+
+					<nav aria-label="Pagine informative" className="space-y-4">
+						<h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+							Informazioni
+						</h3>
+						<ul className="space-y-2 text-sm">
+							<li>
+								<Link
+									to="/contatti"
+									className="hover:text-foreground transition-colors text-muted-foreground"
+								>
+									Feedback e contatti
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/terms"
+									className="hover:text-foreground transition-colors text-muted-foreground"
+								>
+									Termini e condizioni
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/privacy"
+									className="hover:text-foreground transition-colors text-muted-foreground"
+								>
+									Privacy policy
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/cookie"
+									className="hover:text-foreground transition-colors text-muted-foreground"
+								>
+									Cookie policy
+								</Link>
+							</li>
+						</ul>
+					</nav>
 				</div>
 
 				<div className="mt-16 flex flex-col gap-4 border-t-2 border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
@@ -178,9 +218,13 @@ function SiteFooter() {
 						rispettivi proprietari.
 					</p>
 					<p className="text-xs text-muted-foreground">
-						Realizzato con{" "}
-						<span className="brand-gradient-text font-semibold">cura</span> in
-						Italia.
+						Realizzato da{" "}
+						<a
+							href="mailto:giacomorossi.dev@gmail.com"
+							className="brand-gradient-text font-semibold underline-offset-4 hover:underline"
+						>
+							giacomorossi.dev
+						</a>
 					</p>
 				</div>
 			</div>

@@ -40,6 +40,10 @@ function Home() {
               : `${filtered.length} di ${CATEGORIES.length}`}
           </span>
         </div>
+        <div
+          aria-hidden="true"
+          className="brand-gradient-bg -mt-2 h-[2px] w-full"
+        />
 
         <CategorySearch query={query} onQueryChange={setQuery} />
 

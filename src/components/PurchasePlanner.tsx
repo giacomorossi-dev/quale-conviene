@@ -1,7 +1,7 @@
-import { Calculator } from "lucide-react";
+import { Calculator, RotateCcw } from "lucide-react";
 import { useState } from "react";
+import { Button } from "#/components/app/button.tsx";
 import { Input } from "#/components/app/input.tsx";
-import { Label } from "#/components/app/label.tsx";
 import {
   getCategoryBaseLabel,
   getCategoryBaseLabelPlural,
@@ -14,8 +14,6 @@ interface Props {
   results: ComputedEntry[];
 }
 
-type Mode = "cost-for-qty" | "qty-for-budget";
-
 const eur = new Intl.NumberFormat("it-IT", {
   style: "currency",
   currency: "EUR",
@@ -25,97 +23,117 @@ const num = new Intl.NumberFormat("it-IT", {
   maximumFractionDigits: 1,
 });
 
+interface PlannerCardProps {
+  titlePrefix: string;
+  titleSuffix: string;
+  inputAriaLabel: string;
+  valid: ComputedEntry[];
+  format: (parsed: number, r: ComputedEntry) => string;
+}
+
+function PlannerCard({
+  titlePrefix,
+  titleSuffix,
+  inputAriaLabel,
+  valid,
+  format,
+}: PlannerCardProps) {
+  const [value, setValue] = useState("");
+  const parsed = Number(value.replace(",", "."));
+  const hasInput = value.trim() !== "" && Number.isFinite(parsed) && parsed > 0;
+
+  return (
+    <section className="space-y-3 rounded-lg border bg-card p-4">
+      <div className="flex items-start gap-2">
+        <Calculator className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" />
+        <h3 className="flex flex-wrap items-center gap-2 font-semibold">
+          <span>{titlePrefix}</span>
+          <Input
+            type="number"
+            inputMode="decimal"
+            min={0}
+            step="any"
+            placeholder="0"
+            value={value}
+            onChange={(e) => setValue(e.currentTarget.value)}
+            aria-label={inputAriaLabel}
+            className="h-8 w-24 px-2 text-sm font-normal"
+          />
+          <span>{titleSuffix}</span>
+        </h3>
+      </div>
+
+      {hasInput && (
+        <>
+          <ul className="space-y-1 text-sm" aria-live="polite">
+            {valid.map((r, i) => (
+              <li
+                key={i}
+                className="flex items-baseline justify-between gap-3"
+              >
+                <span className="truncate">
+                  {r.entry.name?.trim() || `Prodotto ${i + 1}`}
+                </span>
+                <span className="font-medium tabular-nums">
+                  {format(parsed, r)}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="flex justify-end">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setValue("")}
+            >
+              <RotateCcw className="h-4 w-4" />
+              Reimposta
+            </Button>
+          </div>
+        </>
+      )}
+    </section>
+  );
+}
+
 export default function PurchasePlanner({ category, results }: Props) {
   const valid = results.filter((r) => !r.invalid);
-  const [mode, setMode] = useState<Mode>("cost-for-qty");
-  const [value, setValue] = useState("");
   const baseLabel = getCategoryBaseLabel(category);
   const baseLabelPlural = getCategoryBaseLabelPlural(category);
 
   if (valid.length === 0) return null;
 
-  const parsed = Number(value.replace(",", "."));
-  const hasInput = value.trim() !== "" && Number.isFinite(parsed) && parsed > 0;
-
   return (
-    <section
-      aria-labelledby="planner-heading"
-      className="space-y-3 rounded-lg border bg-card p-4"
-    >
-      <div className="flex items-center gap-2">
-        <Calculator className="h-4 w-4 text-muted-foreground" />
-        <h3 id="planner-heading" className="font-semibold">
-          Pianifica un acquisto
-        </h3>
+    <section aria-labelledby="planner-heading">
+      <h2 id="planner-heading" className="text-xl font-semibold">
+        Pianifica
+      </h2>
+      <div
+        aria-hidden="true"
+        className="brand-gradient-bg mt-2 mb-4 h-[2px] w-full"
+      />
+      <div className="grid gap-4 md:grid-cols-2">
+        <PlannerCard
+          titlePrefix="Quanto costano"
+          titleSuffix={baseLabelPlural}
+          inputAriaLabel={`Numero di ${baseLabelPlural}`}
+          valid={valid}
+          format={(parsed, r) => eur.format(parsed * r.pricePerBase)}
+        />
+        <PlannerCard
+          titlePrefix={`Quanti ${baseLabelPlural} con`}
+          titleSuffix="€"
+          inputAriaLabel="Budget in euro"
+          valid={valid}
+          format={(parsed, r) => {
+            const projected = parsed / r.pricePerBase;
+            return `${num.format(projected)} ${
+              projected === 1 ? baseLabel : baseLabelPlural
+            }`;
+          }}
+        />
       </div>
-
-      <fieldset className="space-y-2">
-        <legend className="sr-only">Modalità di calcolo</legend>
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="radio"
-            name="planner-mode"
-            value="cost-for-qty"
-            checked={mode === "cost-for-qty"}
-            onChange={() => setMode("cost-for-qty")}
-          />
-          Quanto costano <strong>X {baseLabelPlural}</strong>?
-        </label>
-        <label className="flex items-center gap-2 text-sm">
-          <input
-            type="radio"
-            name="planner-mode"
-            value="qty-for-budget"
-            checked={mode === "qty-for-budget"}
-            onChange={() => setMode("qty-for-budget")}
-          />
-          Quanti <strong>{baseLabelPlural}</strong> con <strong>X €</strong>?
-        </label>
-      </fieldset>
-
-      <div className="flex items-end gap-2">
-        <div className="flex-1 space-y-1">
-          <Label htmlFor="planner-input">
-            {mode === "cost-for-qty"
-              ? `Numero di ${baseLabelPlural}`
-              : "Budget (€)"}
-          </Label>
-          <Input
-            id="planner-input"
-            type="number"
-            inputMode="decimal"
-            min={0}
-            step="any"
-            value={value}
-            onChange={(e) => setValue(e.currentTarget.value)}
-          />
-        </div>
-      </div>
-
-      {hasInput && (
-        <ul className="space-y-1 text-sm" aria-live="polite">
-          {valid.map((r, i) => {
-            const projected =
-              mode === "cost-for-qty"
-                ? parsed * r.pricePerBase
-                : parsed / r.pricePerBase;
-            return (
-              <li key={i} className="flex items-baseline justify-between gap-3">
-                <span className="truncate">
-                  {r.entry.name?.trim() || `Prodotto ${i + 1}`}
-                </span>
-                <span className="font-medium tabular-nums">
-                  {mode === "cost-for-qty"
-                    ? eur.format(projected)
-                    : `${num.format(projected)} ${
-                        projected === 1 ? baseLabel : baseLabelPlural
-                      }`}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-      )}
     </section>
   );
 }

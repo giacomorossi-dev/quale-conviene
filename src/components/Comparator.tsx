@@ -156,7 +156,7 @@ export default function Comparator({ category }: Props) {
           </div>
           <Button
             type="button"
-            variant="ghost"
+            variant="outline"
             size="sm"
             onClick={() => {
               reset();
@@ -213,21 +213,21 @@ export default function Comparator({ category }: Props) {
             className="flex flex-wrap items-center gap-2"
             data-print="hide"
           >
-            <Button type="button" variant="outline" onClick={addEntry}>
+            <Button type="button" variant="gradient" onClick={addEntry}>
               <Plus className="h-4 w-4" />
               Aggiungi prodotto
             </Button>
-            <Button type="button" variant="ghost" onClick={reset}>
+            <Button type="button" variant="outline" onClick={reset}>
               <RotateCcw className="h-4 w-4" />
               Reimposta esempi
             </Button>
-            <Button type="button" variant="ghost" onClick={clear}>
+            <Button type="button" variant="outline" onClick={clear}>
               <Eraser className="h-4 w-4" />
               Svuota tutto
             </Button>
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               onClick={() => window.print()}
               className="sm:ml-auto"
               aria-label="Stampa lista comparazione"
@@ -237,7 +237,7 @@ export default function Comparator({ category }: Props) {
             </Button>
             <Button
               type="button"
-              variant="ghost"
+              variant="outline"
               onClick={share}
               aria-live="polite"
             >
@@ -256,9 +256,13 @@ export default function Comparator({ category }: Props) {
           </div>
 
           <section aria-labelledby="results-heading">
-            <h2 id="results-heading" className="mb-3 text-xl font-semibold">
+            <h2 id="results-heading" className="text-xl font-semibold">
               Risultati
             </h2>
+            <div
+              aria-hidden="true"
+              className="brand-gradient-bg mt-2 mb-4 h-[2px] w-full"
+            />
             <ResultsTable category={category} results={results} />
           </section>
 

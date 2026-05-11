@@ -68,8 +68,12 @@ function CategoryPage() {
       <Comparator category={category} />
 
       {category.faq && category.faq.length > 0 && (
-        <section className="space-y-4">
+        <section>
           <h2 className="text-2xl font-semibold">Domande frequenti</h2>
+          <div
+            aria-hidden="true"
+            className="brand-gradient-bg mt-2 mb-4 h-[2px] w-full"
+          />
           <dl className="space-y-4">
             {category.faq.map((qa, i) => (
               <div key={i} className="rounded-lg border bg-card p-4">
@@ -82,8 +86,12 @@ function CategoryPage() {
       )}
 
       {related.length > 0 && (
-        <section className="space-y-4">
+        <section>
           <h2 className="text-2xl font-semibold">Categorie correlate</h2>
+          <div
+            aria-hidden="true"
+            className="brand-gradient-bg mt-2 mb-4 h-[2px] w-full"
+          />
           <div className="grid gap-4 sm:grid-cols-2">
             {related.map((c) => (
               <CategoryCard key={c.slug} category={c} />
