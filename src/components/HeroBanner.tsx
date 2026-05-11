@@ -67,7 +67,7 @@ export default function HeroBanner() {
 	return (
 		<section
 			aria-label={`${SITE_NAME} — banner`}
-			className="relative isolate flex h-[340px] sm:h-[380px] items-center justify-center overflow-hidden rounded-2xl px-6 sm:px-12"
+			className="relative isolate flex min-h-[340px] sm:min-h-[380px] items-center justify-center overflow-hidden rounded-2xl px-6 py-12 sm:px-12 sm:py-14"
 		>
 			{/* Base gradient — adapts to theme via brand variables */}
 			<div className="brand-gradient-bg absolute inset-0" aria-hidden="true" />
