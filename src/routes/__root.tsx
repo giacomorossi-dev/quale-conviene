@@ -9,6 +9,7 @@ import {
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import BuyMeCoffee from "#/components/BuyMeCoffee.tsx";
 import Logo from "#/components/Logo.tsx";
+import ServiceWorkerRegister from "#/components/ServiceWorkerRegister.tsx";
 import ThemeToggle from "#/components/ThemeToggle.tsx";
 import { CLOUDFLARE_ANALYTICS_TOKEN, SITE_NAME } from "#/lib/seo.ts";
 import appCss from "../styles.css?url";
@@ -30,7 +31,18 @@ export const Route = createRootRoute({
 			},
 			{ title: `${SITE_NAME} — Confronta prezzi e formati di prodotti` },
 		],
-		links: [{ rel: "stylesheet", href: appCss }],
+		links: [
+			{ rel: "stylesheet", href: appCss },
+			// SVG favicon for modern browsers — scales perfectly at any DPI.
+			{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+			// Bitmap fallbacks for legacy browsers and Windows tiles.
+			{ rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+			{ rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
+			// iOS home-screen icon.
+			{ rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
+			// PWA manifest.
+			{ rel: "manifest", href: "/manifest.json" },
+		],
 	}),
 	notFoundComponent: NotFound,
 	errorComponent: ErrorBoundary,
@@ -80,6 +92,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 					/>
 				)}
 				<Scripts />
+				<ServiceWorkerRegister />
 			</body>
 		</html>
 	);
