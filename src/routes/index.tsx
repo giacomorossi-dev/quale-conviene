@@ -1,6 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { LayoutGrid } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, LayoutGrid, Wand2 } from "lucide-react";
 import { useMemo, useState } from "react";
+import { Button } from "#/components/app/button.tsx";
 import CategoryCard from "#/components/CategoryCard.tsx";
 import CategorySearch, {
   matchesCategory,
@@ -58,9 +59,20 @@ function Home() {
         <CategorySearch query={query} onQueryChange={setQuery} />
 
         {filtered.length === 0 ? (
-          <div className="py-10 text-center text-sm text-muted-foreground">
-            Nessuna categoria trovata per <strong>«{query}»</strong>. Prova con
-            un sinonimo o una marca.
+          <div className="space-y-4 py-10 text-center">
+            <p className="text-sm text-muted-foreground">
+              Nessuna categoria trovata per <strong>«{query}»</strong>. Prova
+              con un sinonimo o crea un confronto su misura.
+            </p>
+            <Button asChild variant="gradient">
+              <Link
+                to="/confronta"
+                search={{ q: query } as never}
+              >
+                <Wand2 className="h-4 w-4" />
+                Crea un confronto per «{query}»
+              </Link>
+            </Button>
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
@@ -73,6 +85,40 @@ function Home() {
             ))}
           </div>
         )}
+      </section>
+
+      <section
+        aria-labelledby="custom-cta-heading"
+        className="relative isolate overflow-hidden rounded-2xl border bg-card p-6 sm:p-8"
+      >
+        <div
+          aria-hidden="true"
+          className="brand-gradient-bg pointer-events-none absolute -top-24 -right-12 h-48 w-48 rounded-full opacity-30 blur-3xl"
+        />
+        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="space-y-2">
+            <h2
+              id="custom-cta-heading"
+              className="flex items-center gap-3 text-xl font-semibold"
+            >
+              <SectionIcon>
+                <Wand2 />
+              </SectionIcon>
+              Non trovi quello che cerchi?
+            </h2>
+            <p className="text-sm text-muted-foreground max-w-xl">
+              Crea un confronto personalizzato in pochi click: scegli come
+              misurare i prodotti, dai un nome alle unità, e parti. Funziona
+              per qualunque cosa.
+            </p>
+          </div>
+          <Button asChild variant="gradient" size="lg">
+            <Link to="/confronta">
+              Crea confronto
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        </div>
       </section>
     </div>
   );

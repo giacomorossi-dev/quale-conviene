@@ -25,6 +25,17 @@ import { buildShareUrl, decodeEntries } from "#/lib/share.ts";
 
 interface Props {
   category: CategoryDefinition;
+  /** Override the localStorage key used for entries. Defaults to
+   *  `qc:entries:<slug>`. Custom-category screens pass a project-wide key
+   *  so the parent route can own the full custom-comparison snapshot. */
+  storageKey?: string;
+  /** Override the share-URL builder. Defaults to the slug-based builder
+   *  in `lib/share.ts`. Custom-category screens pass one that encodes
+   *  both the on-the-fly category and the entries. */
+  shareBuilder?: (entries: ProductEntry[]) => string;
+  /** Fired whenever entries change. Lets parent routes mirror state for
+   *  their own persistence (e.g. saving definition + entries together). */
+  onEntriesChange?: (entries: ProductEntry[]) => void;
 }
 
 const STORAGE_PREFIX = "qc:entries:";
@@ -36,7 +47,13 @@ const initialEntries = (category: CategoryDefinition): ProductEntry[] => {
   return [buildEmptyEntry(category), buildEmptyEntry(category)];
 };
 
-export default function Comparator({ category }: Props) {
+export default function Comparator({
+  category,
+  storageKey,
+  shareBuilder,
+  onEntriesChange,
+}: Props) {
+  const entriesStorageKey = storageKey ?? `${STORAGE_PREFIX}${category.slug}`;
   const [entries, setEntries] = useState<ProductEntry[]>(() =>
     initialEntries(category),
   );
@@ -54,7 +71,8 @@ export default function Comparator({ category }: Props) {
       setHydrated(true);
       return;
     }
-    pushRecent(category.slug);
+    // Parent route (e.g. /confronta) handles its own recents tracking.
+    if (!storageKey) pushRecent(category.slug);
     const params = new URLSearchParams(window.location.search);
     const shared = params.get("d");
     if (shared) {
@@ -72,9 +90,7 @@ export default function Comparator({ category }: Props) {
       }
     }
     try {
-      const stored = window.localStorage.getItem(
-        `${STORAGE_PREFIX}${category.slug}`,
-      );
+      const stored = window.localStorage.getItem(entriesStorageKey);
       if (stored) {
         const parsed = JSON.parse(stored) as ProductEntry[];
         if (Array.isArray(parsed)) setEntries(parsed);
@@ -83,21 +99,19 @@ export default function Comparator({ category }: Props) {
       /* corrupt JSON or unavailable — ignore */
     }
     setHydrated(true);
-  }, [category.slug]);
+  }, [category.slug, entriesStorageKey]);
 
   // Persist after hydration only (otherwise we'd overwrite saved data with
   // the SSR-initialised sample entries on every page load).
   useEffect(() => {
     if (!hydrated || typeof window === "undefined") return;
     try {
-      window.localStorage.setItem(
-        `${STORAGE_PREFIX}${category.slug}`,
-        JSON.stringify(entries),
-      );
+      window.localStorage.setItem(entriesStorageKey, JSON.stringify(entries));
     } catch {
       /* quota exceeded or storage disabled — ignore */
     }
-  }, [entries, category.slug, hydrated]);
+    onEntriesChange?.(entries);
+  }, [entries, entriesStorageKey, hydrated, onEntriesChange]);
 
   const results = useMemo(() => compute(category, entries), [category, entries]);
 
@@ -122,7 +136,9 @@ export default function Comparator({ category }: Props) {
 
   const share = async () => {
     if (typeof window === "undefined") return;
-    const url = buildShareUrl(category.slug, entries);
+    const url = shareBuilder
+      ? shareBuilder(entries)
+      : buildShareUrl(category.slug, entries);
     try {
       if (navigator.share) {
         await navigator.share({ title: category.name, url });

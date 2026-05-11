@@ -15,6 +15,7 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as CookieRouteImport } from './routes/cookie'
 import { Route as ContattiRouteImport } from './routes/contatti'
+import { Route as ConfrontaRouteImport } from './routes/confronta'
 import { Route as CategoryRouteImport } from './routes/$category'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -48,6 +49,11 @@ const ContattiRoute = ContattiRouteImport.update({
   path: '/contatti',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfrontaRoute = ConfrontaRouteImport.update({
+  id: '/confronta',
+  path: '/confronta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CategoryRoute = CategoryRouteImport.update({
   id: '/$category',
   path: '/$category',
@@ -62,6 +68,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$category': typeof CategoryRoute
+  '/confronta': typeof ConfrontaRoute
   '/contatti': typeof ContattiRoute
   '/cookie': typeof CookieRoute
   '/privacy': typeof PrivacyRoute
@@ -72,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$category': typeof CategoryRoute
+  '/confronta': typeof ConfrontaRoute
   '/contatti': typeof ContattiRoute
   '/cookie': typeof CookieRoute
   '/privacy': typeof PrivacyRoute
@@ -83,6 +91,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$category': typeof CategoryRoute
+  '/confronta': typeof ConfrontaRoute
   '/contatti': typeof ContattiRoute
   '/cookie': typeof CookieRoute
   '/privacy': typeof PrivacyRoute
@@ -95,6 +104,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$category'
+    | '/confronta'
     | '/contatti'
     | '/cookie'
     | '/privacy'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$category'
+    | '/confronta'
     | '/contatti'
     | '/cookie'
     | '/privacy'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$category'
+    | '/confronta'
     | '/contatti'
     | '/cookie'
     | '/privacy'
@@ -126,6 +138,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CategoryRoute: typeof CategoryRoute
+  ConfrontaRoute: typeof ConfrontaRoute
   ContattiRoute: typeof ContattiRoute
   CookieRoute: typeof CookieRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -178,6 +191,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContattiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/confronta': {
+      id: '/confronta'
+      path: '/confronta'
+      fullPath: '/confronta'
+      preLoaderRoute: typeof ConfrontaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/$category': {
       id: '/$category'
       path: '/$category'
@@ -198,6 +218,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CategoryRoute: CategoryRoute,
+  ConfrontaRoute: ConfrontaRoute,
   ContattiRoute: ContattiRoute,
   CookieRoute: CookieRoute,
   PrivacyRoute: PrivacyRoute,

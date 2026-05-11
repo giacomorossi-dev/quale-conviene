@@ -14,9 +14,10 @@ const COUNT_UP_DURATION = 1400;
 const easeOutCubic = (t: number) => 1 - (1 - t) ** 3;
 
 function useCountUp(target: number, duration: number) {
-	// SSR / first render: emit the final value so the SEO/no-JS snapshot is correct.
-	// Right after hydration the effect resets to 0 and animates up.
-	const [value, setValue] = useState(target);
+	// Initial state is 0 on both server and client so hydration matches; the
+	// animation starts in the effect below right after mount. No flash from
+	// "final → 0 → animate", because the user only ever sees post-mount frames.
+	const [value, setValue] = useState(0);
 
 	useEffect(() => {
 		if (
@@ -27,7 +28,6 @@ function useCountUp(target: number, duration: number) {
 			return;
 		}
 
-		setValue(0);
 		let raf = 0;
 		const start = performance.now();
 		const tick = (now: number) => {
