@@ -455,3 +455,109 @@ curl -sI https://qualeconviene.app/ | grep -iE "cf-cache-status|age|cache-contro
 # Confirm canonical is a <link>, not a <meta>
 curl -s https://qualeconviene.app/acqua | tr '<' '\n' | grep -i canonical
 ```
+
+---
+
+## 16. Roadmap / known gaps
+
+The list below captures the gaps in the current product. Order is
+roughly by leverage (impact / effort). None of these is blocking; the
+app works well today. Pick them up when there's appetite.
+
+### High leverage — do these first
+
+- **Dynamic OG image per category.** Today every shared link
+  (WhatsApp, Twitter, LinkedIn, etc.) renders the same generic
+  `/og-image.png`. Generating a branded PNG per category — name,
+  background gradient, `€/X` label — would make every share visually
+  distinct and shareable. Implementation path: a Worker endpoint
+  (`/og/{slug}.png`) that uses `satori` or `@vercel/og` to render JSX
+  to PNG at the edge. Set the response `Content-Type: image/png` and a
+  long `Cache-Control` (these are deterministic by slug). Roughly half
+  a day of work, big upside on social-driven traffic.
+
+- **Lightweight backend for saved comparisons.** Today all state lives
+  in `localStorage` and the only "share" is the `?d=` token in the URL.
+  Adding a tiny persistence layer (Cloudflare KV or D1) with a
+  link-as-token model (no auth: writing creates a short ID, fetching
+  decodes it) turns every shared comparison from a one-shot URL into a
+  persistent, named asset. Useful for: "my weekly shopping list", "the
+  detergent comparison I keep updating". Stays GDPR-friendly because
+  the link itself is the credential — no accounts needed. ~2 days.
+
+- **Product analytics (Plausible / Umami / PostHog).** CF Web
+  Analytics tells you page views and Core Web Vitals — not which
+  categories convert, where the funnel breaks, how many shares
+  actually get clicked. Plausible is the cleanest fit for the
+  privacy-first promise of the site (no cookie banner, ~$9/mo) or
+  Umami self-hosted on a CF Worker (free, more work). Without this
+  data, prioritisation is blind. ~1 hour to set up.
+
+- **CI runs the test suite.** Workers Builds today only runs the
+  build step. A push that breaks `bun run test` ships to production
+  anyway. Adding a GitHub Action that runs `bun run test && bun run
+  check && bunx tsc --noEmit` on every push is ~10 minutes of work
+  and prevents regressions on the math (`pricing.test.ts`),
+  share-URL round-trip (`share.test.ts`), and bulk-paste parser
+  (`bulk-paste.test.ts`).
+
+### Medium leverage
+
+- **Blog / articles section (`/blog`).** One or two articles a month
+  on adjacent topics ("Quanto è aumentato il prezzo del latte UHT nel
+  2026", "5 errori al supermercato che ti fanno spendere di più",
+  category round-ups). Each article gives Google a fresh page to index
+  AND a chance to internally link to the comparator of the relevant
+  category. New surface area for SEO without changing the core
+  product. ~half a day per article.
+
+- **Custom wizard discoverability.** `/confronta` is hidden behind a
+  CTA at the bottom of the home and the empty-search hook. Lots of
+  users won't discover it. Possible improvements: a more prominent
+  card near the top of the home; pre-filled wizard templates ("I 3
+  detersivi più venduti", "Fardelli d'acqua sotto 0,20 €/L", "Mix di
+  patatine"); a "create new" entry in the topbar; an onboarding
+  banner the first time a search yields 0 results.
+
+- **Error & performance monitoring.** No Sentry / no error capture
+  today. A 500 in production is invisible until a user reports it.
+  Sentry's free tier (5k events/month) is more than enough; the SDK
+  wraps the TanStack Start error boundary in a few lines. While
+  we're there, RUM with Web Vitals would surface the slowest pages.
+
+- **OCR / smart bulk paste.** The current `BulkPaste` flow expects
+  text in a roughly tabular form. Most users have a phone with the
+  product photo in front of them. A future iteration could OCR a
+  receipt or scan a supermarket shelf label (CF doesn't have OCR
+  primitives — needs an external API like Cloud Vision or
+  Tesseract.js client-side).
+
+### Lower leverage / future bets
+
+- **i18n.** Today Italian only. French and Spanish would 3-5× the
+  addressable market. The category content is translatable but
+  significant work (60+ pages of long-form copy). Stack supports it
+  (TanStack Router has i18n patterns) but the cost is mostly in
+  translated content quality, not code.
+
+- **Browser extension / bookmarklet.** "I'm on the Esselunga website
+  and want to compare these products" → one-click adds them to a
+  comparison on `qualeconviene.app`. Needs a parser per supermarket
+  e-commerce site (a few dozens are dominant in Italy: Esselunga,
+  Coop, Conad, Carrefour, Lidl Online).
+
+- **PWA → Google Play via TWA.** The site is already a valid PWA. A
+  Trusted Web Activity wrapper publishes it to Play Store with the
+  same codebase. Discoverability + native-feeling install.
+
+- **Newsletter / RSS.** Once `/blog` exists, a small newsletter or
+  RSS feed for "new categories / new articles" gives a retention
+  channel beyond `localStorage` recents.
+
+### Already-listed infrastructure improvements
+
+See **section 12 → "Other CF improvements worth doing later"** for the
+Cloudflare-side checklist (Tiered Cache, Early Hints, DNSSEC, WAF
+Managed Ruleset, Bot Fight Mode, Rate Limiting, Health Check, SPF/DMARC
+email hardening). All free or low cost, total setup time well under
+an hour.
