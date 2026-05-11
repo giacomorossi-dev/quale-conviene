@@ -147,7 +147,7 @@ function SiteFooter() {
 							<li>
 								<Link
 									to="/"
-									className="hover:brand-gradient-text transition-colors text-muted-foreground"
+									className="text-muted-foreground transition-colors hover:text-foreground"
 								>
 									Home
 								</Link>
@@ -156,7 +156,7 @@ function SiteFooter() {
 								<Link
 									to="/$category"
 									params={{ category: "acqua" }}
-									className="hover:brand-gradient-text transition-colors text-muted-foreground"
+									className="text-muted-foreground transition-colors hover:text-foreground"
 								>
 									Acqua
 								</Link>
@@ -165,7 +165,7 @@ function SiteFooter() {
 								<Link
 									to="/$category"
 									params={{ category: "detersivo-lavatrice" }}
-									className="hover:brand-gradient-text transition-colors text-muted-foreground"
+									className="text-muted-foreground transition-colors hover:text-foreground"
 								>
 									Detersivo lavatrice
 								</Link>
@@ -174,7 +174,7 @@ function SiteFooter() {
 								<Link
 									to="/$category"
 									params={{ category: "capsule-caffe" }}
-									className="hover:brand-gradient-text transition-colors text-muted-foreground"
+									className="text-muted-foreground transition-colors hover:text-foreground"
 								>
 									Capsule caffè
 								</Link>
@@ -190,7 +190,7 @@ function SiteFooter() {
 							<li>
 								<Link
 									to="/contatti"
-									className="hover:brand-gradient-text transition-colors text-muted-foreground"
+									className="text-muted-foreground transition-colors hover:text-foreground"
 								>
 									Feedback e contatti
 								</Link>
@@ -198,7 +198,7 @@ function SiteFooter() {
 							<li>
 								<Link
 									to="/terms"
-									className="hover:brand-gradient-text transition-colors text-muted-foreground"
+									className="text-muted-foreground transition-colors hover:text-foreground"
 								>
 									Termini e condizioni
 								</Link>
@@ -206,7 +206,7 @@ function SiteFooter() {
 							<li>
 								<Link
 									to="/privacy"
-									className="hover:brand-gradient-text transition-colors text-muted-foreground"
+									className="text-muted-foreground transition-colors hover:text-foreground"
 								>
 									Privacy policy
 								</Link>
@@ -214,7 +214,7 @@ function SiteFooter() {
 							<li>
 								<Link
 									to="/cookie"
-									className="hover:brand-gradient-text transition-colors text-muted-foreground"
+									className="text-muted-foreground transition-colors hover:text-foreground"
 								>
 									Cookie policy
 								</Link>

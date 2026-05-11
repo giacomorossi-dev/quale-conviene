@@ -190,14 +190,17 @@ body {
 
 /* ── Branded utilities ─────────────────────────────────────────────────── */
 
-.brand-gradient-text {
+/* Declared as @utility so Tailwind v4 generates the `hover:` / `group-hover:` /
+   `focus:` selectors. Plain `.class { ... }` is a no-op when used with those
+   variants. */
+@utility brand-gradient-text {
   background-image: var(--brand-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.brand-gradient-bg {
+@utility brand-gradient-bg {
   background-image: var(--brand-gradient);
 }
 
