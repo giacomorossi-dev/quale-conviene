@@ -61,7 +61,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 			</head>
 			<body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
 				<header className="topbar-surface fixed inset-x-0 top-0 z-50">
-					<div className="container mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+					<div className="container mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
 						<Logo />
 						<div className="flex items-center gap-2">
 							<Button asChild variant="outline" size="sm">
@@ -124,7 +124,7 @@ function SiteFooter() {
 				aria-hidden="true"
 				className="pointer-events-none absolute -bottom-72 left-1/2 h-72 w-[min(1100px,90%)] -translate-x-1/2 rounded-full opacity-30 blur-3xl brand-gradient-bg"
 			/>
-			<div className="relative container mx-auto max-w-6xl px-4 py-20 sm:py-24">
+			<div className="relative container mx-auto max-w-5xl px-4 py-20 sm:py-24">
 				<div className="grid gap-12 md:grid-cols-4">
 					<div className="space-y-4 md:col-span-2 max-w-xl">
 						<Logo />
