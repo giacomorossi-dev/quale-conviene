@@ -78,15 +78,48 @@ export default function EntryForm({
   const hasData = Number.isFinite(entry.price) && entry.price > 0;
   const [collapsed, setCollapsed] = useState(hasData);
   const bodyId = `entry-${index}-body`;
-  const displayName = entry.name?.trim() || `Prodotto ${index + 1}`;
 
   return (
-    <div className="space-y-3 rounded-lg border bg-card p-4">
-      <div className="flex items-center justify-between gap-2">
+    <div className="relative">
+      {/* Floating name chip — straddles the card's top border (left-aligned)
+          so it reads as the product label. `bg-background` matches the page
+          surface and creates a "notch" cut through the card border;
+          `brand-gradient-border` rings the input with the brand gradient. */}
+      <div className="absolute left-4 top-0 z-10 -translate-y-1/2 w-[min(18rem,calc(100%-4rem))]">
+        <div className="brand-gradient-border rounded-md">
+          <Input
+            aria-label="Nome prodotto"
+            placeholder={`Prodotto ${index + 1}`}
+            value={entry.name ?? ""}
+            onChange={(e) =>
+              onChange({ ...entry, name: e.currentTarget.value })
+            }
+            className="border-0 bg-background font-medium"
+          />
+        </div>
+      </div>
+
+      {/* Remove button — top-right corner */}
+      {onRemove && (
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          onClick={onRemove}
+          aria-label="Rimuovi prodotto"
+          className="absolute top-2 right-2 z-10"
+        >
+          <Trash2 className="h-4 w-4" />
+        </Button>
+      )}
+
+      <div className="rounded-lg border bg-card p-4 pt-8 pr-12 space-y-3">
+        {/* Mobile-only collapse summary. Name is already visible in the
+            floating chip above, so we just surface the price/measure here. */}
         <button
           type="button"
           onClick={() => setCollapsed((c) => !c)}
-          className="flex items-center gap-2 text-left sm:hidden flex-1 min-w-0 rounded outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          className="flex w-full items-center gap-2 text-left sm:hidden rounded outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
           aria-expanded={!collapsed}
           aria-controls={bodyId}
         >
@@ -96,141 +129,128 @@ export default function EntryForm({
               collapsed && "-rotate-90",
             )}
           />
-          <span className="flex flex-col min-w-0">
-            <span className="font-medium truncate">{displayName}</span>
-            <span className="text-xs text-muted-foreground truncate">
-              {summarise(entry, "Da compilare")}
-            </span>
+          <span className="text-xs text-muted-foreground truncate">
+            {summarise(entry, "Da compilare")}
           </span>
         </button>
-        <Input
-          aria-label="Nome prodotto"
-          placeholder={`Prodotto ${index + 1}`}
-          value={entry.name ?? ""}
-          onChange={(e) => onChange({ ...entry, name: e.currentTarget.value })}
-          className="max-w-xs hidden sm:flex"
-        />
-        {onRemove && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={onRemove}
-            aria-label="Rimuovi prodotto"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
-        )}
-      </div>
 
-      <div
-        id={bodyId}
-        className={cn(
-          "space-y-3 sm:block",
-          collapsed ? "hidden" : "block",
-        )}
-      >
-        <Input
-          aria-label="Nome prodotto"
-          placeholder={`Prodotto ${index + 1}`}
-          value={entry.name ?? ""}
-          onChange={(e) => onChange({ ...entry, name: e.currentTarget.value })}
-          className="sm:hidden"
-        />
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {category.levels.map((level) => (
-          <div key={level.id} className="space-y-1">
-            <Label htmlFor={`entry-${index}-${level.id}`}>
-              {level.pluralLabel}
-              {level.optional && (
-                <span className="ml-1 text-xs text-muted-foreground">(opz.)</span>
-              )}
-            </Label>
-            <Input
-              id={`entry-${index}-${level.id}`}
-              type="number"
-              inputMode="numeric"
-              min={0}
-              step={1}
-              value={Number.isFinite(entry.counts[level.id]) ? entry.counts[level.id] : ""}
-              onChange={(e) => updateCount(level.id, numericValue(e.currentTarget.value))}
-            />
+        <div
+          id={bodyId}
+          className={cn(
+            "space-y-3 sm:block",
+            collapsed ? "hidden" : "block",
+          )}
+        >
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {category.levels.map((level) => (
+              <div key={level.id} className="space-y-1">
+                <Label htmlFor={`entry-${index}-${level.id}`}>
+                  {level.pluralLabel}
+                  {level.optional && (
+                    <span className="ml-1 text-xs text-muted-foreground">
+                      (opz.)
+                    </span>
+                  )}
+                </Label>
+                <Input
+                  id={`entry-${index}-${level.id}`}
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  step={1}
+                  value={
+                    Number.isFinite(entry.counts[level.id])
+                      ? entry.counts[level.id]
+                      : ""
+                  }
+                  onChange={(e) =>
+                    updateCount(level.id, numericValue(e.currentTarget.value))
+                  }
+                />
+              </div>
+            ))}
+
+            <div className="space-y-1">
+              <Label htmlFor={`entry-${index}-measure`}>
+                {measureFieldLabel}
+              </Label>
+              <div className="flex gap-1">
+                <Input
+                  id={`entry-${index}-measure`}
+                  type="number"
+                  inputMode="decimal"
+                  min={0}
+                  step="any"
+                  value={
+                    Number.isFinite(entry.measureValue) ? entry.measureValue : ""
+                  }
+                  onChange={(e) =>
+                    onChange({
+                      ...entry,
+                      measureValue: numericValue(e.currentTarget.value),
+                    })
+                  }
+                  className="flex-1"
+                />
+                {units.length > 1 ? (
+                  <Select
+                    value={entry.measureUnitId}
+                    onValueChange={(v) => onChange({ ...entry, measureUnitId: v })}
+                  >
+                    <SelectTrigger className="w-20">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {units.map((u) => (
+                        <SelectItem key={u.id} value={u.id}>
+                          {u.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                ) : units[0].label ? (
+                  <span className="flex items-center px-3 text-sm text-muted-foreground">
+                    {units[0].label}
+                  </span>
+                ) : null}
+              </div>
+            </div>
+
+            {doseFieldLabel && (
+              <div className="space-y-1">
+                <Label htmlFor={`entry-${index}-doses`}>{doseFieldLabel}</Label>
+                <Input
+                  id={`entry-${index}-doses`}
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  step={1}
+                  value={Number.isFinite(entry.doseCount) ? entry.doseCount : ""}
+                  onChange={(e) =>
+                    onChange({
+                      ...entry,
+                      doseCount: numericValue(e.currentTarget.value),
+                    })
+                  }
+                />
+              </div>
+            )}
+
+            <div className="space-y-1">
+              <Label htmlFor={`entry-${index}-price`}>Prezzo (€)</Label>
+              <Input
+                id={`entry-${index}-price`}
+                type="number"
+                inputMode="decimal"
+                min={0}
+                step="0.01"
+                value={Number.isFinite(entry.price) ? entry.price : ""}
+                onChange={(e) =>
+                  onChange({ ...entry, price: numericValue(e.currentTarget.value) })
+                }
+              />
+            </div>
           </div>
-        ))}
-
-        <div className="space-y-1">
-          <Label htmlFor={`entry-${index}-measure`}>{measureFieldLabel}</Label>
-          <div className="flex gap-1">
-            <Input
-              id={`entry-${index}-measure`}
-              type="number"
-              inputMode="decimal"
-              min={0}
-              step="any"
-              value={Number.isFinite(entry.measureValue) ? entry.measureValue : ""}
-              onChange={(e) =>
-                onChange({ ...entry, measureValue: numericValue(e.currentTarget.value) })
-              }
-              className="flex-1"
-            />
-            {units.length > 1 ? (
-              <Select
-                value={entry.measureUnitId}
-                onValueChange={(v) => onChange({ ...entry, measureUnitId: v })}
-              >
-                <SelectTrigger className="w-20">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {units.map((u) => (
-                    <SelectItem key={u.id} value={u.id}>
-                      {u.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : units[0].label ? (
-              <span className="flex items-center px-3 text-sm text-muted-foreground">
-                {units[0].label}
-              </span>
-            ) : null}
-          </div>
-        </div>
-
-        {doseFieldLabel && (
-          <div className="space-y-1">
-            <Label htmlFor={`entry-${index}-doses`}>{doseFieldLabel}</Label>
-            <Input
-              id={`entry-${index}-doses`}
-              type="number"
-              inputMode="numeric"
-              min={0}
-              step={1}
-              value={Number.isFinite(entry.doseCount) ? entry.doseCount : ""}
-              onChange={(e) =>
-                onChange({
-                  ...entry,
-                  doseCount: numericValue(e.currentTarget.value),
-                })
-              }
-            />
-          </div>
-        )}
-
-        <div className="space-y-1">
-          <Label htmlFor={`entry-${index}-price`}>Prezzo (€)</Label>
-          <Input
-            id={`entry-${index}-price`}
-            type="number"
-            inputMode="decimal"
-            min={0}
-            step="0.01"
-            value={Number.isFinite(entry.price) ? entry.price : ""}
-            onChange={(e) =>
-              onChange({ ...entry, price: numericValue(e.currentTarget.value) })
-            }
-          />
-        </div>
         </div>
       </div>
     </div>

@@ -215,7 +215,7 @@ export default function Comparator({
         <>
           <section
             aria-label="Prodotti da confrontare"
-            className="space-y-3"
+            className="space-y-10"
             data-print="hide"
           >
             {entries.map((entry, i) => (
