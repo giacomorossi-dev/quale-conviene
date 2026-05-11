@@ -1,4 +1,4 @@
-import { Check, Eraser, Plus, RotateCcw, Share2 } from "lucide-react";
+import { Check, Eraser, Plus, Printer, RotateCcw, Share2 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "#/components/app/button.tsx";
 import BulkPaste from "./BulkPaste.tsx";
@@ -11,6 +11,7 @@ import {
   type CategoryDefinition,
   type ProductEntry,
 } from "#/lib/pricing.ts";
+import { pushRecent } from "#/lib/recent.ts";
 import { buildShareUrl, decodeEntries } from "#/lib/share.ts";
 
 interface Props {
@@ -35,6 +36,7 @@ export default function Comparator({ category }: Props) {
   const [hydrated, setHydrated] = useState(false);
   const [shareState, setShareState] = useState<"idle" | "copied">("idle");
   const shareTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [fromShareLink, setFromShareLink] = useState(false);
 
   // U2 — `?d=…` URL takes precedence over localStorage and replaces history
   // so the user can keep editing without the share token cluttering future URLs.
@@ -43,12 +45,14 @@ export default function Comparator({ category }: Props) {
       setHydrated(true);
       return;
     }
+    pushRecent(category.slug);
     const params = new URLSearchParams(window.location.search);
     const shared = params.get("d");
     if (shared) {
       const decoded = decodeEntries(shared);
       if (decoded && decoded.length > 0) {
         setEntries(decoded);
+        setFromShareLink(true);
         params.delete("d");
         const query = params.toString();
         const url =
@@ -137,6 +141,34 @@ export default function Comparator({ category }: Props) {
 
   return (
     <div className="space-y-6">
+      {fromShareLink && (
+        <div
+          className="glass flex flex-wrap items-center gap-3 rounded-lg p-4"
+          data-print="hide"
+        >
+          <Share2 className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+          <div className="flex-1 min-w-0 text-sm">
+            <strong className="font-semibold">Comparazione condivisa caricata.</strong>{" "}
+            <span className="text-muted-foreground">
+              Stai vedendo i prodotti scelti da chi ti ha mandato il link. Puoi
+              modificarli liberamente.
+            </span>
+          </div>
+          <Button
+            type="button"
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              reset();
+              setFromShareLink(false);
+            }}
+          >
+            <RotateCcw className="h-4 w-4" />
+            Riparti dagli esempi
+          </Button>
+        </div>
+      )}
+
       {entries.length === 0 ? (
         <div className="rounded-lg border border-dashed bg-muted/40 py-12 px-4 text-center space-y-4">
           <p className="text-muted-foreground">
@@ -159,6 +191,7 @@ export default function Comparator({ category }: Props) {
           <section
             aria-label="Prodotti da confrontare"
             className="space-y-3"
+            data-print="hide"
           >
             {entries.map((entry, i) => (
               <EntryForm
@@ -172,9 +205,14 @@ export default function Comparator({ category }: Props) {
             ))}
           </section>
 
-          <BulkPaste category={category} onImport={appendEntries} />
+          <div data-print="hide">
+            <BulkPaste category={category} onImport={appendEntries} />
+          </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div
+            className="flex flex-wrap items-center gap-2"
+            data-print="hide"
+          >
             <Button type="button" variant="outline" onClick={addEntry}>
               <Plus className="h-4 w-4" />
               Aggiungi prodotto
@@ -190,8 +228,17 @@ export default function Comparator({ category }: Props) {
             <Button
               type="button"
               variant="ghost"
-              onClick={share}
+              onClick={() => window.print()}
               className="ml-auto"
+              aria-label="Stampa lista comparazione"
+            >
+              <Printer className="h-4 w-4" />
+              Stampa
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={share}
               aria-live="polite"
             >
               {shareState === "copied" ? (
@@ -215,7 +262,9 @@ export default function Comparator({ category }: Props) {
             <ResultsTable category={category} results={results} />
           </section>
 
-          <PurchasePlanner category={category} results={results} />
+          <div data-print="hide">
+            <PurchasePlanner category={category} results={results} />
+          </div>
         </>
       )}
     </div>

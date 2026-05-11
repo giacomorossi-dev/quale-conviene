@@ -19,6 +19,15 @@ const SITE_URL =
 const CLOUDFLARE_ANALYTICS_TOKEN = import.meta.env
   .VITE_CLOUDFLARE_ANALYTICS_TOKEN as string | undefined;
 
+const OG_IMAGE_URL = `${SITE_URL}/og-image.png`;
+const OG_IMAGE_META = [
+  { property: "og:image", content: OG_IMAGE_URL },
+  { property: "og:image:width", content: "1200" },
+  { property: "og:image:height", content: "630" },
+  { property: "og:image:alt", content: `${SITE_NAME} — confronta prezzi e formati` },
+  { name: "twitter:image", content: OG_IMAGE_URL },
+];
+
 export function buildCategoryMeta(category: CategoryDefinition) {
   // SEO-tuned title: long-tail + question framing performs better in SERP.
   const title = `${category.name} al miglior prezzo · €/${category.baseLabel ?? "unità"} · ${SITE_NAME}`;
@@ -33,9 +42,10 @@ export function buildCategoryMeta(category: CategoryDefinition) {
     { property: "og:url", content: url },
     { property: "og:site_name", content: SITE_NAME },
     { property: "og:locale", content: "it_IT" },
-    { name: "twitter:card", content: "summary" },
+    { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
+    ...OG_IMAGE_META,
     { rel: "canonical", href: url },
   ];
 }
@@ -104,6 +114,10 @@ export function buildHomeMeta() {
     { property: "og:url", content: SITE_URL },
     { property: "og:site_name", content: SITE_NAME },
     { property: "og:locale", content: "it_IT" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    ...OG_IMAGE_META,
     { rel: "canonical", href: SITE_URL },
   ];
 }

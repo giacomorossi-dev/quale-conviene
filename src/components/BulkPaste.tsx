@@ -15,7 +15,7 @@ interface Props {
 
 function exampleFor(category: CategoryDefinition): string {
   const sample = category.sampleEntries?.[0];
-  if (!sample) return "Nome prodotto, 1.99, 1, L";
+  if (!sample) return "Nome prodotto; 1,99; 1; L";
   const parts: (string | number)[] = [
     sample.name ?? "Prodotto",
     sample.price,
@@ -27,7 +27,7 @@ function exampleFor(category: CategoryDefinition): string {
   if (category.context === "dosage" && sample.doseCount !== undefined) {
     parts.push(sample.doseCount);
   }
-  return parts.join(", ");
+  return parts.join("; ");
 }
 
 export default function BulkPaste({ category, onImport }: Props) {
@@ -87,14 +87,16 @@ export default function BulkPaste({ category, onImport }: Props) {
         </Button>
       </div>
       <p id={helpId} className="text-sm text-muted-foreground">
-        Una riga per prodotto, separa i campi con virgola o tab:
+        Una riga per prodotto. Separa i campi con punto e virgola{" "}
+        <code className="text-xs">;</code> o tab (per Excel). I prezzi accettano
+        la virgola decimale (<code className="text-xs">2,49</code>):
         <br />
         <code className="text-xs">
-          nome, prezzo, quantità
+          nome; prezzo; quantità
           {category.context === "liquid" || category.context === "weight"
-            ? ", unità"
+            ? "; unità"
             : ""}
-          {category.context === "dosage" ? ", lavaggi" : ""}
+          {category.context === "dosage" ? "; lavaggi" : ""}
         </code>
         <br />
         Esempio: <code className="text-xs">{exampleFor(category)}</code>

@@ -266,6 +266,71 @@ select {
     transform 180ms ease, box-shadow 180ms ease, opacity 180ms ease;
 }
 
+/* ── Hero banner: drifting blob animation ──────────────────────────────── */
+
+@keyframes drift-slow {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(2.5rem, -1.5rem, 0) scale(1.18); }
+}
+
+@keyframes drift-medium {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  33%      { transform: translate3d(-2rem, 1rem, 0) scale(1.1); }
+  66%      { transform: translate3d(1.5rem, -1rem, 0) scale(0.95); }
+}
+
+@keyframes drift-fast {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50%      { transform: translate3d(-1.5rem, 1.5rem, 0) scale(1.22); }
+}
+
+.animate-drift-slow   { animation: drift-slow   16s ease-in-out infinite; will-change: transform; }
+.animate-drift-medium { animation: drift-medium 22s ease-in-out infinite; will-change: transform; }
+.animate-drift-fast   { animation: drift-fast   13s ease-in-out infinite; will-change: transform; }
+
+.hero-grid-overlay {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 85%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-drift-slow,
+  .animate-drift-medium,
+  .animate-drift-fast {
+    animation: none;
+  }
+}
+
+/* ── Print stylesheet ──────────────────────────────────────────────────── */
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  body::before { display: none; }
+  header,
+  footer,
+  [data-print="hide"] {
+    display: none !important;
+  }
+  main { padding-top: 0 !important; }
+  [data-slot="card"] {
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+    background: white !important;
+    backdrop-filter: none !important;
+  }
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

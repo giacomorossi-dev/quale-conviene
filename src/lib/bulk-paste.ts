@@ -21,13 +21,13 @@ export interface ParsedRow {
 }
 
 /**
- * Parse free-form text into product entries. Each non-empty line is one row,
- * comma/semicolon/tab-separated, fields in order:
+ * Parse free-form text into product entries. One row per line. Fields are
+ * separated by tabs (Excel paste) or semicolons:
  *
- *   name, price, measureValue[, unit][, doseCount]
+ *   name; price; measureValue[; unit][; doseCount]
  *
- * Missing optional fields are filled from the category's defaults. Unknown
- * unit labels fall back to the first declared unit.
+ * Comma is reserved for Italian decimals ("2,49") and is NOT a field
+ * separator, so users can paste numbers in either "2,49" or "2.49" form.
  */
 export function parseBulkPaste(
   category: CategoryDefinition,
@@ -41,7 +41,7 @@ export function parseBulkPaste(
     .map((line, idx) => ({ line: line.trim(), lineNumber: idx + 1 }))
     .filter(({ line }) => line.length > 0)
     .forEach(({ line, lineNumber }) => {
-      const fields = line.split(/[,;\t]/).map((f) => f.trim());
+      const fields = line.split(/[;\t]/).map((f) => f.trim());
       if (fields.length < 2) {
         out.push({
           entry: buildEmptyEntry(category),

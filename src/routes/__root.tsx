@@ -15,7 +15,7 @@ import appCss from "../styles.css?url";
 
 // Runs synchronously before hydration so the .dark class is applied before
 // first paint — no white-flash for users with the dark theme saved.
-const THEME_BOOTSTRAP = `(function(){try{var t=localStorage.getItem('qc:theme');if(!t){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}if(t==='dark')document.documentElement.classList.add('dark');}catch(e){}})();`;
+const THEME_BOOTSTRAP = `(function(){try{var t=localStorage.getItem('qc:theme');var isDark;if(t==='dark'){isDark=true;}else if(t==='light'){isDark=false;}else{isDark=matchMedia('(prefers-color-scheme: dark)').matches;}if(isDark)document.documentElement.classList.add('dark');}catch(e){}})();`;
 
 export const Route = createRootRoute({
 	head: () => ({
