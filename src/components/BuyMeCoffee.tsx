@@ -1,22 +1,22 @@
 import { Coffee } from "lucide-react";
+import { Button } from "#/components/app/button.tsx";
+
+const KOFI_URL = "https://ko-fi.com/giacomorossidev";
 
 interface Props {
-  username?: string;
+	/** Hide the label on screens narrower than `sm` — useful in tight headers. */
+	compact?: boolean;
 }
 
-const ENV_HANDLE = import.meta.env.VITE_BMC_HANDLE as string | undefined;
-
-export default function BuyMeCoffee({ username = ENV_HANDLE }: Props) {
-  if (!username) return null;
-  return (
-    <a
-      href={`https://www.buymeacoffee.com/${username}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 rounded-md bg-yellow-400 px-4 py-2 text-sm font-medium text-black transition-colors hover:bg-yellow-300"
-    >
-      <Coffee className="h-4 w-4" />
-      Offrimi un caffè
-    </a>
-  );
+export default function BuyMeCoffee({ compact = false }: Props) {
+	return (
+		<Button asChild variant="gradient" size="sm">
+			<a href={KOFI_URL} target="_blank" rel="noopener noreferrer">
+				<Coffee className="h-4 w-4" />
+				<span className={compact ? "hidden sm:inline" : undefined}>
+					Offrimi un caffè
+				</span>
+			</a>
+		</Button>
+	);
 }

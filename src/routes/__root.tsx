@@ -64,12 +64,13 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 					<div className="container mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
 						<Logo />
 						<div className="flex items-center gap-2">
-							<Button asChild variant="gradient" size="sm">
+							<Button asChild variant="outline" size="sm">
 								<Link to="/contatti">
 									<MessageSquare className="h-4 w-4" />
 									<span className="hidden sm:inline">Feedback</span>
 								</Link>
 							</Button>
+							<BuyMeCoffee compact />
 							<ThemeToggle />
 						</div>
 					</div>
@@ -236,6 +237,10 @@ function SiteFooter() {
 							giacomorossi.dev
 						</a>
 					</p>
+				</div>
+
+				<div className="mt-10 flex justify-center">
+					<BuyMeCoffee />
 				</div>
 			</div>
 		</footer>
