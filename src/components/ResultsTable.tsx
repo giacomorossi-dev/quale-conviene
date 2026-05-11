@@ -93,18 +93,23 @@ export default function ResultsTable({ category, results }: Props) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-12">#</TableHead>
+            <TableHead className="hidden w-12 sm:table-cell">#</TableHead>
             <TableHead>Prodotto</TableHead>
             <TableHead className="text-right">Prezzo</TableHead>
             {visibleLevels.map((level) => (
-              <TableHead key={level.id} className="text-right">
+              <TableHead
+                key={level.id}
+                className="hidden text-right sm:table-cell"
+              >
                 €/{level.label}
               </TableHead>
             ))}
             <TableHead className="text-right font-semibold">
               €/{baseDisplay.label}
             </TableHead>
-            <TableHead className="text-right">vs migliore</TableHead>
+            <TableHead className="hidden text-right sm:table-cell">
+              vs migliore
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -116,7 +121,7 @@ export default function ResultsTable({ category, results }: Props) {
                 !r.invalid && r.rank === 1 && "bg-emerald-50 dark:bg-emerald-950/20",
               )}
             >
-              <TableCell className="font-medium">
+              <TableCell className="hidden font-medium sm:table-cell">
                 {!r.invalid && r.rank === 1 ? (
                   <span className="inline-flex items-center gap-1 text-emerald-700 dark:text-emerald-400">
                     <Crown className="h-4 w-4" />
@@ -128,10 +133,27 @@ export default function ResultsTable({ category, results }: Props) {
               </TableCell>
               <TableCell className="font-medium">
                 <div className="flex flex-col gap-0.5">
-                  <span>{r.entry.name?.trim() || `Prodotto ${i + 1}`}</span>
+                  <span className="flex items-center gap-1">
+                    {/* On mobile we drop the rank column, so show the crown here instead. */}
+                    {!r.invalid && r.rank === 1 && (
+                      <Crown
+                        className="h-4 w-4 shrink-0 text-emerald-700 dark:text-emerald-400 sm:hidden"
+                        aria-label="Vincitore"
+                      />
+                    )}
+                    <span className="truncate">
+                      {r.entry.name?.trim() || `Prodotto ${i + 1}`}
+                    </span>
+                  </span>
                   {!r.invalid && r.rank === 1 && maxDiff > 0 && (
                     <span className="text-xs font-normal text-emerald-700 dark:text-emerald-400">
                       Risparmi fino al {pctMagnitude.format(maxDiff)}%
+                    </span>
+                  )}
+                  {/* Compact mobile delta replacing the hidden "vs migliore" column. */}
+                  {!r.invalid && r.rank !== 1 && Number.isFinite(r.diffPctFromBest) && (
+                    <span className="text-xs font-normal text-muted-foreground sm:hidden">
+                      {pct.format(r.diffPctFromBest)} % vs migliore
                     </span>
                   )}
                 </div>
@@ -140,7 +162,10 @@ export default function ResultsTable({ category, results }: Props) {
                 {r.invalid ? "—" : eur.format(r.entry.price)}
               </TableCell>
               {visibleLevels.map((level) => (
-                <TableCell key={level.id} className="text-right tabular-nums">
+                <TableCell
+                  key={level.id}
+                  className="hidden text-right tabular-nums sm:table-cell"
+                >
                   {r.invalid || r.pricePerLevel[level.id] === undefined
                     ? "—"
                     : eurPrecise.format(r.pricePerLevel[level.id])}
@@ -151,7 +176,7 @@ export default function ResultsTable({ category, results }: Props) {
                   ? "—"
                   : eurPrecise.format(r.pricePerBase * baseDisplay.multiplier)}
               </TableCell>
-              <TableCell className="text-right tabular-nums text-sm text-muted-foreground">
+              <TableCell className="hidden text-right tabular-nums text-sm text-muted-foreground sm:table-cell">
                 {r.invalid
                   ? "—"
                   : r.rank === 1

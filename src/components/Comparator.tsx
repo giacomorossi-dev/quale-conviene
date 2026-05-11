@@ -229,7 +229,7 @@ export default function Comparator({ category }: Props) {
               type="button"
               variant="ghost"
               onClick={() => window.print()}
-              className="ml-auto"
+              className="sm:ml-auto"
               aria-label="Stampa lista comparazione"
             >
               <Printer className="h-4 w-4" />

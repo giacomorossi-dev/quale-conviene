@@ -5,10 +5,12 @@ import {
   notFound,
 } from "@tanstack/react-router";
 import { ChevronRight } from "lucide-react";
-import Comparator from "#/components/Comparator.tsx";
 import AdSlot from "#/components/AdSlot.tsx";
 import CategoryCard from "#/components/CategoryCard.tsx";
+import CategoryPager from "#/components/CategoryPager.tsx";
+import Comparator from "#/components/Comparator.tsx";
 import {
+  getAdjacentCategories,
   getCategoryBySlug,
   getRelatedCategories,
 } from "#/data/categories.ts";
@@ -38,6 +40,7 @@ const route = getRouteApi("/$category");
 function CategoryPage() {
   const category = route.useLoaderData();
   const related = getRelatedCategories(category);
+  const { prev, next } = getAdjacentCategories(category);
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-10 space-y-10">
@@ -88,6 +91,8 @@ function CategoryPage() {
           </div>
         </section>
       )}
+
+      <CategoryPager prev={prev} next={next} />
 
       <AdSlot className="mt-12" />
     </div>

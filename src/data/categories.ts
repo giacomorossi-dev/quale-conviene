@@ -499,3 +499,19 @@ export function getRelatedCategories(category: CategoryDefinition) {
     .map((slug) => getCategoryBySlug(slug))
     .filter((c): c is CategoryDefinition => c !== undefined);
 }
+
+/**
+ * Adjacent categories in the CATEGORIES array (the order curated above —
+ * groups bevande, snack, igiene, casa, etc.). Wraps around so the last
+ * category's "next" is the first, and vice versa.
+ */
+export function getAdjacentCategories(category: CategoryDefinition): {
+  prev: CategoryDefinition;
+  next: CategoryDefinition;
+} {
+  const i = CATEGORIES.findIndex((c) => c.slug === category.slug);
+  const total = CATEGORIES.length;
+  const prevIdx = (i - 1 + total) % total;
+  const nextIdx = (i + 1) % total;
+  return { prev: CATEGORIES[prevIdx], next: CATEGORIES[nextIdx] };
+}
