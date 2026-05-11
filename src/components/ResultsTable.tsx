@@ -85,7 +85,7 @@ export default function ResultsTable({ category, results }: Props) {
 
   return (
     <div
-      className="overflow-x-auto rounded-lg border"
+      className="overflow-x-auto rounded-lg border bg-card shadow-sm"
       role="region"
       aria-label="Risultati del confronto"
       aria-live="polite"
