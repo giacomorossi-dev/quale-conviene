@@ -1,4 +1,4 @@
-import { Coffee } from "lucide-react";
+import { Heart } from "lucide-react";
 import { Button } from "#/components/app/button.tsx";
 
 const KOFI_URL = "https://ko-fi.com/giacomorossidev";
@@ -12,9 +12,9 @@ export default function BuyMeCoffee({ compact = false }: Props) {
 	return (
 		<Button asChild variant="gradient" size="sm">
 			<a href={KOFI_URL} target="_blank" rel="noopener noreferrer">
-				<Coffee className="h-4 w-4" />
+				<Heart className="h-4 w-4" />
 				<span className={compact ? "hidden sm:inline" : undefined}>
-					Offrimi un caffè
+					Supporta
 				</span>
 			</a>
 		</Button>

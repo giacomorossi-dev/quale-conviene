@@ -238,10 +238,6 @@ function SiteFooter() {
 						</a>
 					</p>
 				</div>
-
-				<div className="mt-10 flex justify-center">
-					<BuyMeCoffee />
-				</div>
 			</div>
 		</footer>
 	);
