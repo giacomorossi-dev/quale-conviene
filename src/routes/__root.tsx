@@ -10,6 +10,7 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { MessageSquare } from "lucide-react";
 import { Button } from "#/components/app/button.tsx";
 import BuyMeCoffee from "#/components/BuyMeCoffee.tsx";
+import CookieConsent from "#/components/CookieConsent.tsx";
 import HelpButton from "#/components/HelpButton.tsx";
 import Logo from "#/components/Logo.tsx";
 import OnboardingDialog from "#/components/OnboardingDialog.tsx";
@@ -21,6 +22,12 @@ import appCss from "../styles.css?url";
 // Runs synchronously before hydration so the .dark class is applied before
 // first paint — no white-flash for users with the dark theme saved.
 const THEME_BOOTSTRAP = `(function(){try{var t=localStorage.getItem('qc:theme');var isDark;if(t==='dark'){isDark=true;}else if(t==='light'){isDark=false;}else{isDark=matchMedia('(prefers-color-scheme: dark)').matches;}if(isDark)document.documentElement.classList.add('dark');}catch(e){}})();`;
+
+// Google Consent Mode v2 — default DENIED for everything until the user
+// accepts. Must run BEFORE any GA4/GTM script loads. When the user accepts
+// the `analytics` category, `lib/analytics.ts → loadGA4()` flips
+// `analytics_storage` to `granted` and injects gtag.js.
+const CONSENT_BOOTSTRAP = `window.dataLayer=window.dataLayer||[];window.gtag=function(){window.dataLayer.push(arguments);};window.gtag('consent','default',{analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',wait_for_update:500});`;
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -60,6 +67,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<HeadContent />
 				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: theme bootstrap must run before hydration */}
 				<script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
+				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: gtag consent default must run before any analytics script */}
+				<script dangerouslySetInnerHTML={{ __html: CONSENT_BOOTSTRAP }} />
 			</head>
 			<body className="min-h-screen flex flex-col bg-background text-foreground antialiased">
 				<header className="topbar-surface fixed inset-x-0 top-0 z-50">
@@ -108,6 +117,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				<Scripts />
 				<ServiceWorkerRegister />
 				<OnboardingDialog />
+				<CookieConsent />
 			</body>
 		</html>
 	);
@@ -234,6 +244,15 @@ function SiteFooter() {
 								>
 									Cookie policy
 								</Link>
+							</li>
+							<li>
+								<button
+									type="button"
+									data-cc="show-preferencesModal"
+									className="text-muted-foreground transition-colors hover:text-foreground"
+								>
+									Preferenze cookie
+								</button>
 							</li>
 						</ul>
 					</nav>

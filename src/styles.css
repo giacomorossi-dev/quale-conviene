@@ -3,6 +3,7 @@
 @plugin '@tailwindcss/typography';
 
 @import 'tw-animate-css';
+@import 'vanilla-cookieconsent/dist/cookieconsent.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -14,6 +15,11 @@
   --brand-cool: #06b6d4;
   --brand-gradient: linear-gradient(110deg, var(--brand-from) 0%, var(--brand-via) 55%, var(--brand-to) 100%);
   --brand-gradient-soft: linear-gradient(110deg, color-mix(in oklab, var(--brand-from) 78%, white), color-mix(in oklab, var(--brand-to) 78%, white));
+
+  /* Semantic gradient variants — same 3-stop structure as --brand-gradient,
+     used to color affirmative/destructive CTAs (e.g. cookie banner buttons). */
+  --success-gradient: linear-gradient(110deg, #10b981 0%, #22c55e 55%, #14b8a6 100%);
+  --destructive-gradient: linear-gradient(110deg, #ef4444 0%, #f43f5e 55%, #e11d48 100%);
 
   --glow-a: rgba(99, 102, 241, 0.22);
   --glow-b: rgba(236, 72, 153, 0.16);
@@ -70,6 +76,9 @@
   --brand-cool: #22d3ee;
   --brand-gradient: linear-gradient(110deg, var(--brand-from) 0%, var(--brand-via) 55%, var(--brand-to) 100%);
   --brand-gradient-soft: linear-gradient(110deg, color-mix(in oklab, var(--brand-from) 35%, transparent), color-mix(in oklab, var(--brand-to) 35%, transparent));
+
+  --success-gradient: linear-gradient(110deg, #34d399 0%, #4ade80 55%, #2dd4bf 100%);
+  --destructive-gradient: linear-gradient(110deg, #f87171 0%, #fb7185 55%, #f43f5e 100%);
 
   --glow-a: rgba(99, 102, 241, 0.34);
   --glow-b: rgba(236, 72, 153, 0.22);
@@ -336,4 +345,101 @@ select {
   * {
     @apply border-border outline-ring/50;
   }
+}
+
+/* ── Cookie consent banner (vanilla-cookieconsent) ─────────────────────
+   Override the library's design tokens so the banner blends with the
+   rest of the site. The library exposes CSS vars under #cc-main; we
+   map them to the design tokens already in use elsewhere. */
+#cc-main {
+  --cc-font-family: var(--font-sans);
+  --cc-bg: var(--background);
+  --cc-primary-color: var(--foreground);
+  --cc-secondary-color: var(--muted-foreground);
+  --cc-btn-primary-bg: var(--primary);
+  --cc-btn-primary-color: var(--primary-foreground);
+  --cc-btn-primary-hover-bg: color-mix(in oklab, var(--primary) 85%, black);
+  --cc-btn-secondary-bg: var(--secondary);
+  --cc-btn-secondary-color: var(--secondary-foreground);
+  --cc-btn-secondary-hover-bg: var(--accent);
+  --cc-toggle-on-bg: var(--primary);
+  --cc-toggle-off-bg: var(--muted);
+  --cc-toggle-on-knob-bg: var(--primary-foreground);
+  --cc-toggle-off-knob-bg: var(--background);
+  --cc-toggle-readonly-bg: var(--muted);
+  --cc-cookie-category-block-bg: var(--muted);
+  --cc-cookie-category-block-bg-hover: var(--accent);
+  --cc-cookie-category-block-border: var(--border);
+  --cc-cookie-category-block-border-hover: var(--border);
+  --cc-cookie-category-expanded-block-bg: var(--muted);
+  --cc-separator-border-color: var(--border);
+  --cc-modal-border-radius: var(--radius);
+  --cc-btn-border-radius: calc(var(--radius) - 4px);
+  --cc-modal-margin: 1rem;
+  --cc-z-index: 2147483647;
+}
+
+/* All consent buttons styled as brand-gradient, mirroring the topbar
+   "Supporta" button (size="sm" → h-8). Override both `--secondary`
+   variants too so the hover state can't fall back to the library's
+   neutral grey, and so Accept/Reject keep equal visual weight as
+   required by Garante Privacy guidelines. */
+#cc-main .cm__btn,
+#cc-main .cm__btn--secondary,
+#cc-main .pm__btn,
+#cc-main .pm__btn--secondary {
+  background: var(--brand-gradient);
+  border: none;
+  color: #fff;
+  min-height: 2rem;
+  padding: 0 0.875rem;
+  font-size: 0.875em;
+  font-weight: 600;
+  border-radius: calc(var(--radius) - 4px);
+  box-shadow: 0 8px 24px -8px rgba(99, 102, 241, 0.45);
+  transition: filter 0.15s ease, box-shadow 0.15s ease;
+}
+#cc-main .cm__btn:hover,
+#cc-main .cm__btn--secondary:hover,
+#cc-main .pm__btn:hover,
+#cc-main .pm__btn--secondary:hover {
+  background: var(--brand-gradient);
+  border-color: transparent;
+  color: #fff;
+  filter: brightness(1.1);
+  box-shadow: 0 12px 32px -10px rgba(168, 85, 247, 0.55);
+}
+
+/* Semantic recolor by action:
+   - "Accetta tutti"  (data-role="all")       → success (green)
+   - "Rifiuta tutti"  (data-role="necessary") → destructive (red)
+   Salva preferenze / Personalizza keep the brand gradient as a tertiary
+   visual weight. Higher specificity (attribute selector) lets these
+   override the baseline rule above without !important. */
+#cc-main .cm__btn[data-role="all"],
+#cc-main .pm__btn[data-role="all"] {
+  background: var(--success-gradient);
+}
+#cc-main .cm__btn[data-role="all"]:hover,
+#cc-main .pm__btn[data-role="all"]:hover {
+  background: var(--success-gradient);
+}
+#cc-main .cm__btn[data-role="necessary"],
+#cc-main .pm__btn[data-role="necessary"] {
+  background: var(--destructive-gradient);
+}
+#cc-main .cm__btn[data-role="necessary"]:hover,
+#cc-main .pm__btn[data-role="necessary"]:hover {
+  background: var(--destructive-gradient);
+}
+
+/* Banner / modal links: by default the lib leaves <a> uncolored so it
+   inherits the surrounding text, which in our theme is identical to
+   the hover color (var(--cc-primary-color) = var(--foreground)) and
+   makes the hover state invisible. Tint them with the brand primary
+   instead — the library's own hover rule then swaps to foreground,
+   producing a clear color change on both light and dark themes. */
+#cc-main a,
+#cc-main .cc__link {
+  color: var(--primary);
 }

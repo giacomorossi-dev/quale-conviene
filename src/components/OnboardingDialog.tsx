@@ -22,6 +22,15 @@ const KOFI_URL = "https://ko-fi.com/giacomorossidev";
 
 const TOTAL_STEPS = 3;
 
+// Delay the first-visit auto-open so the user gets a moment to read the page
+// before a modal pops up; also avoids visual conflict with the cookie banner.
+const AUTO_OPEN_DELAY_MS = 10_000;
+
+// vanilla-cookieconsent sets `show--consent` on <html> while the banner is
+// visible, and dispatches `cc:onConsent` once the user accepts or rejects.
+const CONSENT_VISIBLE_CLASS = "show--consent";
+const CONSENT_DONE_EVENT = "cc:onConsent";
+
 export default function OnboardingDialog() {
 	const [open, setOpen] = useState(false);
 	const [step, setStep] = useState(0);
@@ -29,21 +38,56 @@ export default function OnboardingDialog() {
 	// Auto-open on first visit + listen for explicit "open" events from triggers.
 	useEffect(() => {
 		if (typeof window === "undefined") return;
-		try {
-			if (!window.localStorage.getItem(STORAGE_KEY)) {
-				setStep(0);
-				setOpen(true);
-			}
-		} catch {
-			/* storage disabled — silently skip the auto-trigger */
-		}
 
-		const onOpen = () => {
+		const openOnboarding = () => {
 			setStep(0);
 			setOpen(true);
 		};
-		window.addEventListener(OPEN_EVENT, onOpen);
-		return () => window.removeEventListener(OPEN_EVENT, onOpen);
+
+		// Manual trigger (Aiuto button, footer link) — always allowed, never deferred.
+		window.addEventListener(OPEN_EVENT, openOnboarding);
+
+		let alreadySeen = false;
+		try {
+			alreadySeen = !!window.localStorage.getItem(STORAGE_KEY);
+		} catch {
+			/* storage disabled — treat as not-seen, but auto-open still runs below */
+		}
+		if (alreadySeen) {
+			return () => window.removeEventListener(OPEN_EVENT, openOnboarding);
+		}
+
+		let timerId: number | null = null;
+		let consentListener: (() => void) | null = null;
+
+		const tryAutoOpen = () => {
+			timerId = null;
+			const bannerUp = document.documentElement.classList.contains(
+				CONSENT_VISIBLE_CLASS,
+			);
+			if (!bannerUp) {
+				openOnboarding();
+				return;
+			}
+			// Cookie banner is still on screen — wait for the user to dismiss it
+			// (accept or reject) and only then surface the tutorial.
+			consentListener = () => {
+				if (!consentListener) return;
+				window.removeEventListener(CONSENT_DONE_EVENT, consentListener);
+				consentListener = null;
+				openOnboarding();
+			};
+			window.addEventListener(CONSENT_DONE_EVENT, consentListener);
+		};
+
+		timerId = window.setTimeout(tryAutoOpen, AUTO_OPEN_DELAY_MS);
+
+		return () => {
+			window.removeEventListener(OPEN_EVENT, openOnboarding);
+			if (timerId !== null) window.clearTimeout(timerId);
+			if (consentListener)
+				window.removeEventListener(CONSENT_DONE_EVENT, consentListener);
+		};
 	}, []);
 
 	const markSeen = useCallback(() => {
