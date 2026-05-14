@@ -10,7 +10,9 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { MessageSquare } from "lucide-react";
 import { Button } from "#/components/app/button.tsx";
 import BuyMeCoffee from "#/components/BuyMeCoffee.tsx";
+import HelpButton from "#/components/HelpButton.tsx";
 import Logo from "#/components/Logo.tsx";
+import OnboardingDialog from "#/components/OnboardingDialog.tsx";
 import ServiceWorkerRegister from "#/components/ServiceWorkerRegister.tsx";
 import ThemeToggle from "#/components/ThemeToggle.tsx";
 import { CLOUDFLARE_ANALYTICS_TOKEN, SITE_NAME } from "#/lib/seo.ts";
@@ -70,6 +72,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 									<span className="hidden sm:inline">Feedback</span>
 								</Link>
 							</Button>
+							<HelpButton />
 							<BuyMeCoffee compact />
 							<ThemeToggle />
 						</div>
@@ -104,6 +107,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 				)}
 				<Scripts />
 				<ServiceWorkerRegister />
+				<OnboardingDialog />
 			</body>
 		</html>
 	);
@@ -187,6 +191,18 @@ function SiteFooter() {
 							Informazioni
 						</h3>
 						<ul className="space-y-2 text-sm">
+							<li>
+								<button
+									type="button"
+									onClick={() => {
+										if (typeof window === "undefined") return;
+										window.dispatchEvent(new Event("qc:open-onboarding"));
+									}}
+									className="text-muted-foreground transition-colors hover:text-foreground"
+								>
+									Tour guidato
+								</button>
+							</li>
 							<li>
 								<Link
 									to="/contatti"

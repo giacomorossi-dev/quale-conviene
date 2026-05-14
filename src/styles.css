@@ -244,6 +244,12 @@ body {
   border-bottom: 1px solid var(--topbar-border);
   backdrop-filter: blur(14px) saturate(140%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
+  /* When a Radix Dialog (or any react-remove-scroll consumer) locks body scroll
+     it hides the scrollbar and compensates the body with right padding.
+     Fixed-position elements like this topbar escape that compensation and
+     would otherwise jump rightward by the scrollbar width. Reserve the same
+     gap here so the topbar stays put when a dialog opens. */
+  padding-right: var(--removed-body-scroll-bar-size, 0px);
 }
 
 .display-title {
