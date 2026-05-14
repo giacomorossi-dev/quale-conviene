@@ -1,4 +1,4 @@
-import { ChevronDown, Trash2 } from "lucide-react";
+import { AlertCircle, ChevronDown, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "#/components/app/button.tsx";
 import { Input } from "#/components/app/input.tsx";
@@ -12,6 +12,7 @@ import {
 } from "#/components/app/select.tsx";
 import { cn } from "#/lib/utils.ts";
 import {
+  computeEntry,
   getCategoryBaseLabelPlural,
   getCategoryUnits,
   type CategoryDefinition,
@@ -79,6 +80,24 @@ export default function EntryForm({
   const [collapsed, setCollapsed] = useState(hasData);
   const bodyId = `entry-${index}-body`;
 
+  const isInvalid = computeEntry(category, entry).invalid;
+
+  // Per-field invalidity — mirrors the rules in `computeEntry`. Empty/non-positive
+  // values mark the specific input as invalid so the user sees exactly which
+  // field needs filling, instead of a card-wide red flood.
+  const priceInvalid = !Number.isFinite(entry.price) || entry.price <= 0;
+  const measureInvalid =
+    category.context !== "dosage" &&
+    (!Number.isFinite(entry.measureValue) || entry.measureValue <= 0);
+  const doseCountInvalid =
+    category.context === "dosage" &&
+    (!Number.isFinite(entry.doseCount) || (entry.doseCount ?? 0) <= 0);
+  const isCountInvalid = (levelId: string, optional?: boolean): boolean => {
+    if (optional) return false;
+    const raw = entry.counts[levelId];
+    return !Number.isFinite(raw) || raw <= 0;
+  };
+
   return (
     <div className="relative">
       {/* Floating name chip — straddles the card's top border (left-aligned)
@@ -99,21 +118,37 @@ export default function EntryForm({
         </div>
       </div>
 
-      {/* Remove button — top-right corner */}
-      {onRemove && (
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={onRemove}
-          aria-label="Rimuovi prodotto"
-          className="absolute top-2 right-2 z-10"
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
-      )}
+      {/* Top-right cluster: invalid warning + remove button */}
+      <div className="absolute top-2 right-2 z-10 flex items-center gap-0.5">
+        {isInvalid && (
+          <span
+            role="img"
+            aria-label="Prodotto non valido"
+            title="Prodotto non valido"
+            className="flex h-9 w-9 items-center justify-center text-destructive"
+          >
+            <AlertCircle className="h-5 w-5" />
+          </span>
+        )}
+        {onRemove && (
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={onRemove}
+            aria-label="Rimuovi prodotto"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        )}
+      </div>
 
-      <div className="rounded-lg border bg-card p-4 pt-8 pr-12 space-y-3">
+      <div
+        className={cn(
+          "rounded-lg border bg-card p-4 pt-8 space-y-3",
+          isInvalid ? "pr-[5.25rem]" : "pr-12",
+        )}
+      >
         {/* Mobile-only collapse summary. Name is already visible in the
             floating chip above, so we just surface the price/measure here. */}
         <button
@@ -158,6 +193,7 @@ export default function EntryForm({
                   inputMode="numeric"
                   min={0}
                   step={1}
+                  aria-invalid={isCountInvalid(level.id, level.optional)}
                   value={
                     Number.isFinite(entry.counts[level.id])
                       ? entry.counts[level.id]
@@ -181,6 +217,7 @@ export default function EntryForm({
                   inputMode="decimal"
                   min={0}
                   step="any"
+                  aria-invalid={measureInvalid}
                   value={
                     Number.isFinite(entry.measureValue) ? entry.measureValue : ""
                   }
@@ -225,6 +262,7 @@ export default function EntryForm({
                   inputMode="numeric"
                   min={0}
                   step={1}
+                  aria-invalid={doseCountInvalid}
                   value={Number.isFinite(entry.doseCount) ? entry.doseCount : ""}
                   onChange={(e) =>
                     onChange({
@@ -244,6 +282,7 @@ export default function EntryForm({
                 inputMode="decimal"
                 min={0}
                 step="0.01"
+                aria-invalid={priceInvalid}
                 value={Number.isFinite(entry.price) ? entry.price : ""}
                 onChange={(e) =>
                   onChange({ ...entry, price: numericValue(e.currentTarget.value) })
@@ -252,6 +291,13 @@ export default function EntryForm({
             </div>
           </div>
         </div>
+
+        {isInvalid && (
+          <p className="flex items-center gap-1.5 text-sm font-medium text-destructive">
+            <AlertCircle className="h-3.5 w-3.5" aria-hidden="true" />
+            Prodotto non valido
+          </p>
+        )}
       </div>
     </div>
   );
