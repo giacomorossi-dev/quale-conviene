@@ -36,15 +36,28 @@ function TermsPage() {
 					<span className="brand-gradient-text">Termini e condizioni</span>
 				</h1>
 				<p className="text-sm text-muted-foreground">
-					Ultimo aggiornamento: 11 maggio 2026
+					Ultimo aggiornamento: 14 maggio 2026
 				</p>
 			</header>
 
 			<p className="text-muted-foreground leading-relaxed">
 				Benvenuto su <strong className="text-foreground">{SITE_NAME}</strong>.
 				Utilizzando questo sito accetti integralmente i termini d'uso descritti
-				qui di seguito. Se non sei d'accordo con uno qualsiasi dei punti, ti
-				invitiamo a non utilizzare il servizio.
+				qui di seguito. Per il trattamento dei dati personali consulta la
+				nostra <a
+					href="/privacy"
+					className="brand-gradient-text font-semibold underline-offset-4 hover:underline"
+				>
+					privacy policy
+				</a>{" "}
+				e la <a
+					href="/cookie"
+					className="brand-gradient-text font-semibold underline-offset-4 hover:underline"
+				>
+					cookie policy
+				</a>
+				. Se non sei d'accordo con uno qualsiasi dei punti, ti invitiamo a non
+				utilizzare il servizio.
 			</p>
 
 			<section>

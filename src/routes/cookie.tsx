@@ -36,15 +36,16 @@ function CookiePage() {
 					<span className="brand-gradient-text">Cookie policy</span>
 				</h1>
 				<p className="text-sm text-muted-foreground">
-					Ultimo aggiornamento: 11 maggio 2026
+					Ultimo aggiornamento: 14 maggio 2026
 				</p>
 			</header>
 
 			<p className="text-muted-foreground leading-relaxed">
-				{SITE_NAME} adotta un approccio minimalista: <strong className="text-foreground">non utilizziamo cookie di
-				profilazione, di marketing o di terze parti</strong>. Questa pagina spiega
-				quali tecnologie di archiviazione locale vengono effettivamente
-				utilizzate dal sito e con quale finalità.
+				{SITE_NAME} adotta un approccio minimalista: <strong className="text-foreground">nessun cookie di
+				profilazione o marketing</strong>. Utilizziamo un solo cookie tecnico per ricordare
+				le tue preferenze sul banner di consenso e, esclusivamente previo tuo
+				consenso esplicito, cookie statistici di terze parti per misurazioni
+				aggregate.
 			</p>
 
 			<section>
@@ -62,10 +63,40 @@ function CookiePage() {
 			<section>
 				<SectionHeading>2. Cookie utilizzati da {SITE_NAME}</SectionHeading>
 				<p className="text-muted-foreground leading-relaxed">
-					Il sito <strong className="text-foreground">non utilizza alcun cookie HTTP</strong>: né
-					tecnici, né statistici, né di terze parti. Tutte le preferenze e i
-					dati di confronto vengono salvati nel <code>localStorage</code> del
-					tuo browser, accessibili solo dal tuo dispositivo.
+					Gestiamo i cookie tramite un banner di consenso conforme alle Linee
+					Guida del Garante Privacy del 10 giugno 2021. Le categorie disponibili
+					sono:
+				</p>
+				<ul className="mt-3 space-y-3 text-muted-foreground leading-relaxed">
+					<li>
+						<strong className="text-foreground">Strettamente necessari</strong> (sempre
+						attivi): un cookie tecnico di prima parte memorizza la scelta che
+						hai espresso nel banner. Durata: 6 mesi. Non raccoglie dati
+						personali identificativi.
+					</li>
+					<li>
+						<strong className="text-foreground">Statistiche</strong> (opt-in): cookie di Google
+						Analytics 4 (<code>_ga</code>, <code>_ga_&lt;container-id&gt;</code>),
+						durata 24 mesi, che misurano in forma aggregata e anonima
+						l'utilizzo del sito (pagine viste, durata sessione, dispositivo,
+						paese di provenienza). Vengono installati soltanto se acconsenti
+						esplicitamente alla categoria "Statistiche"; in caso contrario non
+						vengono mai impostati. Maggiori informazioni:{" "}
+						<a
+							href="https://policies.google.com/privacy"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="brand-gradient-text font-semibold underline-offset-4 hover:underline"
+						>
+							privacy policy di Google
+						</a>
+						.
+					</li>
+				</ul>
+				<p className="mt-3 text-muted-foreground leading-relaxed">
+					Puoi modificare le tue scelte in qualsiasi momento cliccando su{" "}
+					<strong className="text-foreground">"Preferenze cookie"</strong> nel
+					footer del sito.
 				</p>
 			</section>
 
@@ -97,23 +128,27 @@ function CookiePage() {
 			</section>
 
 			<section>
-				<SectionHeading>4. Analitiche anonime</SectionHeading>
+				<SectionHeading>4. Analitiche di base senza cookie</SectionHeading>
 				<p className="text-muted-foreground leading-relaxed">
-					Per capire come viene utilizzato il sito ci affidiamo a Cloudflare
+					In aggiunta ai cookie statistici opt-in, ci affidiamo a Cloudflare
 					Web Analytics, una soluzione privacy-first che <strong className="text-foreground">non utilizza
-					cookie</strong> e non raccoglie identificatori univoci. Le statistiche
-					rilevate sono aggregate e anonime.
+					cookie</strong> e non raccoglie identificatori univoci. Queste
+					statistiche di base sono aggregate, anonime e operano lato edge
+					senza interagire con il tuo browser.
 				</p>
 			</section>
 
 			<section>
-				<SectionHeading>5. Come gestire lo storage locale</SectionHeading>
+				<SectionHeading>5. Come gestire cookie e storage locale</SectionHeading>
 				<p className="text-muted-foreground leading-relaxed">
-					Puoi cancellare in qualunque momento i dati salvati localmente
-					utilizzando il pulsante "Svuota tutto" del calcolatore oppure
-					cancellando i dati del sito dalle impostazioni del browser
-					(Chrome, Firefox, Safari, Edge tutti supportano la cancellazione
-					per singolo sito).
+					Per i cookie del consenso utilizza il pulsante{" "}
+					<strong className="text-foreground">"Preferenze cookie"</strong>{" "}
+					presente nel footer di ogni pagina: puoi rifiutare, accettare o
+					revocare il consenso in qualunque momento. Per i dati salvati nel
+					<code> localStorage</code> usa il pulsante "Svuota tutto" del
+					calcolatore oppure cancella i dati del sito dalle impostazioni del
+					browser (Chrome, Firefox, Safari, Edge supportano tutti la
+					cancellazione per singolo sito).
 				</p>
 			</section>
 
