@@ -1,4 +1,4 @@
-import type { CategoryDefinition } from "./pricing";
+import { getCategoryBaseLabel, type CategoryDefinition } from "./pricing";
 
 const SITE_NAME = "Quale Conviene";
 
@@ -30,7 +30,7 @@ const OG_IMAGE_META = [
 
 export function buildCategoryMeta(category: CategoryDefinition) {
   // SEO-tuned title: long-tail + question framing performs better in SERP.
-  const title = `${category.name} al miglior prezzo · €/${category.baseLabel ?? "unità"} · ${SITE_NAME}`;
+  const title = `${category.name} al miglior prezzo · €/${getCategoryBaseLabel(category)} · ${SITE_NAME}`;
   const description = category.description;
   const url = `${SITE_URL}/${category.slug}`;
   return [
@@ -69,7 +69,7 @@ export function buildCategoryJsonLd(category: CategoryDefinition) {
   const article = {
     "@context": "https://schema.org",
     "@type": "Article",
-    headline: `${category.name} — quale conviene? Calcolatore €/unità`,
+    headline: `${category.name} — quale conviene? Calcolatore €/${getCategoryBaseLabel(category)}`,
     description: category.description,
     url,
     inLanguage: "it",
