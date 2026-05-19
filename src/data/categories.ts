@@ -19,7 +19,7 @@ export const CATEGORIES: CategoryDefinition[] = [
       "I supermercati alternano formati e promozioni continuamente. Inserisci la confezione (anche più bottiglie/lattine in un fardello), la quantità di ciascuna e il prezzo: il sistema normalizza tutto al prezzo per litro.",
     context: "liquid",
     keywords: ["acqua", "acqua minerale", "acqua naturale", "acqua frizzante", "acqua effervescente", "minerale"],
-    related: ["bibite", "succhi-frutta", "bevande-sportive"],
+    related: ["bibite", "succhi-frutta", "bevande-sportive", "birra"],
     guideTitle: "Guida all'acqua minerale al supermercato",
     longDescription: `Il prezzo dell'acqua minerale in Italia oscilla fra meno di 10 centesimi al litro per i fardelli di marche private label e oltre 1 € al litro per le acque premium in vetro. La differenza in scaffale non riflette quasi mai una differenza nutrizionale o di sicurezza: tutte le acque imbottigliate vendute in Italia sono regolate da limiti stringenti (D.Lgs. 176/2011) e sono potabili.
 
@@ -152,7 +152,7 @@ Considerare le isotoniche un'idratazione quotidiana. Contengono 25-40 g di zucch
     intro: "Bottiglie da 1,5 L, fardelli di lattine da 33 cl, mini-bottiglie da 45 cl: il prezzo in scaffale non si confronta a colpo d'occhio. Inserisci formato e prezzo, il sistema normalizza al litro.",
     context: "liquid",
     keywords: ["coca cola", "coca-cola", "pepsi", "aranciata", "fanta", "sprite", "chinotto", "ginger", "tè freddo", "the freddo", "tea", "energy drink", "redbull", "red bull", "monster", "estathè", "lipton"],
-    related: ["acqua", "succhi-frutta", "bevande-sportive"],
+    related: ["acqua", "succhi-frutta", "bevande-sportive", "birra"],
     guideTitle: "Guida alle bibite: come confrontare il prezzo al litro",
     longDescription: `Bibite gassate, tè freddi, energy drink: è uno dei reparti dove il prezzo "al pezzo" inganna di più. La stessa bevanda dello stesso brand può costare 1,80 €/L in bottiglia 1,5 L e 2,80 €/L in lattina 33 cl venduta singola — a parità di contenuto e di marca. Il costo è quasi tutto nell'imballaggio (vetro e alluminio pesano molto di più della plastica PET sul prezzo finale) e nel canale di vendita.
 
@@ -222,6 +222,184 @@ Pensare che "zero" costi sempre uguale. Le versioni zero (Zero Sugar, Light) cos
   },
 
   {
+    slug: "birra",
+    name: "Birra",
+    description:
+      "Confronta lattine, bottiglie e fardelli di birra al prezzo al litro. Funziona fra formati diversi: 6 × 66 cl, 24 × 33 cl, cassa da 12.",
+    intro:
+      "La birra è una delle categorie dove il prezzo al litro varia di più: la stessa marca può costare il triplo cambiando solo formato. Inserisci il pack (fardello/multipack), il numero di bottiglie/lattine e il volume di ciascuna: il calcolatore normalizza tutto a €/L.",
+    context: "liquid",
+    keywords: [
+      "birra",
+      "birra al litro",
+      "fardello birra",
+      "cassa birra",
+      "lattina birra",
+      "bottiglia birra",
+      "peroni",
+      "moretti",
+      "heineken",
+      "ichnusa",
+      "menabrea",
+      "birra chiara",
+      "lager",
+    ],
+    related: ["acqua", "bibite", "succhi-frutta"],
+    guideTitle: "Guida alla birra: prezzo al litro",
+    longDescription: `Il mercato italiano della birra è uno dei più vivaci d'Europa: gli italiani consumano in media 36 litri di birra a testa all'anno (dati Assobirra 2024), per un fatturato GDO che vale oltre 3 miliardi di euro. In scaffale convivono lattine 33 cl singole, bottiglie 33/66 cl, fardelli 6×66 cl, casse da 12 o 24 lattine, formati gigante 1 L: e il prezzo al litro può variare del 200-300% fra il singolo "presa veloce" al frigo cassa e il fardello convenienza.
+
+Lo stesso prodotto della stessa marca (es. Peroni Nastro Azzurro 4,7°) può costare 4,50 €/L in lattina singola 33 cl al supermercato di vicinato e meno di 1,80 €/L in fardello da 24 lattine all'iper. Il €/L è l'unico parametro che permette confronti onesti, soprattutto perché le promozioni sui multipack ("3 fardelli a 12 €", "cassa 24 a 9,99 €") sono frequenti e cambiano la convenienza ogni settimana.
+
+In Italia il prezzo per unità di misura è obbligatorio in scaffale dal 2005 (Codice del Consumo art. 14): per la birra è espresso in €/L ed è la metrica da guardare prima del prezzo etichetta. Questo calcolatore lo applica al volo confrontando fino a 5 prodotti contemporaneamente, anche fra formati eterogenei (cl, ml, L).`,
+    sections: [
+      {
+        heading: "Lattina, bottiglia, fardello: dove sta il risparmio",
+        body: `Le lattine costano in media il 10-20% meno al litro delle bottiglie di vetro a parità di marca, perché l'alluminio è più leggero da trasportare. Le bottiglie da 66 cl sono il formato dove il €/L scende di più: un fardello 6 × 66 cl di Heineken si trova spesso a 1,80-2,20 €/L contro 3,00-3,80 €/L della bottiglia 33 cl singola.
+
+Le casse da 12 o 24 lattine (33 cl) sono il prodotto-civetta della GDO estiva: in offerta arrivano a 1,40-1,60 €/L per le marche standard. Sono il singolo formato più conveniente quasi sempre, a patto di avere spazio (24 × 33 cl pesa 8 kg e occupa parecchio).
+
+Il vuoto a rendere è ormai marginale nella GDO, ma resta in alcune zone (Trentino, Alto Adige) e in birre regionali: vale 0,10-0,20 € a bottiglia che recuperi alla restituzione — controllane sempre l'indicazione in scontrino.`,
+      },
+      {
+        heading: "Errori comuni quando compri birra",
+        body: `Comprare al frigo cassa. È il formato dove il €/L è peggiore: 4,00-5,00 €/L contro 1,80-2,20 €/L del fardello equivalente. Ha senso solo se ti serve UNA birra fredda subito. Per una settimana di consumo conviene programmare e comprare in pack.
+
+Ignorare il grado alcolico. Una birra al 7-8% (es. Hoegaarden, doppio malto) costa al litro più di una lager 4,5-5,0%, ma "rende" anche di più. A parità di €/L una doppio malto richiede meno volume per la stessa "occasione di consumo": il vero confronto sarebbe €/grado-alcolico-litro, che però è una metrica troppo nicchia da implementare.
+
+Confondere artigianale e premium industriale. Una birra artigianale italiana 33 cl costa spesso 4-6 € (= 12-18 €/L), una "premium" industriale tipo Menabrea costa 2-3 €/L: le due cose non sono comparabili. Il calcolatore qui sopra fa il €/L matematicamente, ma sta a te decidere a parità di gusto se preferisci un birrificio locale o una lager mass-market.`,
+      },
+      {
+        heading: "Private label e birre da discount",
+        body: `Lidl, Eurospin, Aldi e MD hanno linee birra private label (es. Perlenbacher di Lidl, Bavaria di MD) che competono direttamente con le mass-market premium tedesche e olandesi. Il €/L si attesta sotto i 1,00-1,30 € per le lager standard 50 cl o 1 L, contro 1,80-2,50 €/L delle stesse occasioni di consumo Heineken/Beck's.
+
+Qualitativamente sono lager industriali rispettabili, prodotte spesso negli stessi stabilimenti tedeschi o belgi che producono i brand "top". Difficilmente si distinguono in test alla cieca da un consumatore medio, e per consumo quotidiano in famiglia rappresentano lo zoccolo duro del risparmio sulla categoria.
+
+Le birre regionali italiane (Ichnusa, Forst, Menabrea) hanno una fascia di prezzo intermedia (2,50-4,00 €/L) e una percezione di qualità superiore, giustificata in parte dalla materia prima e dal processo. Su queste il fardello multipack è quasi sempre molto più conveniente del singolo, valori al litro -30/-40%.`,
+      },
+      {
+        heading: "Quando il fardello non conviene",
+        body: `La birra ha una shelf life di 6-12 mesi dichiarata, ma il sapore degrada più rapidamente: dopo 3-4 mesi le note luppolate si appiattiscono e oltre 6 mesi il gusto diventa più piatto. Comprare 24 lattine se ne bevi 2 a settimana significa avere birra "vecchia" entro 3 mesi.
+
+Per single o coppie con consumo basso, un fardello 6 × 33 cl (poco meno di 2 L totali) è un buon compromesso fra €/L decente e turnover veloce. Sopra il fardello da 24, conviene solo se si fanno cene/grigliate frequenti o si ha un freezer/cantina dedicata.
+
+In estate il consumo cresce del 30-50%: vale la pena fare scorta in offerta a maggio-giugno con casse, in inverno tornare al fardello piccolo. Le promozioni "fardello + fardello = 3 €" sotto i mondiali/europei di calcio sono fra le migliori dell'anno per il €/L.`,
+      },
+    ],
+    faq: [
+      { q: "Qual è il formato di birra che costa meno al litro?", a: "Quasi sempre il fardello 6 × 66 cl o la cassa 24 × 33 cl: si scende sotto 1,80 €/L per le marche standard e sotto 1,20 €/L per i discount o le private label. Le lattine singole 33 cl al supermercato di vicinato hanno invece il €/L peggiore, spesso oltre 4,00 €/L." },
+      { q: "Le lattine costano davvero meno delle bottiglie?", a: "Sì, in media il 10-20% al litro a parità di marca e volume. L'alluminio pesa meno del vetro: trasporto e logistica costano meno e il prezzo lo riflette. Inoltre la lattina protegge meglio la birra dalla luce, riducendo il rischio di alterazioni del gusto." },
+      { q: "Conviene comprare le birre del discount (Lidl, Eurospin)?", a: "Per consumo quotidiano sì: le linee private label (es. Perlenbacher di Lidl) sono lager tedesche rispettabili a 0,90-1,30 €/L, contro 1,80-2,80 €/L delle marche premium internazionali. In test alla cieca la differenza è poco percepibile per un consumatore medio. Se invece cerchi un'esperienza specifica (birre artigianali, stili poco comuni), il discount non è il canale giusto." },
+      { q: "Quanta birra serve a un party di 10 persone?", a: "Stima conservativa: 1 birra grande (66 cl) o 2 piccole (33 cl) a persona per ogni 2 ore di evento. Per 10 persone in una serata di 4 ore servono 30-40 lattine 33 cl o 20-25 bottiglie 66 cl, cioè 2-3 casse da 24 oppure 5-6 fardelli 6×66 cl. Aggiungi sempre un 20% di scorta." },
+      { q: "Quanto dura una birra in dispensa?", a: "La data di scadenza dichiarata in etichetta è solitamente 6-12 mesi dal confezionamento, ma il sapore degrada più rapidamente: dopo 3-4 mesi le note di luppolo si appiattiscono. Conserva al fresco e al buio (15-18°C max); evita scorte massicce se il turnover è lento." },
+      { q: "Birra in offerta multipack: come si confronta il prezzo?", a: "Non guardare il prezzo etichetta del pack: dividi il prezzo per i litri totali contenuti (es. 24 × 33 cl = 7,92 L). Questo calcolatore lo fa automaticamente. Le promozioni \"3 fardelli a 12 €\" sono il formato dove il €/L scende di più, spesso sotto 1,00 €/L per i mass-market." },
+      { q: "Birra senza alcool: costa meno o uguale?", a: "Costa praticamente uguale alla controparte alcolica (a volte 5-10% in più) perché il processo di dealcolizzazione è in più rispetto a quello standard. Heineken 0.0 costa più o meno come Heineken normale. Confrontare al €/L resta valido, ma tieni presente che la metrica non distingue il grado alcolico." },
+      { q: "Le birre artigianali sono confrontabili con quelle industriali?", a: "Matematicamente sì, il €/L si calcola allo stesso modo. Ma sono prodotti diversi: una IPA artigianale a 14 €/L non sta competendo con una lager a 1,80 €/L sullo stesso terreno. Usa il €/L per confrontare prodotti dello stesso segmento (industriali fra loro, artigianali fra loro) — non per scegliere fra un'IPA e una lager." },
+      { q: "Birra in vetro o lattina: cambia il gusto?", a: "In condizioni ideali no — i moderni rivestimenti interni delle lattine annullano qualsiasi sentore metallico. In condizioni di luce intensa la lattina protegge meglio della bottiglia trasparente (che lascia entrare i raggi UV e produce off-flavor). Le bottiglie scure (verdi, marroni) sono protette quanto le lattine." },
+    ],
+    levels: [
+      { id: "box", label: "fardello", pluralLabel: "fardelli", optional: true, default: 0 },
+      { id: "bottle", label: "bottiglia/lattina", pluralLabel: "bottiglie/lattine", default: 6 },
+    ],
+    sampleEntries: [
+      { name: "Fardello 6 × 66 cl Heineken", price: 5.99, counts: { box: 1, bottle: 6 }, measureValue: 66, measureUnitId: "cl" },
+      { name: "Cassa 24 × 33 cl Peroni", price: 9.99, counts: { box: 1, bottle: 24 }, measureValue: 33, measureUnitId: "cl" },
+      { name: "Lattina singola 50 cl Ichnusa", price: 1.49, counts: { box: 0, bottle: 1 }, measureValue: 50, measureUnitId: "cl" },
+    ],
+  },
+
+  {
+    slug: "caffe-macinato",
+    name: "Caffè macinato e in grani",
+    description:
+      "Confronta pacchi di caffè macinato per moka o in grani al prezzo al chilo. Funziona fra formati diversi: 250 g, 500 g, multipack 4×250 g, 1 kg in grani.",
+    intro:
+      "Il caffè da moka e da bar è il formato dominante in Italia: ~60% delle famiglie lo usa ogni giorno. I formati cambiano (brick 250 g, multipack 4×250 g, sacchetti 500 g, 1 kg in grani) e il €/kg varia del 200-300%. Inserisci confezioni e prezzo: il sistema normalizza tutto al chilo.",
+    context: "weight",
+    keywords: [
+      "caffè macinato",
+      "caffè in grani",
+      "caffè moka",
+      "caffè espresso",
+      "lavazza",
+      "illy",
+      "vergnano",
+      "kimbo",
+      "segafredo",
+      "caffè borbone",
+      "qualità rossa",
+      "caffè per bar",
+      "macinatura moka",
+    ],
+    related: ["capsule-caffe", "merendine", "latte-uht"],
+    guideTitle: "Guida al caffè macinato e in grani: prezzo al chilo",
+    longDescription: `Il caffè macinato per moka e quello in grani sono il segmento più venduto del reparto caffè in Italia: una famiglia italiana consuma in media 4-6 kg di caffè all'anno, per una spesa di 60-150 €. I prezzi al chilo vanno da meno di 10 €/kg per i brand discount e i tagli "internazionali" fino a oltre 35 €/kg per le miscele 100% Arabica premium o gli specialty.
+
+I formati cambiano in modo estremo. Un brick 250 g Lavazza Qualità Rossa costa in media 3,20-3,80 € (= 12,80-15,20 €/kg) al singolo, ma in multipack 4×250 g lo stesso identico prodotto scende a 9,99-11,99 € (= 10,00-12,00 €/kg, -20%). I formati 500 g e i pacchi 1 kg in grani sono ancora più convenienti: spesso sotto 9 €/kg per le marche standard. Per chi beve caffè quotidianamente, comprare in formato "bar" 1 kg in grani con macinacaffè dedicato è la strategia più conveniente in assoluto.
+
+In Italia il prezzo per unità di misura è obbligatorio in scaffale dal 2005 (Codice del Consumo, art. 14): per il caffè è indicato come €/kg ed è la metrica decisiva. Questo calcolatore unifica tutti i formati a €/kg confrontando fino a 5 prodotti contemporaneamente, anche fra unità diverse (g, kg).`,
+    sections: [
+      {
+        heading: "Macinato per moka vs in grani: quando conviene cosa",
+        body: `Il macinato per moka è il formato più diffuso (≈ 70% del mercato): pronto all'uso, nessuna attrezzatura aggiuntiva, ma una volta aperta la confezione perde aroma in 2-3 settimane. È adatto a consumi familiari "tutti i giorni" — non a chi beve sporadicamente.
+
+I grani costano in media il 15-25% in meno al chilo rispetto al macinato dello stesso brand, perché si saltano un passaggio industriale (la macinatura). Però richiedono un macinacaffè (50-150 € one-time). Conviene se: bevi più di 1 kg/mese, vuoi freschezza al top, sei disposto al piccolo investimento iniziale.
+
+Il macinato "espresso" è diverso dal macinato "moka": l'espresso ha grana più fine. Comprare il tipo sbagliato significa caffè acquoso (espresso in moka) o estremamente amaro (moka in espresso). Leggi sempre l'etichetta — molti pacchi sono polivalenti, ma altri specificano "macinatura per moka" o "macinatura per macchina espresso".`,
+      },
+      {
+        heading: "Brand premium, mass-market, discount",
+        body: `**Premium** (Illy, Caffè del Doge, specialty 100% Arabica): 25-40 €/kg. Miscele monorigine, tracciate, spesso 100% Arabica. Differenza sensoriale percepibile da un consumatore attento. Per uso quotidiano sono un lusso giustificabile solo se il caffè è un piacere consapevole.
+
+**Mass-market premium** (Lavazza Qualità Oro, Vergnano, Pellini Top): 12-18 €/kg. Miscele Arabica/Robusta studiate per la moka domestica italiana. Lo zoccolo duro delle famiglie italiane medie. Differenza percepibile rispetto al brand storico standard (Qualità Rossa), giustifica i +30-40% per chi è abituato all'espresso al bar.
+
+**Mass-market standard** (Lavazza Qualità Rossa, Kimbo Aroma Classico, Segafredo Intermezzo): 10-14 €/kg al multipack, 13-15 €/kg al singolo. È il caffè da moka quotidiano "stesso del bar al banco" di una larga parte delle case italiane.
+
+**Discount/private label** (Aldi, Lidl, Eurospin, Caffè Borbone tagli più economici): 7-12 €/kg. Miscele più cariche di Robusta, gusto più amaro/corposo. Per il consumatore medio sono accettabili, soprattutto per la moka del mattino "veloce". In test alla cieca la differenza con il mass-market sta nei dettagli, non in un dislivello drammatico.`,
+      },
+      {
+        heading: "Errori comuni quando compri caffè",
+        body: `Comprare il singolo brick 250 g. È il formato dove il €/kg è peggiore. I multipack 4×250 g costano in media il 20-30% meno al chilo a parità di prodotto, e il caffè ha shelf-life lunga (12-18 mesi sigillato): scorta 2-3 mesi senza problemi.
+
+Sottovalutare i grani. Se in casa bevete 2-3 caffè al giorno, un pacco da 1 kg in grani con macinacaffè da 80 € si ripaga in 4-6 mesi rispetto al macinato in brick singoli. Più freschezza, più risparmio nel medio periodo.
+
+Confondere "torrefazione artigianale al supermercato" con specialty. Le confezioni "artigianali" della GDO (es. "Caffè del Borgo", "Torrefazione di Famiglia") costano spesso 18-25 €/kg ma sono comunque prodotte da torrefattori industriali con un'etichetta orientata al marketing. Lo specialty vero (da torrefazione indipendente con data di tostatura visibile) parte da 30-40 €/kg.
+
+Conservare male. Una volta aperto, il caffè va in barattolo ermetico al buio. Non in frigo: l'umidità e i passaggi termici degradano gli oli aromatici più rapidamente. Una scorta di 4 brick aperti che si seccano un mese a testa è uno spreco.`,
+      },
+      {
+        heading: "Quando il pacco famiglia non conviene",
+        body: `Tre scenari in cui il multipack 4×250 g o il pacco 1 kg in grani non sono la scelta migliore.
+
+**Consumi molto bassi.** Per single o coppie che bevono 1-2 caffè al giorno, 1 kg dura 4-6 mesi: oltre il termine ideale (3-4 settimane dall'apertura) il gusto degrada. Meglio un singolo 250 g consumato in tempo a un multipack che si appiattisce in dispensa.
+
+**Spesa irregolare.** Se compri il caffè "quando finisce" senza programmare, comprare 1 kg significa rotture di stock fino al riacquisto. Il singolo 250 g è più flessibile in casa di chi non pianifica.
+
+**Esperienza varia.** Se ami provare brand e miscele diverse, il singolo 250 g è il formato giusto per testare senza impegnarsi. I multipack 4×250 g ti obbligano a 1 kg dello stesso prodotto: ottimo per il caffè "di casa", limitante per la sperimentazione.`,
+      },
+    ],
+    faq: [
+      { q: "Conviene di più il caffè macinato o in grani?", a: "In grani costa il 15-25% in meno al chilo a parità di marca, ed è più fresco perché viene macinato al momento. Però richiede un macinacaffè (50-150 € one-time). Conviene se bevete più di 1 kg/mese in casa: l'investimento si ripaga in 4-6 mesi." },
+      { q: "Caffè per moka e per espresso sono la stessa cosa?", a: "Quasi sempre no: la macinatura per moka è leggermente più grossa di quella per macchina espresso. Comprare la grana sbagliata produce caffè acquoso (espresso in moka) o estremamente concentrato e amaro (moka in espresso). Leggi sempre l'etichetta: i pacchi indicano \"macinatura per moka\" o \"per espresso\"." },
+      { q: "Quanto dura un pacco aperto di caffè macinato?", a: "Al massimo 2-3 settimane se conservato in barattolo ermetico al buio. Oltre quel termine il gusto perde la nota aromatica fresca e diventa più piatto, anche se resta perfettamente sicuro per consumo. Sigillato dura 12-18 mesi." },
+      { q: "Lavazza Qualità Rossa o Qualità Oro: che differenza c'è?", a: "Qualità Rossa è il mass-market standard (mix Arabica/Robusta, gusto corposo) a 10-15 €/kg. Qualità Oro è la fascia premium (100% Arabica, gusto più delicato) a 14-18 €/kg. La differenza è reale e percepibile, soprattutto per chi ama un caffè meno amaro. Per uso quotidiano in moka la Rossa è il bestseller per ragioni di prezzo e abitudine al gusto." },
+      { q: "Le private label dei discount sono accettabili?", a: "Sì per consumo quotidiano: Aldi, Lidl, Eurospin vendono macinato a 7-11 €/kg con miscele studiate per la moka. Il gusto tende al più amaro/carico (più Robusta) ma in test alla cieca la differenza con i mass-market standard è contenuta. Per chi cerca un espresso \"come al bar\" potrebbe deludere; per la moka del mattino in famiglia funziona bene." },
+      { q: "Quanto caffè consuma una famiglia italiana media?", a: "Stima: 4-6 kg di caffè all'anno per una famiglia di 3-4 persone che fa la moka 1-2 volte al giorno, per una spesa di 60-150 €. Una caffettiera da 6 tazze consuma circa 30 g di macinato. Se compri il pacco 250 g, dura 8-10 caffettierate." },
+      { q: "Caffè in cialde, capsule, macinato: quale conviene?", a: "Al singolo caffè il macinato per moka è il più economico (0,08-0,15 €/tazzina), seguito dalle cialde ESE (0,15-0,25 €), poi dalle capsule (0,20-0,50 € per le originali, 0,15-0,30 € per le compatibili). Per il confronto fra capsule e cialde vedi la pagina dedicata su questo sito; questo calcolatore copre solo macinato e grani." },
+      { q: "Posso usare il caffè per espresso scaduto?", a: "Sì se sigillato: la data di scadenza dichiarata in etichetta è 12-18 mesi ma il caffè sigillato resta sicuro per consumo anche 6-12 mesi oltre. Il gusto peggiora gradualmente (più piatto, meno aromatico) ma non è pericoloso. Una volta aperto, le 2-3 settimane di freschezza sono la soglia oltre cui conviene buttare." },
+      { q: "Caffè specialty vale i 30+ €/kg?", a: "Per chi ama il caffè in modo consapevole (filtri, V60, Aeropress, cold brew), sì: lo specialty è prodotto in piccoli lotti tracciati, tostato da pochi giorni, profilo gustativo specifico. Per la moka del mattino dove zucchero e latte coprono i sapori delicati, è uno spreco — un buon mass-market funziona altrettanto bene." },
+    ],
+    levels: [
+      { id: "pack", label: "multipack", pluralLabel: "multipack", optional: true, default: 0 },
+      { id: "bag", label: "pacchetto", pluralLabel: "pacchetti", default: 1 },
+    ],
+    sampleEntries: [
+      { name: "Lavazza Qualità Rossa 250 g", price: 3.29, counts: { pack: 0, bag: 1 }, measureValue: 250, measureUnitId: "g" },
+      { name: "Multipack 4 × 250 g Vergnano", price: 11.99, counts: { pack: 1, bag: 4 }, measureValue: 250, measureUnitId: "g" },
+      { name: "Caffè Borbone in grani 1 kg", price: 13.9, counts: { pack: 0, bag: 1 }, measureValue: 1, measureUnitId: "kg" },
+    ],
+  },
+
+  {
     slug: "capsule-caffe",
     name: "Capsule caffè",
     description: "Confronta confezioni di capsule caffè al prezzo per singola capsula. Confronta sempre capsule dello stesso tipo di macchina.",
@@ -230,7 +408,7 @@ Pensare che "zero" costi sempre uguale. Le versioni zero (Zero Sugar, Light) cos
     baseLabel: "capsula",
     baseLabelPlural: "capsule",
     keywords: ["caffè", "caffe", "capsule", "capsule caffè", "cialde", "nespresso", "dolce gusto", "lavazza", "a modo mio", "lavazza espresso point"],
-    related: ["yogurt", "merendine"],
+    related: ["caffe-macinato", "yogurt", "merendine"],
     guideTitle: "Guida alle capsule caffè: prezzo per capsula",
     longDescription: `Le capsule caffè sono uno dei reparti dove il "prezzo per capsula" varia di più, anche del 200-300% fra il pacchetto più piccolo e il megapack online. Una scatola da 10 capsule al supermercato può costare 5 € (0,50 €/capsula), un megapack da 100 capsule dello stesso brand online viaggia spesso sotto i 25 €, cioè 0,25 €/capsula. A parità di gusto e sistema.
 
@@ -381,13 +559,107 @@ In Italia non c'è obbligo di indicare le variazioni di formato in modo evidente
   },
 
   {
+    slug: "cibo-cani-gatti",
+    name: "Cibo per cani e gatti",
+    description:
+      "Confronta crocchette, scatolette, bustine e sacchi di cibo per cani e gatti al prezzo al chilo. Funziona fra formati diversi: scatoletta 85 g, multipack, sacco 7,5 kg.",
+    intro:
+      "Il pet food è la categoria con la maggiore dispersione di formati del supermercato. Inserisci il pack (multipack/singolo), il numero di buste o scatolette e il peso di ciascuna: il calcolatore unifica tutto a €/kg per confrontare onestamente secco e umido, brand premium e private label.",
+    context: "weight",
+    keywords: [
+      "cibo cane",
+      "cibo gatto",
+      "crocchette cane",
+      "crocchette gatto",
+      "scatolette gatto",
+      "umido cane",
+      "umido gatto",
+      "felix",
+      "whiskas",
+      "cesar",
+      "pedigree",
+      "friskies",
+      "purina one",
+      "royal canin",
+      "pet food",
+    ],
+    related: ["detersivo-lavatrice", "sacchi-spazzatura", "carta-igienica"],
+    guideTitle: "Guida al cibo per cani e gatti: prezzo al chilo",
+    longDescription: `In Italia il 40% delle famiglie ha almeno un animale domestico (dati Censis 2024), per un mercato pet food che supera i 2,7 miliardi di euro/anno in GDO. La spesa mensile media è di 30-80 € per famiglia, ma il €/kg può variare di 3-5 volte fra il sacco famiglia 15 kg e la scatoletta monodose 100 g — a parità di brand e linea di prodotto.
+
+Lo scaffale è frammentato come pochi altri reparti: scatolette 85 g, bustine 100 g, vaschette monodose 150 g, multipack 4×100 g, 6×85 g, 12×85 g, 24×85 g, sacchi crocchette 400 g, 1,5 kg, 3 kg, 7,5 kg, 15 kg. La stessa Felix Sensations dello stesso gusto può costare 14 €/kg in scatoletta singola e meno di 6 €/kg in multipack 24×85 g all'iper in offerta. Il prezzo per kg è l'unica metrica utile perché normalizza fra confezioni eterogenee — anche il confronto fra secco e umido funziona, tenendo a mente che l'umido è 70-80% acqua e quindi il €/kg "effettivo nutrizionale" andrebbe ridimensionato.
+
+In Italia il prezzo per unità di misura è obbligatorio in scaffale dal 2005 (Codice del Consumo art. 14): per il pet food è espresso in €/kg ed è la metrica che salva centinaia di euro all'anno alle famiglie con animali. Questo calcolatore lo applica automaticamente confrontando fino a 5 prodotti contemporaneamente, anche fra unità diverse (g, kg).`,
+    sections: [
+      {
+        heading: "Secco vs umido: come confrontare onestamente",
+        body: `Il cibo secco (crocchette) costa in media 3-12 €/kg per la fascia mass-market; il cibo umido costa 4-20 €/kg per la stessa fascia. A prima vista l'umido sembra più caro, ma è 70-80% acqua: 100 g di scatoletta contengono 20-30 g di sostanza secca, contro 90-95 g per 100 g di crocchette.
+
+Questo significa che 1 kg di crocchette equivale nutrizionalmente a circa 3-4 kg di umido. Quando confronti €/kg, l'umido che costa il triplo è in realtà sulla stessa fascia di costo nutrizionale del secco. Per uso quotidiano, il secco resta il formato più economico in valore di sostanza nutritiva per euro.
+
+L'umido ha però vantaggi diversi: idratazione (importante per gatti predisposti a problemi renali), palatabilità, controllo porzioni. Molte famiglie mescolano i due, con un secco "di base" e un umido "topper" 1-2 volte a settimana — strategia equilibrata fra costo e gradimento.`,
+      },
+      {
+        heading: "Brand premium, mass-market e private label",
+        body: `**Premium veterinario** (Royal Canin, Hill's Science Plan, Farmina): 8-25 €/kg secco, 12-30 €/kg umido. Formulazioni studiate per esigenze specifiche (taglia, età, problemi renali, sensibilità). Differenza qualitativa reale, soprattutto per soggetti con problemi di salute. Costo significativo nel budget familiare.
+
+**Mass-market** (Friskies, Felix, Whiskas, Cesar, Pedigree, Purina One): 4-10 €/kg secco, 6-14 €/kg umido. Lo zoccolo duro del mercato. Buona palatabilità per la maggior parte dei soggetti sani, gamme adatte a età e taglia, marketing diffuso. La fascia dove la differenza fra brand spesso è più di marketing che di sostanza.
+
+**Private label** (Coop, Esselunga, Conad, Lidl, MD): 2-7 €/kg secco, 4-9 €/kg umido. Prodotte spesso negli stessi stabilimenti dei brand mass-market. Per soggetti sani senza esigenze particolari, sono un'opzione perfettamente accettabile e fanno risparmiare 30-50% sulla spesa annuale.
+
+**Discount/economici** (Cibobello, brand discount no-name): 1,50-4 €/kg secco, 3-6 €/kg umido. Funzionano per soggetti sani e poco esigenti, ma il profilo proteico tende ad essere più basso (più cereali, meno carne). Per animali in salute e su parere veterinario possono andare bene; per soggetti con esigenze nutrizionali specifiche meglio salire di fascia.`,
+      },
+      {
+        heading: "Errori comuni nell'acquisto",
+        body: `Comprare la scatoletta singola. È il formato peggiore al kg: +50/+100% rispetto al multipack equivalente. La scatoletta singola Felix Sensations 85 g a 0,79 € costa 9,29 €/kg, lo stesso prodotto in multipack 24 × 85 g in offerta a 9,99 € costa 4,90 €/kg.
+
+Acquistare il sacco gigante senza considerare il turnover. Un sacco 15 kg di crocchette aperto perde aroma in 4-6 settimane. Per un cane medio che consuma 250-400 g/giorno (≈ 8-12 kg/mese) il sacco grande va bene; per un gatto che mangia 60-80 g/giorno (≈ 2 kg/mese), un sacco da 15 kg dura 7-8 mesi e si secca. Meglio formati 3-7,5 kg.
+
+Cambiare brand senza transizione. Il pet food non è interscambiabile come per noi: cambi bruschi causano disturbi gastrici. Quando passi a un brand più economico, transizione di 7-10 giorni miscelando 25% nuovo + 75% vecchio, poi 50/50, poi 75/25, poi 100%.
+
+Confondere "premium percepito" con "valore reale". Le linee "natural", "grain-free", "raw" della GDO costano 30-50% in più di altre dello stesso brand, ma per il cane/gatto medio sano non producono differenza clinica. Sono spesso scelte di marketing per padroni che vogliono "il meglio". Parla con il tuo veterinario prima di pagare un premium che non serve.`,
+      },
+      {
+        heading: "Quando il pacco famiglia non conviene",
+        body: `Tre scenari pratici in cui i multipack giganti non sono la scelta migliore.
+
+**Animale schizzinoso.** Se il tuo gatto/cane mangia volentieri una scatoletta e rifiuta la successiva dello stesso brand, comprare in multipack di 24 è la ricetta per buttare cibo. Meglio variare con multipack 6 × da gusti diversi.
+
+**Spazio di stoccaggio.** Un sacco da 15 kg di crocchette occupa fisicamente molto. In appartamenti piccoli senza ripostiglio dedicato, il formato 3-7,5 kg è più gestibile, anche al costo di un €/kg leggermente più alto.
+
+**Tagli economici per soggetti con diete speciali.** Se il tuo veterinario prescrive una dieta specifica (renale, diabetica, ipoallergenica), comprare il primo prodotto trovato in offerta multipack rischia di mandare l'animale fuori regime alimentare. Su queste diete, costanza > risparmio.`,
+      },
+    ],
+    faq: [
+      { q: "Conviene il multipack di scatolette o le scatolette singole?", a: "Quasi sempre il multipack: il €/kg scende del 30-50% rispetto al singolo. Lo stesso Felix 85 g in scatoletta singola costa 9-10 €/kg, in multipack 24 in offerta arriva a 4-5 €/kg. L'unica eccezione è il caso di animali schizzinosi che mangiano un gusto solo: meglio variare." },
+      { q: "Le crocchette private label sono di qualità simile ai brand?", a: "Per soggetti sani senza esigenze nutrizionali particolari, sì: la qualità nutrizionale è comparabile al mass-market di marca. La differenza di prezzo è di 30-50% al chilo, e per una famiglia con cane medio significa 100-200 € all'anno di risparmio. Per animali con allergie/sensibilità o problemi di salute, parla col veterinario prima del cambio." },
+      { q: "Conviene di più il cibo secco o umido?", a: "Per €/kg \"nutrizionale\" il secco vince sempre (l'umido è 70-80% acqua). Per il consumo quotidiano \"di base\", il secco è il formato più economico ed equilibrato. L'umido ha senso come integrazione (idratazione, palatabilità, varietà) ma non come dieta esclusiva, soprattutto per famiglie attente al budget." },
+      { q: "Quanto cibo al giorno serve a un cane medio?", a: "Dipende da taglia e attività: un cane di 10 kg adulto consuma ~150-200 g/giorno di crocchette secche, uno di 25 kg circa 350-450 g/giorno. Un sacco da 15 kg dura ~1 mese per un cane di taglia media, ~2 mesi per un cane piccolo. Per l'umido, la razione equivalente è 3-4 volte superiore in peso." },
+      { q: "Royal Canin / Hill's: vale la pena spendere il triplo?", a: "Per soggetti con problemi specifici (renale, gastroenterico, allergie, obesità) prescritti dal veterinario, sì. Per soggetti sani senza problemi, no: il margine qualitativo rispetto a un buon mass-market o anche private label è marginale per il consumatore. Compra premium veterinario su consiglio del vet, non come scelta di lusso." },
+      { q: "Conviene comprare cibo per animali online o al supermercato?", a: "Per i sacchi grandi (>5 kg) e i multipack 24 scatolette, l'online specializzato (Zooplus, Bitiba, Amazon) batte spesso la GDO del 15-30% al kg. Per acquisti settimanali piccoli e per le marche mass-market in offerta, supermercato e discount restano competitivi. Confronta il €/kg, mai il prezzo etichetta." },
+      { q: "Cibo umido aperto: quanto dura?", a: "In frigorifero, sigillato con coperchio o pellicola, dura 24-48 ore. Oltre quel termine il rischio di contaminazione batterica sale. Le scatolette monodose 85-100 g sono pensate per essere consumate in 1-2 pasti dallo stesso animale: i formati più grandi (300-400 g) hanno senso solo se hai 2+ animali che mangiano contemporaneamente." },
+      { q: "Si può dare la stessa marca al cane e al gatto?", a: "No: cane e gatto hanno esigenze nutrizionali molto diverse. Il gatto è un carnivoro stretto, richiede taurina, vitamina A preformata, alto contenuto proteico. Il cane è onnivoro e tollera una dieta più varia. Usare cibo per cani sul gatto a lungo termine può portare a carenze gravi. Sempre prodotti formulati per la specie corretta." },
+      { q: "Le linee \"grain-free\" valgono il prezzo extra?", a: "Per la stragrande maggioranza dei cani/gatti, no: \"senza cereali\" è uno slogan di marketing, non un beneficio nutrizionale documentato. Anzi: FDA e studi recenti hanno collegato alcune diete grain-free a cardiomiopatie nei cani. Per soggetti con allergia ai cereali specifica documentata dal vet ha senso; per uso generale è uno spreco. Spende meglio per qualità della proteina." },
+    ],
+    levels: [
+      { id: "pack", label: "multipack", pluralLabel: "multipack", optional: true, default: 0 },
+      { id: "unit", label: "busta/scatoletta/sacco", pluralLabel: "buste/scatolette/sacchi", default: 1 },
+    ],
+    sampleEntries: [
+      { name: "Felix multipack 24 × 85 g", price: 9.99, counts: { pack: 1, unit: 24 }, measureValue: 85, measureUnitId: "g" },
+      { name: "Sacco Friskies crocchette 7,5 kg", price: 14.9, counts: { pack: 0, unit: 1 }, measureValue: 7.5, measureUnitId: "kg" },
+      { name: "Cesar multipack 4 × 100 g", price: 3.49, counts: { pack: 1, unit: 4 }, measureValue: 100, measureUnitId: "g" },
+    ],
+  },
+
+  {
     slug: "detersivo-lavatrice",
     name: "Detersivo lavatrice",
     description: "Confronta detersivi liquidi e in capsule per la lavatrice al prezzo per lavaggio. Funziona anche con detersivi concentrati.",
     intro: "Il numero che conta è il prezzo per lavaggio, non al litro: un concentrato da 750 ml che fa 44 lavaggi quasi sempre vince contro uno standard da 1,5 L che ne fa solo 24. Inserisci numero lavaggi dichiarati in confezione e prezzo: il sistema fa i conti.",
     context: "dosage",
     keywords: ["detersivo", "detersivo lavatrice", "detersivo bucato", "bucato", "lavaggio", "ammorbidente", "dash", "dixan", "perlana", "vernel", "scala", "ace lavatrice", "capsule lavatrice"],
-    related: ["detersivo-piatti", "tabs-lavastoviglie"],
+    related: ["detersivo-piatti", "tabs-lavastoviglie", "cibo-cani-gatti"],
     guideTitle: "Guida al detersivo lavatrice: prezzo per lavaggio",
     longDescription: `Il detersivo per lavatrice è il prodotto dove il "€/L" inganna di più. Un detersivo concentrato da 750 ml che dichiara 44 lavaggi può costare molto meno per lavaggio di uno standard da 1,5 L che ne fa solo 24, anche se il prezzo etichetta è simile. L'unica metrica utile è il €/lavaggio: rapporto fra prezzo della confezione e numero di lavaggi dichiarati.
 
@@ -618,7 +890,7 @@ Fissarsi sulla stagionatura più lunga. Un Parmigiano Reggiano 36 mesi costa il 
     intro: "Brick da 500 ml, da 1 L, bottiglie PET da 1,5 L, fardelli 6 × 1 L: il prezzo per brick varia ma €/L è l'unico numero che conta. Lo stesso strumento serve anche per la panna fresca, da montare o da cucina: stesso volume, formato uguale.",
     context: "liquid",
     keywords: ["latte", "latte uht", "latte fresco", "latte parzialmente scremato", "latte intero", "latte scremato", "panna", "panna fresca", "panna da cucina", "panna da montare", "panna vegetale", "yogurt liquido", "yogurt da bere", "kefir", "latte di mandorla", "latte di soia", "bevanda vegetale"],
-    related: ["yogurt", "succhi-frutta"],
+    related: ["yogurt", "succhi-frutta", "pannolini"],
     guideTitle: "Guida al latte e alla panna: prezzo al litro",
     longDescription: `Il latte è uno dei prodotti più stabili del carrello: una famiglia italiana media consuma 60-120 L di latte all'anno, con un budget di 80-180 €. Il prezzo al litro varia da meno di 0,90 €/L per il fardello UHT private label a oltre 2,50 €/L per il fresco di alta qualità o le bevande vegetali. Lo stesso strumento serve per la panna fresca e da cucina, che segue dinamiche simili.
 
@@ -864,7 +1136,7 @@ Trascurare le scadenze. I formati famiglia 24+ pezzi durano 2-3 mesi sul packagi
     intro: "Bottiglie da 750 ml, da 1 L, lattine da 3 e 5 L, bag-in-box: i formati grandi spesso scendono sotto i 6 €/L mentre la bottiglia da 750 ml in promozione del supermercato resta sui 7-8 €/L. Inserisci volume e prezzo, il sistema dice quale conviene.",
     context: "liquid",
     keywords: ["olio", "olio extravergine", "olio evo", "olio oliva", "olio extra vergine", "olio di oliva", "olio di semi", "olio di girasole", "olio di mais", "olio di arachide", "olio di vinaccioli"],
-    related: ["pasta", "formaggio-grattugiato"],
+    related: ["pasta", "formaggio-grattugiato", "pomodoro"],
     guideTitle: "Guida all'olio extravergine: prezzo al litro",
     longDescription: `L'olio extravergine d'oliva (EVO) è uno dei prodotti italiani con la maggiore dispersione di prezzo: dalla bottiglia 1 L "supermercato discount" a 4 €/L fino agli oli artigianali DOP/IGP che superano i 25 €/L, con una mediana di mercato attorno ai 7-9 €/L per il consumo familiare di buon livello. Le campagne 2022-2023 con scarsità produttiva hanno portato il prezzo medio italiano del 50-80% in più rispetto al biennio precedente.
 
@@ -942,13 +1214,118 @@ Comprare l'olio EVO a 3,99 €/L "perché in offerta". Sotto i 5 €/L è quasi 
   },
 
   {
+    slug: "pannolini",
+    name: "Pannolini",
+    description:
+      "Confronta confezioni di pannolini per bambini al prezzo per pannolino. Funziona fra formati diversi: pack 24, multipack 80, megapack 144.",
+    intro:
+      "I pannolini sono una delle voci più pesanti del budget di una famiglia con neonato. Inserisci la confezione (singolo o multipack), il numero di pannolini per pacco: il sistema normalizza tutto al prezzo per pannolino, l'unica metrica che permette confronti onesti fra brand premium e linee economiche.",
+    context: "unit",
+    baseLabel: "pannolino",
+    baseLabelPlural: "pannolini",
+    keywords: [
+      "pannolini",
+      "pannolino",
+      "pampers",
+      "huggies",
+      "lines",
+      "lillydoo",
+      "naturaline",
+      "pannolini economici",
+      "pannolini bio",
+      "pannolini taglia 4",
+      "pannolini taglia 5",
+      "baby dry",
+      "neonato",
+    ],
+    related: ["carta-igienica", "shampoo", "detersivo-lavatrice"],
+    guideTitle: "Guida ai pannolini: prezzo per pannolino",
+    longDescription: `Una famiglia italiana con un bambino spende fra 1.200 e 2.500 € in pannolini nei primi 3 anni di vita, a seconda di marca, frequenza di cambio (6-10 al giorno fino ai 12 mesi, poi calo graduale) e taglia. La differenza fra brand premium e linee economiche è enorme: Pampers Baby Dry può costare 0,30-0,40 € a pannolino al singolo pack, una private label di taglia equivalente arriva a 0,10-0,15 €/cad. — un fattore 3× sulla stessa funzione.
+
+I formati cambiano radicalmente con la taglia: dalla 1 (newborn, 2-5 kg) alla 6 (Junior, 15+ kg), il numero di pannolini per pack varia da 24 (singolo standard) a 200+ (megapack famiglia). I multipack 2× o 3× dello stesso pack standard sono il sweet spot del €/pannolino: spesso costano il 25-40% meno al pezzo rispetto al singolo a parità di taglia e prodotto, perché distribuzione e marketing si dividono su più unità.
+
+In Italia il prezzo per unità è obbligatorio in scaffale dal 2005 (Codice del Consumo art. 14): per i pannolini è indicato come €/pannolino sull'etichetta. È la metrica che salva centinaia di euro nei primi 3 anni di vita del bambino. Questo calcolatore lo applica automaticamente fra confezioni eterogenee, inclusi i \"megapack\" mensili.`,
+    sections: [
+      {
+        heading: "Brand premium vs private label",
+        body: `**Premium** (Pampers Baby Dry/Premium Care, Huggies Extra Care): 0,25-0,40 €/pannolino al singolo, 0,18-0,30 €/cad. in multipack. Assorbenza eccellente, indicatore di umidità, design migliore. Marchio storico con percezione di sicurezza forte fra i genitori. La fascia dove la differenza pratica è reale ma spesso non proporzionale al sovrapprezzo.
+
+**Mass-market** (Lines Dry, Chicco, Sapientino Soft & Dry): 0,15-0,25 €/pannolino. Buona alternativa per la stragrande maggioranza dei bambini sani. Assorbenza adeguata, costo inferiore del 30-50% rispetto ai premium.
+
+**Private label** (Coop Origine, Conad Vivi Verde, Esselunga BIO Logico, Naturaline DM): 0,10-0,18 €/pannolino. Spesso prodotti dagli stessi stabilimenti del mass-market. Per neonati sani senza dermatiti gravi sono perfettamente accettabili. Risparmio annuale fra 300 e 600 €.
+
+**Bio/eco** (Naty, WaterWipes, Lillydoo): 0,30-0,50 €/pannolino. Materiali certificati, meno plastica, profumi assenti. Hanno senso per neonati con dermatiti documentate o per scelta familiare consapevole. Differenza qualitativa percepibile, ma costo significativamente superiore.
+
+Tip: i discount tipo Lidl (Lupilu) e DM (Babylove) hanno linee competitive sul rapporto qualità/prezzo, paragonabili al premium a metà del costo.`,
+      },
+      {
+        heading: "Taglia: come capire qual è la giusta",
+        body: `Le taglie italiane seguono il peso del bambino, non l'età:
+
+— Taglia 1 / Newborn (2-5 kg): primi 1-2 mesi
+— Taglia 2 (3-6 kg): 2-3 mesi
+— Taglia 3 (4-9 kg): 3-9 mesi
+— Taglia 4 (7-18 kg): 9 mesi - 2 anni (la taglia di maggior consumo)
+— Taglia 5 (11-25 kg): 2-3 anni
+— Taglia 6 / Junior (15+ kg): 3+ anni
+
+Cambia taglia quando: il pannolino lascia segni rossi sulla pelle (troppo stretto), perde da uno dei lati (troppo piccolo), o tu lo metti a un terzo della sua altezza (troppo grande). Il primo gambizzazione richiede sempre l'aiuto di un professionista.
+
+Le confezioni mostrano sempre il peso indicativo: leggi sempre il range, non solo la taglia. Una taglia 4 \"Pampers\" e una taglia 4 \"Coop\" hanno entrambe lo stesso range di peso, ma possono differire di 1-2 cm nelle dimensioni fisiche. Per neonati al limite superiore di una taglia, prova un pacco prima di comprare il megapack.`,
+      },
+      {
+        heading: "Quando il megapack non conviene",
+        body: `Il megapack famiglia (144-200 pannolini) ha il €/pannolino più basso in assoluto, fino al 50% meno del singolo standard. Ma non sempre è la scelta migliore.
+
+**Bambino in crescita rapida.** Comprare 200 pannolini di taglia 3 a 7-8 mesi è rischioso: in 2-3 settimane potrebbe passare alla taglia 4 e ti restano 80-100 pannolini inutilizzati. Strategia: alterna fra megapack della taglia attuale e singoli della successiva quando il peso si avvicina al limite.
+
+**Pannolini "non ideali" per il bambino.** Se hai trovato un brand che funziona perfettamente, megapack è la scelta. Se stai ancora sperimentando, meglio singoli pack di marche diverse per testare senza impegno.
+
+**Spazio.** Un megapack 144 pannolini occupa 30-40 cm di profondità per 30-40 cm di altezza. In appartamenti piccoli con stanza del bambino già piena, conviene multipack 2× o 3× standard.
+
+Strategia consigliata: comprare megapack della taglia attuale + uno o due pack singoli della taglia successiva come backup. Calibra in base al ritmo di crescita.`,
+      },
+      {
+        heading: "Errori comuni",
+        body: `**Cambiare brand a ogni offerta.** Brand diverse hanno cuciture diverse, materiali diversi, profumazioni diverse. Cambi continui aumentano il rischio di dermatiti da contatto. Trova 1-2 brand che vanno bene per il tuo bambino e ottimizza sull'acquisto in offerta di QUELLI.
+
+**Comprare il singolo \"piccolo\" al supermercato di vicinato.** Il pack 24 pannolini in convenience store costa il 50-100% in più del megapack equivalente all'iper. Riservalo solo a emergenze (fine settimana, niente scorte).
+
+**Sottovalutare l'opzione lavabili.** Per famiglie green e con budget pianificato, i pannolini lavabili (acquisto iniziale 200-400 €, lavaggi ~150-200 € in 3 anni) totalizzano 400-600 € contro 1.500-2.500 € degli usa-e-getta. Richiedono organizzazione e tempo, ma il risparmio è del 60-80%. Non rientra in questo calcolatore — è una scelta a sé.
+
+**Ignorare l'offerta volantino settimanale.** I pannolini sono prodotto-civetta della GDO: vanno spesso in offerta a -25/-35%. Comprare un megapack pannolini ogni 4-6 settimane sull'offerta più conveniente è la strategia che fa risparmiare di più sul medio periodo. Usa app dei volantini (DoveConviene, BlogoFollow) per non perderle.`,
+      },
+    ],
+    faq: [
+      { q: "Pampers o Coop/Esselunga: la differenza è reale?", a: "Sì, ma è più sottile di quanto suggerisca il prezzo. Pampers ha assorbenza leggermente superiore, design migliore (indicatore di umidità, elastico anti-perdite). Le private label di Coop, Esselunga, Conad sono prodotte da stabilimenti analoghi e funzionano benissimo per neonati sani. Differenza di prezzo 50-70% al pannolino, risparmio annuale 300-600 €." },
+      { q: "Conviene il megapack o multipack di pannolini?", a: "Quasi sempre sì: il €/pannolino scende del 30-50% rispetto al singolo pack. Attento però alla taglia in crescita: per bambini fra 6-12 mesi il rischio è ritrovarsi con 100 pannolini di taglia ormai stretta. Compra megapack della taglia attuale + un pacchetto piccolo della successiva come backup." },
+      { q: "Pannolini bio (Naty, Lillydoo): valgono il prezzo extra?", a: "Per neonati con pelle sensibile o dermatiti documentate, sì: i materiali ipoallergenici e l'assenza di profumi fanno una differenza pratica. Per neonati sani senza problemi, è una scelta etica/ambientale, non una necessità medica. Costo doppio o triplo rispetto a un buon mass-market." },
+      { q: "Quanti pannolini servono al giorno?", a: "Nei primi 2-3 mesi 8-12 al giorno; 4-6 mesi: 6-8; 12 mesi: 5-7; 18-24 mesi: 4-6; verso il vasino: 2-4. Una famiglia con neonato consuma 200-300 pannolini al mese nei primi mesi, scende gradualmente. Il megapack 144 dura 2-3 settimane nei primi mesi, 1 mese o più dopo l'anno." },
+      { q: "Quale taglia di pannolino acquistare per la nascita?", a: "Compra un pack singolo di taglia 1 (Newborn 2-5 kg) e un pack di taglia 2 (3-6 kg). Nei primi giorni il neonato può perdere peso e poi recuperare: la taglia esatta serve in funzione del peso settimanale. Evita di fare scorte di taglia 1 prima della nascita — passa in fretta, può durare 1-2 mesi solo." },
+      { q: "Pannolini lavabili: davvero fanno risparmiare?", a: "Sì, in modo significativo: 400-600 € per il kit completo + lavaggi in 3 anni, contro 1.500-2.500 € degli usa-e-getta. Richiedono però organizzazione (lavaggi ogni 2-3 giorni, asciugatura), spazio (ripostiglio dedicato) e una giornata di gestione mentale in più. Per famiglie con flessibilità di tempo è un risparmio reale." },
+      { q: "I pannolini scadono?", a: "Tecnicamente no: non hanno una data di scadenza obbligatoria. Ma l'elastico e gli adesivi tendono a degradarsi dopo 18-24 mesi sigillati. Comprare megapack per più di 3-4 mesi di consumo non è consigliato — meglio acquisti più frequenti, anche al costo di un €/cad. leggermente più alto." },
+      { q: "Brand premium del supermercato vs farmacia: differenza?", a: "Pampers Baby Dry è lo stesso prodotto al supermercato e in farmacia. La farmacia ha un prezzo medio +15-25% per il servizio (consulenza, comodità di posizione, formati piccoli sempre disponibili). Per acquisti pianificati, supermercato e iper sono nettamente più convenienti. La farmacia ha senso per emergenze o per linee dermatologiche specifiche (Mustela, La Roche-Posay)." },
+      { q: "Pannolini taglia 4 Pampers: prezzo medio al pannolino?", a: "Singolo pack 52 pannolini: 0,30-0,40 €/cad. Multipack 2 × 52: 0,22-0,28 €/cad. Megapack 144: 0,18-0,22 €/cad. In offerta volantino può scendere fino a 0,15 €/cad. Per la taglia 4 (la più consumata) la differenza fra peggior e miglior formato è del 100-150%." },
+    ],
+    levels: [
+      { id: "pack", label: "multipack", pluralLabel: "multipack", optional: true, default: 0 },
+      { id: "bag", label: "confezione", pluralLabel: "confezioni", default: 1 },
+    ],
+    sampleEntries: [
+      { name: "Pampers Baby Dry taglia 4 × 52", price: 19.99, counts: { pack: 0, bag: 1 }, measureValue: 52, measureUnitId: "count" },
+      { name: "Lines Dry taglia 4 multipack 2 × 50", price: 15.99, counts: { pack: 1, bag: 2 }, measureValue: 50, measureUnitId: "count" },
+      { name: "Coop Origine taglia 4 × 72", price: 8.99, counts: { pack: 0, bag: 1 }, measureValue: 72, measureUnitId: "count" },
+    ],
+  },
+
+  {
     slug: "pasta",
     name: "Pasta, riso e farina",
     description: "Confronta pacchi di pasta, riso, farina e legumi al prezzo al kg, indipendentemente dalla grammatura.",
     intro: "Una confezione da 500 g a 1,29 € costa meno di una da 1 kg a 2,49 € o di un cartone da 6 × 500 g a 6,99 €? Il prezzo al chilo lo dice in un attimo. Inserisci confezione, peso e prezzo, il sistema normalizza tutto al kg.",
     context: "weight",
     keywords: ["pasta", "spaghetti", "penne", "fusilli", "rigatoni", "farfalle", "linguine", "tagliatelle", "lasagne", "riso", "riso basmati", "riso arborio", "riso carnaroli", "farro", "orzo", "farina", "farina 00", "farina integrale", "legumi", "ceci", "fagioli", "lenticchie", "barilla", "de cecco", "garofalo", "voiello"],
-    related: ["olio-extravergine", "formaggio-grattugiato", "lievito"],
+    related: ["olio-extravergine", "formaggio-grattugiato", "lievito", "pomodoro"],
     guideTitle: "Guida alla pasta, riso e farina: prezzo al chilo",
     longDescription: `Pasta, riso e farina sono fra i prodotti più stabili del carrello italiano: una famiglia consuma in media 25-35 kg di pasta, 8-15 kg di riso e 10-20 kg di farina all'anno. Il prezzo al chilo varia da meno di 1,30 €/kg per la pasta private label in offerta fino a oltre 5 €/kg per i formati artigianali o premium di nicchia.
 
@@ -1026,6 +1403,102 @@ Per chi non ha tempo, i legumi in barattolo restano comodi ma 2-3× più cari. U
       { name: "Confezione 500 g", price: 1.29, counts: { box: 0, pack: 1 }, measureValue: 500, measureUnitId: "g" },
       { name: "Cartone 6 × 500 g", price: 6.99, counts: { box: 1, pack: 6 }, measureValue: 500, measureUnitId: "g" },
       { name: "Confezione 1 kg", price: 2.49, counts: { box: 0, pack: 1 }, measureValue: 1, measureUnitId: "kg" },
+    ],
+  },
+
+  {
+    slug: "pomodoro",
+    name: "Pomodoro, passata e pelati",
+    description:
+      "Confronta brick, lattine e vasetti di passata, pelati, polpa e cubetti di pomodoro al prezzo al chilo. Funziona fra formati diversi: brick 700 g, latta 400 g, vaso vetro 500 g, multipack 3× e 12×.",
+    intro:
+      "Le conserve di pomodoro sono uno dei prodotti più consumati nelle case italiane. Brick, lattine, vasetti, multipack famiglia: i formati cambiano in continuazione. Inserisci la confezione (multipack o singolo), il numero di brick/scatole/vasetti e il peso netto di ciascuno: il calcolatore unifica tutto a €/kg.",
+    context: "weight",
+    keywords: [
+      "pomodoro",
+      "passata",
+      "passata di pomodoro",
+      "pelati",
+      "polpa di pomodoro",
+      "cubetti di pomodoro",
+      "datterino",
+      "pomodorini",
+      "mutti",
+      "cirio",
+      "de cecco",
+      "pomodoro san marzano",
+      "conserve",
+    ],
+    related: ["pasta", "olio-extravergine", "lievito"],
+    guideTitle: "Guida al pomodoro in conserva: prezzo al chilo",
+    longDescription: `Una famiglia italiana consuma in media 8-15 kg di conserve di pomodoro all'anno fra passata, pelati, polpa e cubetti — la base di tutta la cucina italiana, dalla pasta al pomodoro al ragù, dalla pizza in teglia all'amatriciana. La spesa annuale media è di 30-80 € e i prezzi al chilo variano dai 1,30 €/kg dei multipack discount fino a oltre 6 €/kg dei premium DOP o monovarietali.
+
+I formati sono frammentati: brick 350 g, brick 700 g, lattine 400 g, lattine 800 g, vasi vetro 300-700 g, multipack 3×, 6×, 12×. La stessa identica passata Mutti 700 g può costare 1,69 € al singolo brick (= 2,41 €/kg) e meno di 1,35 € a brick (= 1,93 €/kg) in multipack 6×. Per chi cucina spesso, scegliere il formato giusto significa risparmiare 20-40 € all'anno sulla stessa esatta materia prima.
+
+In Italia il prezzo per unità di misura è obbligatorio in scaffale dal 2005 (Codice del Consumo, art. 14): per le conserve è espresso in €/kg. Questo calcolatore lo applica fra formati eterogenei (brick, latta, vetro), multipack e singoli, anche fra unità diverse (g, kg). Funziona indifferentemente per passata, polpa, pelati o cubetti — il peso netto stampato sull'etichetta è l'unica metrica che davvero conta.`,
+    sections: [
+      {
+        heading: "Passata, polpa, pelati, cubetti: quando usare cosa",
+        body: `**Passata**: pomodoro frullato e setacciato, senza pezzi né bucce. Densità media, gusto delicato. Ideale per sughi veloci, pizza, vellutate. È il formato più versatile e quello più venduto.
+
+**Pelati**: pomodori interi (San Marzano DOP o varietà allungate) pelati e immersi nel proprio liquido. Polpa intatta da rompere a mano o con forchetta in cottura. Ideali per ragù lunghi (3-4 h), amatriciana, sughi rustici dove la consistenza fa parte del piatto.
+
+**Polpa**: pomodori pelati e tagliati a pezzetti grossi (1-2 cm). Compromesso fra pelati e passata. Cottura veloce, consistenza riconoscibile. Ottima per pasta al pomodoro veloce, base per minestre.
+
+**Cubetti / datterini**: pezzetti piccoli (5-10 mm), spesso con varietà specifiche (datterini, ciliegini). Gusto più dolce. Per piatti delicati: pesce, primi di pasta corta, condimenti freschi.
+
+A parità di peso netto il prezzo cambia poco fra le 4 tipologie (passata e polpa sono in media leggermente più economiche, pelati DOP e datterini un po' più cari). Scegli in base al piatto, non al budget.`,
+      },
+      {
+        heading: "Brand premium vs private label",
+        body: `**Premium / DOP** (Mutti Pomodorissima, Cirio Selezione, Casar, San Marzano DOP): 3-6 €/kg. Filiera tracciata, varietà specifica (San Marzano, ciliegino, datterino), qualità sensorialmente percepibile. Adatti a piatti dove il pomodoro è protagonista (pizza margherita d'autore, semplici spaghetti al pomodoro).
+
+**Mass-market** (Mutti standard, Cirio classica, De Rica): 2-3,50 €/kg. Lo zoccolo duro del mercato italiano. Qualità affidabile, varietà di formati, ottimo equilibrio prezzo/gusto per uso quotidiano. Buona scelta per la maggior parte delle ricette.
+
+**Private label** (Coop, Conad, Esselunga, Lidl, Eurospin): 1,30-2,20 €/kg. Spesso prodotti dagli stessi stabilimenti dei brand premium ma con etichetta dell'insegna. Per uso quotidiano sono pienamente accettabili. Risparmio significativo: una famiglia che usa 10 kg/anno di pomodoro risparmia 15-30 € passando dal mass-market al PL.
+
+**Discount** (linee discount premium, MD, Aldi): 1,20-1,80 €/kg. Sotto questa soglia spesso il prodotto è un concentrato diluito o una miscela di pomodori cinesi/turchi a basso costo. Per ricette dove il pomodoro è ingrediente fra molti (chili, sugo lungo con tante spezie) può andare bene; per pasta al pomodoro semplice la differenza si sente.`,
+      },
+      {
+        heading: "Brick vs latta vs vetro",
+        body: `**Brick (cartone Tetra Pak)**: il formato più diffuso in Italia per la passata. Leggero, riciclabile carta, occupa meno spazio. Una volta aperto va consumato entro 3-4 giorni in frigo (è soggetto a fermentazione veloce). Formati tipici: 350 g, 500 g, 700 g.
+
+**Latta (banda stagnata)**: il formato storico per pelati e polpa. Leggermente più cara per unità di peso (~5-10% al kg in più), ma la conservazione è eccezionale (fino a 3 anni sigillata). Una volta aperta, trasferisci il contenuto in contenitore di vetro: il contatto del pomodoro acido con la latta aperta deteriora il sapore in 24-48 h. Formati tipici: 400 g, 800 g.
+
+**Vetro (vaso)**: per i prodotti premium (passata bio, DOP, conserve artigianali). Più caro al kg (+20-40% sulla stessa qualità), ma riciclabile all'infinito, conservazione lunga, una volta aperto può rimanere in frigo 7-10 giorni. Formati tipici: 300 g, 500 g, 700 g.
+
+A parità di prezzo €/kg il brick è il formato più conveniente per turnover veloce. Vetro o latta per scorte di lungo periodo.`,
+      },
+      {
+        heading: "Errori comuni",
+        body: `**Confondere il "prezzo etichetta" con la convenienza.** Un brick 700 g passata Mutti a 1,69 € sembra più caro di un brick 350 g a 0,99 €, ma costa 2,41 €/kg contro 2,83 €/kg: il formato grande risparmia il 15%. Sempre dividere per i grammi.
+
+**Cadere nei multipack \"obbligatori\".** Le promozioni 3×1 sono frequenti sui pomodori: se non li userai tutti entro la data di scadenza (di solito 18-24 mesi), parte del risparmio si trasforma in spreco. Per famiglie a basso consumo (4-6 kg/anno), meglio comprare singoli in offerta che multipack.
+
+**Pagare il \"100% italiano\" senza filiera.** Tutti i brand premium dichiarano \"100% pomodoro italiano\", ma solo alcuni (Mutti, Casar, Cirio Selezione) certificano la filiera con consorzio di produttori. Per i mass-market la dicitura è vera ma indica solo il paese di trasformazione, non sempre il paese di coltivazione del pomodoro fresco. Differenza qualitativa contestabile.
+
+**Stoccare in modo errato.** Una latta o brick aperto in frigo a contatto con l'aria perde gusto e ossida in 24-72 h. Trasferisci sempre in vasetto di vetro chiuso (o pellicola sopra il brick). Per scorte non aperte: dispensa fresca e buia, lontano da fonti di calore. Sigillati durano 18-36 mesi senza perdita di qualità.`,
+      },
+    ],
+    faq: [
+      { q: "Mutti vs Cirio vs private label: quale conviene?", a: "Per uso quotidiano la private label (Coop, Conad, Esselunga) costa il 30-50% in meno con qualità adeguata per la maggior parte delle ricette. Mutti e Cirio sono giustificati per piatti dove il pomodoro è protagonista (pizza, semplice pasta al pomodoro) per profilo gustativo più caratterizzato. Per ragù lunghi e sughi composti la differenza si percepisce meno." },
+      { q: "Conviene comprare passata in multipack 6× o 12×?", a: "Solo se la consumi entro la scadenza (18-24 mesi). Per famiglia di 3-4 persone che fa pasta al pomodoro 2-3 volte/settimana, un multipack 6×700 g (= 4,2 kg) dura 2-3 mesi senza problemi. Multipack 12× ha senso per famiglie numerose o per chi fa scorte di stagione." },
+      { q: "Passata bio vale il prezzo extra?", a: "Per uso quotidiano la differenza qualitativa è marginale rispetto a un buon mass-market. Per scelta etica/ambientale o per cucinare a bambini molto piccoli può avere senso. Costo +30-60% rispetto a un equivalente convenzionale." },
+      { q: "I pelati DOP San Marzano valgono il sovrapprezzo?", a: "Sì per piatti dove la varietà è il valore: pizza napoletana \"vera\", spaghetti al pomodoro minimalisti, primi di pesce delicati. Per ragù bolognese, lasagne, sughi lunghi con cipolla/carote/sedano la differenza è coperta dagli altri ingredienti e i pelati standard a 2 €/kg vanno benissimo." },
+      { q: "Quanto pomodoro consuma una famiglia italiana media?", a: "Stima: 8-15 kg/anno per una famiglia di 3-4 persone, soprattutto in forma di passata (60%) e pelati/polpa (30%). Spesa annuale 30-80 € a seconda della scelta brand. Le scorte stagionali (settembre-ottobre, quando arrivano le nuove conserve della raccolta estiva) sono il momento migliore per fare scorta a prezzo contenuto." },
+      { q: "Pomodoro in latta o in brick: differenze pratiche?", a: "La latta è più cara al kg ma conserva meglio: 3 anni sigillata. Il brick è più economico ma deve essere consumato entro 18-24 mesi e una volta aperto fermenta in 3-4 giorni. Il vetro è il più premium e ha conservazione lunga sia chiuso sia aperto. Per uso quotidiano in famiglia il brick è il formato più conveniente." },
+      { q: "Pomodoro in conserva una volta aperto: quanto dura?", a: "In frigo, in contenitore di vetro chiuso, 3-4 giorni per la passata, 5-7 giorni per i pelati interi. Mai lasciarlo nella latta aperta: il contatto del pomodoro acido con la banda stagnata deteriora il sapore in 24-48 h e può causare migrazione di metalli. Trasferisci sempre in vetro." },
+      { q: "Come confrontare il prezzo fra passata, pelati e cubetti?", a: "Usa sempre il peso netto stampato in etichetta (NON quello \"sgocciolato\" per i pelati: i pelati hanno il 50-60% di pomodoro e 40-50% di liquido di governo; il peso netto include entrambi). Inserisci il peso netto totale nel calcolatore. Per piatti dove conta la \"polpa\", pelati e cubetti vanno scontati del 40-50% del peso netto." },
+      { q: "Cubetti e datterini in barattolo: quando usarli?", a: "I cubetti tradizionali sono adatti per ricette veloci dove vuoi vedere il pomodoro nel piatto (pasta corta, condimenti freschi). I datterini in barattolo (Mutti, Cirio Datterini) sono più dolci e adatti a piatti con pesce, formaggi delicati, vegetariani. Costano in media il 20-30% in più dei cubetti standard a parità di brand." },
+    ],
+    levels: [
+      { id: "pack", label: "multipack", pluralLabel: "multipack", optional: true, default: 0 },
+      { id: "unit", label: "brick/scatola/vaso", pluralLabel: "brick/scatole/vasi", default: 1 },
+    ],
+    sampleEntries: [
+      { name: "Passata Mutti brick 700 g", price: 1.49, counts: { pack: 0, unit: 1 }, measureValue: 700, measureUnitId: "g" },
+      { name: "Multipack pelati Cirio 3 × 400 g", price: 2.99, counts: { pack: 1, unit: 3 }, measureValue: 400, measureUnitId: "g" },
+      { name: "Passata bio vaso vetro 500 g", price: 2.49, counts: { pack: 0, unit: 1 }, measureValue: 500, measureUnitId: "g" },
     ],
   },
 
