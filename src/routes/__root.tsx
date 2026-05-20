@@ -266,7 +266,9 @@ function SiteFooter() {
 					<p className="text-xs text-muted-foreground">
 						Realizzato da{" "}
 						<a
-							href="mailto:giacomorossi.dev@gmail.com"
+							href="https://giacomorossi.dev"
+							target="_blank"
+							rel="noopener noreferrer"
 							className="brand-gradient-text font-semibold underline-offset-4 hover:underline"
 						>
 							giacomorossi.dev
