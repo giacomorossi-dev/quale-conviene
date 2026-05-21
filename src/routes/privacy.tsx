@@ -32,7 +32,7 @@ function PrivacyPage() {
 	return (
 		<div className="container mx-auto max-w-3xl px-4 py-10 space-y-10">
 			<header className="space-y-2">
-				<h1 className="display-title text-4xl font-bold tracking-tight">
+				<h1 className="display-title text-4xl font-semibold tracking-tight">
 					<span className="brand-gradient-text">Privacy policy</span>
 				</h1>
 				<p className="text-sm text-muted-foreground">

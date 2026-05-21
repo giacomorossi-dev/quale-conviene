@@ -132,7 +132,7 @@ function CustomComparePage() {
 		if (!category) {
 			return (
 				<>
-					<h1 className="display-title text-4xl sm:text-5xl font-bold tracking-tight leading-[1.1]">
+					<h1 className="display-title text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.1]">
 						<span className="brand-gradient-text">Confronto personalizzato</span>
 					</h1>
 					<p className="text-lg text-muted-foreground">
@@ -151,7 +151,7 @@ function CustomComparePage() {
 							<Wand2 className="h-3.5 w-3.5" aria-hidden="true" />
 							Confronto personalizzato
 						</p>
-						<h1 className="display-title text-3xl sm:text-4xl font-bold tracking-tight leading-[1.1]">
+						<h1 className="display-title text-3xl sm:text-4xl font-semibold tracking-tight leading-[1.1]">
 							<span className="brand-gradient-text">{category.name}</span>
 						</h1>
 					</div>

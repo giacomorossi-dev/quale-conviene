@@ -226,7 +226,7 @@ function HowtoItem({
 }) {
 	return (
 		<li className="flex gap-3">
-			<span className="brand-gradient-bg flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white">
+			<span className="brand-gradient-bg flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-white">
 				{index}
 			</span>
 			<div className="space-y-0.5">

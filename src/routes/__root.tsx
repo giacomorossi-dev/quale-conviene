@@ -43,6 +43,15 @@ export const Route = createRootRoute({
 			{ title: `${SITE_NAME} — Confronta prezzi e formati di prodotti` },
 		],
 		links: [
+			// Preload the latin 400 woff2 — the body font. Same-origin self-hosted
+			// asset, so no extra DNS/TLS handshake.
+			{
+				rel: "preload",
+				href: "/fonts/poppins-400-latin.woff2",
+				as: "font",
+				type: "font/woff2",
+				crossOrigin: "anonymous",
+			},
 			{ rel: "stylesheet", href: appCss },
 			// SVG favicon for modern browsers — scales perfectly at any DPI.
 			{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
@@ -126,7 +135,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 function SiteFooter() {
 	const year = new Date().getFullYear();
 	return (
-		<footer className="relative mt-20 w-full overflow-hidden bg-background/40 backdrop-blur-sm">
+		<footer
+			className="relative mt-20 w-full overflow-hidden bg-background/40 backdrop-blur-sm"
+			style={{ contentVisibility: "auto", containIntrinsicSize: "auto 800px" }}
+		>
 			{/* Top gradient separator — bumped from 1px to 3px for a stronger split. */}
 			<div
 				aria-hidden="true"
@@ -283,7 +295,7 @@ function SiteFooter() {
 function NotFound() {
 	return (
 		<div className="container mx-auto max-w-3xl px-4 py-20 text-center space-y-4">
-			<h1 className="display-title text-5xl font-bold tracking-tight">
+			<h1 className="display-title text-5xl font-semibold tracking-tight">
 				<span className="brand-gradient-text">404</span>
 			</h1>
 			<p className="text-xl font-medium">Pagina non trovata</p>
@@ -303,7 +315,7 @@ function NotFound() {
 function ErrorBoundary({ error }: { error: Error }) {
 	return (
 		<div className="container mx-auto max-w-3xl px-4 py-20 text-center space-y-4">
-			<h1 className="display-title text-4xl font-bold tracking-tight">
+			<h1 className="display-title text-4xl font-semibold tracking-tight">
 				Qualcosa è andato storto
 			</h1>
 			<p className="text-muted-foreground">

@@ -23,7 +23,7 @@ function ContactPage() {
 	return (
 		<div className="container mx-auto max-w-3xl px-4 py-10 space-y-8">
 			<header className="space-y-2">
-				<h1 className="display-title text-4xl font-bold tracking-tight">
+				<h1 className="display-title text-4xl font-semibold tracking-tight">
 					<span className="brand-gradient-text">Feedback e contatti</span>
 				</h1>
 				<p className="text-sm text-muted-foreground">
@@ -79,7 +79,7 @@ function ContactPage() {
 					</p>
 					<a
 						href={`mailto:${CONTACT_EMAIL}`}
-						className="display-title block break-all text-2xl sm:text-3xl font-bold tracking-tight underline-offset-4 hover:underline"
+						className="display-title block break-all text-2xl sm:text-3xl font-semibold tracking-tight underline-offset-4 hover:underline"
 					>
 						{CONTACT_EMAIL}
 					</a>

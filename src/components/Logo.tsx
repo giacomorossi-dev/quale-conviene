@@ -27,7 +27,7 @@ export default function Logo({ compactBelow = "sm" }: Props) {
 				<Sparkles className="h-4 w-4 text-white" />
 			</span>
 			<span
-				className={`${HIDE_CLASS[compactBelow]} text-base font-bold tracking-tight`}
+				className={`${HIDE_CLASS[compactBelow]} text-base font-semibold tracking-tight`}
 			>
 				<span className="brand-gradient-text">{SITE_NAME}</span>
 			</span>
