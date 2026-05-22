@@ -43,11 +43,20 @@ export const Route = createRootRoute({
 			{ title: `${SITE_NAME} — Confronta prezzi e formati di prodotti` },
 		],
 		links: [
-			// Preload the latin 400 woff2 — the body font. Same-origin self-hosted
-			// asset, so no extra DNS/TLS handshake.
+			// Preload both weights that paint above the fold:
+			// 400 (body copy) and 600 (.display-title H1 — the LCP element on home
+			// and category pages). Parallel to CSS download so they're cached by
+			// the time the browser needs them for first paint.
 			{
 				rel: "preload",
 				href: "/fonts/poppins-400-latin.woff2",
+				as: "font",
+				type: "font/woff2",
+				crossOrigin: "anonymous",
+			},
+			{
+				rel: "preload",
+				href: "/fonts/poppins-600-latin.woff2",
 				as: "font",
 				type: "font/woff2",
 				crossOrigin: "anonymous",
